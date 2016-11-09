@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
+        id="com.liveperson.messagingSDK"
+        version="0.1.0">
+
+  <name>lpMessagingSDK</name>
+
+  <engines>
+    <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+
+  <asset src="www/lpMessagingSDK.js" target="js/lpMessagingSDK.js"/>
+
+
+  <js-module src="www/lpMessagingSDK.js" name="lpMessagingSDK">
+    <clobbers target="lpMessagingSDK" />
+  </js-module>
+
+  <!-- android -->
+  <platform name="android">
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="LPMessagingSDK" >
+        <param name="android-package" value="com.liveperson.plugin.LPMessagingSDK"/>
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/LPMessagingSDK.java" target-dir="src/com/liveperson/plugin/" />
+
+    <framework src="src/android/lpMessagingBuild.gradle" custom="true" type="gradleReference"/>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.INTERNET"/>
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    </config-file>
+
+  </platform>
+
+</plugin>
