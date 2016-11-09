@@ -1,0 +1,53 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "res/xml/config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"LPMessagingSDK\"><param name=\"android-package\" value=\"com.liveperson.plugin.LPMessagingSDK\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "AndroidManifest.xml": {
+                "parents": {
+                    "/manifest": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "com.liveperson.messagingSDK": {
+            "PACKAGE_NAME": "com.liveperson.cordova.sample.app"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "id": "com.liveperson.messagingSDK.lpMessagingSDK",
+            "file": "plugins/com.liveperson.messagingSDK/www/lpMessagingSDK.js",
+            "pluginId": "com.liveperson.messagingSDK",
+            "clobbers": [
+                "lpMessagingSDK"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "com.liveperson.messagingSDK": "0.1.0"
+    }
+}

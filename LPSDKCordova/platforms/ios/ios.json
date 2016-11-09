@@ -1,0 +1,34 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/widget": []
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "com.liveperson.messagingSDK": {
+            "PACKAGE_NAME": "com.liveperson.cordova.sample.app"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "id": "com.liveperson.messagingSDK.lpMessagingSDK",
+            "file": "plugins/com.liveperson.messagingSDK/www/lpMessagingSDK.js",
+            "pluginId": "com.liveperson.messagingSDK",
+            "clobbers": [
+                "lpMessagingSDK"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "com.liveperson.messagingSDK": "0.1.0"
+    }
+}
