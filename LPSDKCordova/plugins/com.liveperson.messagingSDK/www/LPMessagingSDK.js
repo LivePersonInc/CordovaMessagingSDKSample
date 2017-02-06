@@ -14,11 +14,7 @@ Example JS call:
 */
 
 module.exports = {
-
-    lp_conversation_api: function (action, accountId, successCallback, errorCallback) {
-
-        cordova.exec(successCallback, errorCallback, "LPMessagingSDK", action, [accountId]);
-
+    lp_conversation_api: function (action, args, successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "LPMessagingSDK", action, args);
     }
-
 };

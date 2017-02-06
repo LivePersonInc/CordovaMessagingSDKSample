@@ -1,0 +1,7 @@
+{
+    "libc++.tbd": 1,
+    "libz.tbd": 2,
+    "AddressBook.framework": 1,
+    "libsqlite3.0.tbd": 1,
+    "Security.framework": 1
+}

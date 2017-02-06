@@ -17,6 +17,10 @@
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
+    <feature name="FCMPlugin">
+        <param name="android-package" value="com.gae.scaffolder.plugin.FCMPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <feature name="LPMessagingSDK">
         <param name="android-package" value="com.liveperson.plugin.LPMessagingSDK" />
     </feature>

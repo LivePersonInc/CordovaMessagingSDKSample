@@ -7,6 +7,9 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.liveperson.cordova.sample.app"
+        },
         "com.liveperson.messagingSDK": {
             "PACKAGE_NAME": "com.liveperson.cordova.sample.app"
         }

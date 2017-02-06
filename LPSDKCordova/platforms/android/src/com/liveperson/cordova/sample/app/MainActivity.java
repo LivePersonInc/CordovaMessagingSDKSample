@@ -20,6 +20,10 @@
 package com.liveperson.cordova.sample.app;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import com.gae.scaffolder.plugin.FCMPlugin;
+
 import org.apache.cordova.*;
 
 public class MainActivity extends CordovaActivity
@@ -37,5 +41,14 @@ public class MainActivity extends CordovaActivity
 
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //Clear the webview because the activity is destroy and the webview context is not valid anymore.
+        Log.d("MainActivity","onDestroy - clear FCMPlugin.gWebView");
+        FCMPlugin.gWebView = null;
     }
 }

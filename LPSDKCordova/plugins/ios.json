@@ -8,7 +8,13 @@
     },
     "installed_plugins": {
         "com.liveperson.messagingSDK": {
-            "PACKAGE_NAME": "com.liveperson.cordova.sample.app"
+            "PACKAGE_NAME": "com.liveperson.cordova.sampleApp"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.liveperson.cordova.sampleApp"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.liveperson.cordova.sampleApp"
         }
     },
     "dependent_plugins": {}

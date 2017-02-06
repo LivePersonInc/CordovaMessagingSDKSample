@@ -7,14 +7,49 @@
         "files": {
             "config.xml": {
                 "parents": {
-                    "/widget": []
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"LPMessagingSDK\"><param name=\"ios-package\" value=\"LPMessagingSDKPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FCMPlugin\"><param name=\"ios-package\" value=\"FCMPlugin\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*/Entitlements-Debug.plist": {
+                "parents": {
+                    "aps-environment": [
+                        {
+                            "xml": "<string>development</string>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*/Entitlements-Release.plist": {
+                "parents": {
+                    "aps-environment": [
+                        {
+                            "xml": "<string>production</string>",
+                            "count": 1
+                        }
+                    ]
                 }
             }
         }
     },
     "installed_plugins": {
         "com.liveperson.messagingSDK": {
-            "PACKAGE_NAME": "com.liveperson.cordova.sample.app"
+            "PACKAGE_NAME": "com.liveperson.cordova.sampleApp"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.liveperson.cordova.sampleApp"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.liveperson.cordova.sampleApp"
         }
     },
     "dependent_plugins": {},
@@ -26,9 +61,19 @@
             "clobbers": [
                 "lpMessagingSDK"
             ]
+        },
+        {
+            "id": "cordova-plugin-fcm.FCMPlugin",
+            "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
+            "pluginId": "cordova-plugin-fcm",
+            "clobbers": [
+                "FCMPlugin"
+            ]
         }
     ],
     "plugin_metadata": {
-        "com.liveperson.messagingSDK": "0.1.0"
+        "com.liveperson.messagingSDK": "0.1.0",
+        "cordova-plugin-fcm": "2.1.1",
+        "cordova-plugin-whitelist": "1.3.0"
     }
 }

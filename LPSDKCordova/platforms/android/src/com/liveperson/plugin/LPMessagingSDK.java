@@ -1,5 +1,9 @@
 package com.liveperson.plugin;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.liveperson.api.LivePersonCallback;
@@ -16,7 +20,13 @@ import org.json.JSONException;
 public class LPMessagingSDK extends CordovaPlugin {
 
     private static final String TAG = LPMessagingSDK.class.getSimpleName();
-    public static final String SDK_SAMPLE_APP_ID = "com.liveperson.sdk_cordova_sample";
+    private static final String SDK_SAMPLE_APP_ID = "com.liveperson.cordova.sample.app";
+
+    private static final String INIT = "lp_sdk_init";
+    private static final String START_CONVERSATION = "start_lp_conversation";
+    private static final String SET_USER = "set_lp_user_profile";
+    public static final String LP_ACCOUND_ID = "lp_account_id";
+    public static final String LP_REGISTER_PUSHER = "register_pusher";
 
     CallbackContext mCallbackContext;
 
@@ -30,18 +40,56 @@ public class LPMessagingSDK extends CordovaPlugin {
      */
     public boolean execute(final String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
-        Log.v(TAG, "LPMessagingSDK   received account id:" + action);
+        Log.v(TAG, "LPMessagingSDK.execute:" + action);
 
+        boolean success = true;
         mCallbackContext = callbackContext;
+
+        switch (action){
+            case INIT:
         // lp_sdk_init - Call this action inorder to do Messaging SDK init
-        if ("lp_sdk_init".equals(action)) {
-            final String accountId = args.getString(0);
+                final String accountId = args.getString(0);
+                Log.d(TAG, "Messaging SDK: init for account Id: " + accountId);
+                initSDK(accountId);
+                break;
+            case START_CONVERSATION:
+                Log.d(TAG, "Messaging SDK: Start conversation");
+                startConversation();
+                break;
+            case SET_USER:
+                Log.d(TAG, "Messaging SDK: Set User, args:" + args);
+                setProfile(callbackContext, args);
+                break;
+            case LP_REGISTER_PUSHER:
+                final String account = args.getString(0);
+                final String token = args.getString(1);
+                Log.d(TAG, "Messaging SDK: Register pusher for for accoun: " + account +", token: " + token);
+                LivePerson.registerLPPusher(account, SDK_SAMPLE_APP_ID, token);
+                mCallbackContext.success("FCM token registration end successfully");
+                break;
+            default:
+                Log.d(TAG,"LPMessagingSDK - LivePerson." + action + " is not a supported function.");
+                callbackContext.error("LivePerson." + action + " is not a supported function.");
+                success = false;
+                break;
+        }
+
+        return success;
+    }
+
+    /**
+     *
+     * @param accountId
+     */
+    private void initSDK(final String accountId) {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     LivePerson.initialize(cordova.getActivity(), new InitLivePersonProperties(accountId, SDK_SAMPLE_APP_ID, new InitLivePersonCallBack() {
                         @Override
                         public void onInitSucceed() {
                             Log.i(TAG, "SDK initialize completed successfully");
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cordova.getActivity());
+                        sharedPreferences.edit().putString(LP_ACCOUND_ID, accountId).apply();
                             cordova.getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -65,8 +113,12 @@ public class LPMessagingSDK extends CordovaPlugin {
 
                 }
             });
-        // start_lp_conversation - Call this action to start \ resume messaging conversation
-        } else if ("start_lp_conversation".equals(action)) {
+    }
+
+    /**
+     *
+     */
+    private void startConversation() {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -74,11 +126,23 @@ public class LPMessagingSDK extends CordovaPlugin {
 
                 }
             });
-        } else {
-            return false;
         }
-        return true;
+
+    /**
+     *
+     * @param callbackContext
+     * @param args
+     * @throws JSONException
+     */
+    private void setProfile(final CallbackContext callbackContext, JSONArray args) throws JSONException {
+        final String appId = SDK_SAMPLE_APP_ID;
+        final String firstName  = args.getString(1);
+        final String lastName   = args.getString(2);
+        final String phone      = args.getString(3);
+        LivePerson.setUserProfile(appId, firstName, lastName, phone);
+        callbackContext.success();
     }
+
 
     /**
      * Callbacks that call when the conversation activity running
@@ -144,6 +208,11 @@ public class LPMessagingSDK extends CordovaPlugin {
             @Override
             public void onOfflineHoursChanges(boolean isOfflineHoursOn) {
                 onEvent(" on Offline Hours Changes - " + isOfflineHoursOn );
+            }
+
+            @Override
+            public void onAgentAvatarTapped(AgentData agentData) {
+                onEvent(" on Agent Avatar Tapped - " + agentData );
             }
         });
     }

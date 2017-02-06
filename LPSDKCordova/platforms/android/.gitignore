@@ -7,8 +7,12 @@ local.properties
 # Ant builds
 ant-build
 ant-gen
-# Eclipse builds
-gen
-out
-# Gradle builds
 /build
+.gradle
+/local.properties
+/.idea/*
+!/.idea/codeStyleSettings.xml
+.DS_Store
+/captures
+*.iml
+
