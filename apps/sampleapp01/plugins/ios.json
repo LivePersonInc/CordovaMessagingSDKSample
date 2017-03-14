@@ -12,6 +12,9 @@
         },
         "com.liveperson.messagingSDK": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.liveperson.sampleapp01"
         }
     },
     "dependent_plugins": {}

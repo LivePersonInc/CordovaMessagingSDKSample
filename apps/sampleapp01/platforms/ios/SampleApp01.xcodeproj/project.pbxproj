@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -27,6 +26,7 @@
 		AE356542472B45FEA0A5FA23 /* LPMessagingSDKPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604AE583D6E04110B200B18E /* LPMessagingSDKPlugin.swift */; };
 		E227FCEC3C184D19B5519C50 /* LPAMS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 710C27D2E85A4BAD97A48C4D /* LPAMS.framework */; };
 		EB32356C93184A968B9FE814 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C969CDA7F3E449C83C6ADB1 /* ContainerViewController.swift */; };
+		0BF2BC1908AB4C458B09FEA4 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A337FAF20DE146978FB7E0F9 /* CDVLogger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +90,8 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = SampleApp01/config.xml; sourceTree = "<group>"; };
+		A337FAF20DE146978FB7E0F9 /* CDVLogger.m */ = {isa = PBXFileReference; name = "CDVLogger.m"; path = "cordova-plugin-console/CDVLogger.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		C8621CB51B6749C5B11FCAE3 /* CDVLogger.h */ = {isa = PBXFileReference; name = "CDVLogger.h"; path = "cordova-plugin-console/CDVLogger.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,8 @@
 				604AE583D6E04110B200B18E /* LPMessagingSDKPlugin.swift */,
 				9C969CDA7F3E449C83C6ADB1 /* ContainerViewController.swift */,
 				3001333A2FF94E68AA3238D5 /* LPSDKCordovaSample-Bridging-Header.h */,
+				A337FAF20DE146978FB7E0F9 /* CDVLogger.m */,
+				C8621CB51B6749C5B11FCAE3 /* CDVLogger.h */,
 			);
 			name = Plugins;
 			path = SampleApp01/Plugins;
@@ -331,6 +335,7 @@
 				AE356542472B45FEA0A5FA23 /* LPMessagingSDKPlugin.swift in Sources */,
 				EB32356C93184A968B9FE814 /* ContainerViewController.swift in Sources */,
 				979D2E4A22314721A8477486 /* LPSDKCordovaSample-Bridging-Header.h in Sources */,
+				0BF2BC1908AB4C458B09FEA4 /* CDVLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

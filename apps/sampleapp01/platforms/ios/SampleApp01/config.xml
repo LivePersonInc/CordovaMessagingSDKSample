@@ -18,6 +18,9 @@
     <feature name="LPMessagingSDK">
         <param name="ios-package" value="LPMessagingSDKPlugin" />
     </feature>
+    <feature name="Console">
+        <param name="ios-package" value="CDVLogger" />
+    </feature>
     <name>SampleApp01</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

@@ -25,6 +25,7 @@ var app = {
     // Application Constructor
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+
     },
 
     // deviceready Event Handler
@@ -32,13 +33,16 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
+        console.log("console.log works well");
+        if (window.cordova.logger) {
+            window.cordova.logger.__onDeviceReady();
+        }
         this.receivedEvent('deviceready');
         // initialise LP Messaging SDK here
-        this.lpMessagingSdkInit();
+        app.lpMessagingSdkInit();
 
         // setup click event listener for start messaging button example
-        var buttonElement = document.getElementById(this.settings.startMessagingConversationButtonId);
-        buttonElement.addEventListener("click", this.lpStartMessagingConversation);
+
 
         console.log('onDeviceReady completed');
     },
@@ -52,6 +56,8 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
+        var buttonElement = document.getElementById(this.settings.startMessagingConversationButtonId);
+        buttonElement.addEventListener("click", this.lpStartMessagingConversation.bind(this), false);
         console.log('Received Event: ' + id);
     },
     successCallback: function(eventName, eventData) {
