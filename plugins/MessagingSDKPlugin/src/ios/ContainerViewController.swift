@@ -60,6 +60,17 @@ class ContainerViewController: UIViewController, LPMessagingSDKdelegate {
         LPMessagingSDK.instance.showConversation(conversationQuery, containerViewController: self)
     }
     
+    /*
+    show conversation and use this ViewController as a container
+    alternative method for starting authenticated messaging conversations
+    passes in the JWT token supplied from Javascript via the Cordova Plugin bridge
+    */
+    func showConversationWithAuthentication(){
+         let conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(self.brandID)
+          LPMessagingSDK.instance.showConversation(conversationQuery, authenticationCode: self.authenticationCode)
+    }
+    
+
     /**
      Set user profile for the consumer
      */
@@ -157,7 +168,7 @@ class ContainerViewController: UIViewController, LPMessagingSDKdelegate {
     
     func LPMessagingSDKConnectionStateChanged(_ isReady: Bool, brandID: String) {
         print("LPMessagingSDKConnectionStateChanged: \(isReady), \(brandID)")
-        sendEventToJavaScript(event:"LPMessagingSDKConnectionStateChanged: \(isReady), \(brandID)",eventData:["connection_state_\(isReady)",])
+        sendEventToJavaScript(event:"LPMessagingSDKConnectionStateChanged: \(isReady), \(brandID)")
     }
     
     func LPMessagingSDKOffHoursStateChanged(_ isOffHours: Bool, brandID: String) {
@@ -169,7 +180,7 @@ class ContainerViewController: UIViewController, LPMessagingSDKdelegate {
         print("LPMessagingSDKConversationViewControllerDidDismiss")
         sendEventToJavaScript(event:"LPMessagingSDKConversationViewControllerDidDismiss")
     }
-    func sendEventToJavaScript(event: String?,eventData:[String]?) {
+    func sendEventToJavaScript(event: String?) {
         if (self.callBackCommandDelegate != nil && self.callBackCommand != nil) {
            // sleep(10000)
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:event)
