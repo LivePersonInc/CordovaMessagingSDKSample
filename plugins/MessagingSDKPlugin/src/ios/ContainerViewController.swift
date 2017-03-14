@@ -3,6 +3,7 @@
 //  LPSDKCordovaSample
 //
 //  Created by Nir Lachman on 09/11/2016.
+//  Updated by John Beadle and Omer Maroof 13/03/2017
 //
 //
 
@@ -14,10 +15,15 @@ import LPAMS
 
 class ContainerViewController: UIViewController, LPMessagingSDKdelegate {
     var brandID: String!
+    var authenticationCode: String? // placeholder for JWT token for authentication
     var firstName: String?
     var lastName: String?
     var nickName: String?
     var phoneNumber: String?
+
+    // callbacks for CordovaPluginResults
+    var callBackCommandDelegate: CDVCommandDelegate?
+    var callBackCommand:CDVInvokedUrlCommand?
     
     // ViewController Lifecycle
     override func viewDidLoad() {
@@ -27,7 +33,13 @@ class ContainerViewController: UIViewController, LPMessagingSDKdelegate {
         LPMessagingSDK.instance.delegate = self
         self.setUserProfile()
         self.setSDKConfigurations()
-        self.showConversation()
+
+        // UPDATED: conditional logic to support authenticated conversations when the authenticationCode has been set, else fallback to default
+        if authenticationCode != nil {
+            self.showConversationWithAuthentication()
+        }else{
+            self.showConversation()
+        }
         
     }
     
@@ -58,6 +70,10 @@ class ContainerViewController: UIViewController, LPMessagingSDKdelegate {
     
     /**
      Change default SDK configurations
+
+     TODO: update method to support config and branding changes via a JSON object sent through via the cordova wrapper to change the settings here.
+
+     TODO: Add support for other config options as per SDK documentation
      */
     func setSDKConfigurations() {
         let configurations = LPConfig.defaultConfiguration
@@ -74,69 +90,93 @@ class ContainerViewController: UIViewController, LPMessagingSDKdelegate {
         configurations.sendButtonEnabledTextColor = UIColor.purple
     }
     
-    // MARK: LPMessagingSDKDelegate
     func LPMessagingSDKCustomButtonTapped() {
         print("LPMessagingSDKCustomButtonTapped")
+        sendEventToJavaScript(event: "LPMessagingSDKCustomButtonTapped")
     }
     
     func LPMessagingSDKAgentDetails(_ agent: LPUser?) {
         print("LPMessagingSDKAgentDetails: \(agent?.nickName)")
+        sendEventToJavaScript(event: "LPMessagingSDKAgentDetails: \(agent?.nickName)")
     }
     
     func LPMessagingSDKActionsMenuToggled(_ toggled: Bool) {
         print("LPMessagingSDKActionsMenuToggled")
+        sendEventToJavaScript(event: "LPMessagingSDKActionsMenuToggled")
     }
     
     func LPMessagingSDKHasConnectionError(_ error: String?) {
         print("LPMessagingSDKHasConnectionError")
+        sendEventToJavaScript(event: "LPMessagingSDKHasConnectionError")
     }
     
     func LPMessagingSDKCSATScoreSubmissionDidFinish(_ brandID: String, rating: Int) {
         print("LPMessagingSDKCSATScoreSubmissionDidFinish: \(brandID)")
+        sendEventToJavaScript(event: "LPMessagingSDKCSATScoreSubmissionDidFinish: \(brandID)")
     }
     
     func LPMessagingSDKObseleteVersion(_ error: NSError) {
         print("LPMessagingSDKObseleteVersion: \(error)")
+        sendEventToJavaScript(event:"LPMessagingSDKObseleteVersion: \(error)")
     }
     
     func LPMessagingSDKAuthenticationFailed(_ error: NSError) {
         print("LPMessagingSDKAuthenticationFailed: \(error)")
+        sendEventToJavaScript(event:"LPMessagingSDKAuthenticationFailed: \(error)")
     }
     
     func LPMessagingSDKTokenExpired(_ brandID: String) {
         print("LPMessagingSDKTokenExpired: \(brandID)")
+        sendEventToJavaScript(event:"LPMessagingSDKTokenExpired: \(brandID)")
     }
     
     func LPMessagingSDKError(_ error: NSError) {
         print("LPMessagingSDKError: \(error)")
+        sendEventToJavaScript(event:"LPMessagingSDKError: \(error)")
     }
     
     func LPMessagingSDKAgentIsTypingStateChanged(_ isTyping: Bool) {
         print("LPMessagingSDKAgentIsTypingStateChanged: \(isTyping)")
+        sendEventToJavaScript(event:"LPMessagingSDKAgentIsTypingStateChanged: \(isTyping)")
     }
     
     func LPMessagingSDKConversationStarted(_ conversationID: String?) {
         print("LPMessagingSDKConversationStarted: \(conversationID)")
+        sendEventToJavaScript(event:"LPMessagingSDKConversationStarted: \(conversationID)")
     }
     
     func LPMessagingSDKConversationEnded(_ conversationID: String?) {
         print("LPMessagingSDKConversationEnded: \(conversationID)")
+        sendEventToJavaScript(event:"LPMessagingSDKConversationEnded: \(conversationID)")
     }
     
     func LPMessagingSDKConversationCSATDismissedOnSubmittion(_ conversationID: String?) {
         print("LPMessagingSDKConversationCSATDismissedOnSubmittion: \(conversationID)")
+        sendEventToJavaScript(event:"LPMessagingSDKConversationCSATDismissedOnSubmittion: \(conversationID)")
     }
     
     func LPMessagingSDKConnectionStateChanged(_ isReady: Bool, brandID: String) {
         print("LPMessagingSDKConnectionStateChanged: \(isReady), \(brandID)")
+        sendEventToJavaScript(event:"LPMessagingSDKConnectionStateChanged: \(isReady), \(brandID)",eventData:["connection_state_\(isReady)",])
     }
     
     func LPMessagingSDKOffHoursStateChanged(_ isOffHours: Bool, brandID: String) {
         print("LPMessagingSDKOffHoursStateChanged: \(isOffHours), \(brandID)")
+        sendEventToJavaScript(event:"LPMessagingSDKOffHoursStateChanged: \(isOffHours), \(brandID)")
     }
     
     func LPMessagingSDKConversationViewControllerDidDismiss() {
         print("LPMessagingSDKConversationViewControllerDidDismiss")
+        sendEventToJavaScript(event:"LPMessagingSDKConversationViewControllerDidDismiss")
+    }
+    func sendEventToJavaScript(event: String?,eventData:[String]?) {
+        if (self.callBackCommandDelegate != nil && self.callBackCommand != nil) {
+           // sleep(10000)
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:event)
+            pluginResult?.setKeepCallbackAs(true)
+            self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
+           
+        }
     }
     
 }

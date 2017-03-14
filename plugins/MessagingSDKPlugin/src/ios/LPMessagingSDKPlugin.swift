@@ -13,6 +13,12 @@ import LPAMS
 
 @objc(LPMessagingSDKPlugin) class LPMessagingSDKPlugin: CDVPlugin, LPMessagingSDKdelegate {
     
+
+    // adding delegates and callbacks for Cordova to notify javascript wrapper when functions complete
+    var callBackCommandDelegate: CDVCommandDelegate?
+    var callBackCommand:CDVInvokedUrlCommand?
+
+
     override init() {
         super.init()
     }
@@ -41,7 +47,27 @@ import LPAMS
             print("Can't start without brandID")
             return
         }
-        self.showConversation(brandID)
+        
+        // Enable authentication support
+        // check if the second parameter to the function call contains a value?
+        // this is expected to be the JWT token for enabling authenticated messaging conversations
+        // if found we pass it to the showConversation method, otherwise fallback to default unauthenticated mode
+        if(command.argument(at: 1) as? String != nil){
+            let authCode = command.argument(at: 1) as? String
+            self.showConversation(brandID,authenticationCode: authCode)
+        }else{
+            self.showConversation(brandID)
+        }
+
+        // init our callbacks for javascript wrapper
+        self.set_lp_callbacks(command)
+
+    }
+
+    // Assign values to our objects for triggering JS callbacks in the wrapper once native methods complete
+    func set_lp_callbacks(_ command: CDVInvokedUrlCommand) {
+        self.callBackCommandDelegate = commandDelegate
+        self.callBackCommand = command
     }
     
     func set_lp_user_profile(_ command: CDVInvokedUrlCommand) {
@@ -62,14 +88,17 @@ import LPAMS
     /**
      Show conversation screen and use this ViewController as a container
      */
-    func showConversation(_ brandID: String) {
-        //        let container = ContainerViewController()
-        //        container.brandID = brandID
-        //        let navigationController = UINavigationController(rootViewController: container)
-        //        UIApplication.shared.keyWindow?.rootViewController?.present(navigationController, animated: false, completion: nil)
-        
-        let conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(brandID)
-        LPMessagingSDK.instance.showConversation(conversationQuery)
+    func showConversation(_ brandID: String, authenticationCode:String? = nil) {
+        let container = ContainerViewController()
+        container.brandID = brandID
+        container.authenticationCode = authenticationCode // assign the JWT token to the variable in the ContainerViewController class
+        container.callBackCommand = self.callBackCommand
+        container.callBackCommandDelegate = self.callBackCommandDelegate
+        let navigationController = UINavigationController(rootViewController: container)
+        UIApplication.shared.keyWindow?.rootViewController?.present(navigationController, animated: false, completion: nil)
+
+        //let conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(brandID)
+        //LPMessagingSDK.instance.showConversation(conversationQuery)
     }
     
     /**
@@ -82,6 +111,10 @@ import LPAMS
     
     /**
      Change default SDK configurations
+
+     TODO: update method to support config and branding changes via a JSON object sent through via the cordova wrapper to change the settings here.
+
+     TODO: Add support for other config options as per SDK documentation
      */
     func setSDKConfigurations() {
         let configurations = LPConfig.defaultConfiguration
