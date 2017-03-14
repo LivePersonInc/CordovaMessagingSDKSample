@@ -138,7 +138,7 @@ class ContainerViewController: UIViewController, LPMessagingSDKdelegate {
     
     func LPMessagingSDKTokenExpired(_ brandID: String) {
         print("LPMessagingSDKTokenExpired: \(brandID)")
-        sendEventToJavaScript(event:"LPMessagingSDKTokenExpired: \(brandID)")
+        sendEventToJavaScript(event:"onTokenExpired")
     }
     
     func LPMessagingSDKError(_ error: NSError) {

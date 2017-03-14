@@ -1,0 +1,3 @@
+// GENERATED FILE - DO NOT EDIT
+include ":", ':lp_messaging_sdk'
+include ":CordovaLib"

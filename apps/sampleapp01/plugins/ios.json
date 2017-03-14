@@ -10,10 +10,10 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
         },
-        "com.liveperson.messagingSDK": {
+        "cordova-plugin-console": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
         },
-        "cordova-plugin-console": {
+        "com.liveperson.messagingSDK": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
         }
     },
