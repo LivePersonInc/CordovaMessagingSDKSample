@@ -26,7 +26,7 @@ public class LPMessagingSDK extends CordovaPlugin {
     private static final String START_CONVERSATION = "start_lp_conversation";
     private static final String SET_USER = "set_lp_user_profile";
     private static final String RECONNECT_WITH_NEW_TOKEN = "reconnect_with_new_token";
-    public static final String LP_ACCOUND_ID = "lp_account_id";
+    public static final String LP_ACCOUNT_ID = "lp_account_id";
     public static final String LP_REGISTER_PUSHER = "register_pusher";
 
     CallbackContext mCallbackContext;
@@ -54,12 +54,20 @@ public class LPMessagingSDK extends CordovaPlugin {
                 initSDK(accountId);
                 break;
             case START_CONVERSATION:
-                Log.d(TAG, "Messaging SDK: Start conversation");
-                startConversation();
+
+                String jwt = args.getString(1); // [0] is accountId [1] is jwt
+                if(jwt != null) {
+                    Log.d(TAG, "Messaging SDK:  startAuthenticatedConversation");
+                    startAuthenticatedConversation(jwt);
+                } else {
+                    Log.d(TAG, "Messaging SDK: Start conversation");
+                    startConversation();
+                }
+
                 break;
             case RECONNECT_WITH_NEW_TOKEN:
-                Log.d(TAG, "Messaging SDK: RECONNECT_WITH_NEW_TOKEN",args.getString(0));
                 final String jwt = args.getString(0); // one arg which should be the new JWT token
+                Log.d(TAG, "Messaging SDK: RECONNECT_WITH_NEW_TOKEN"+jwt);
                 reconnect(jwt);
                 break;
             case SET_USER:
@@ -95,7 +103,7 @@ public class LPMessagingSDK extends CordovaPlugin {
                         public void onInitSucceed() {
                             Log.i(TAG, "SDK initialize completed successfully");
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cordova.getActivity());
-                            sharedPreferences.edit().putString(LP_ACCOUND_ID, accountId).apply();
+                            sharedPreferences.edit().putString(LP_ACCOUNT_ID, accountId).apply();
                             cordova.getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -137,6 +145,16 @@ public class LPMessagingSDK extends CordovaPlugin {
                 }
             });
         }
+
+    private void startAuthenticatedConversation(final String token) {
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LivePerson.showConversation(cordova.getActivity(),token);
+
+            }
+        });
+    }
 
     /**
      *

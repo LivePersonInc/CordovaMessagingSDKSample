@@ -66,8 +66,7 @@ public class LPMessagingSDK extends CordovaPlugin {
 
                 break;
             case RECONNECT_WITH_NEW_TOKEN:
-
-                //String jwt = args.getString(0); // one arg which should be the new JWT token
+                
                 Log.d(TAG, "Messaging SDK: RECONNECT_WITH_NEW_TOKEN"+args.getString(0));
                 reconnect(args.getString(0));
                 break;
@@ -156,6 +155,7 @@ public class LPMessagingSDK extends CordovaPlugin {
             }
         });
     }
+
     /**
      *
      * @param callbackContext
