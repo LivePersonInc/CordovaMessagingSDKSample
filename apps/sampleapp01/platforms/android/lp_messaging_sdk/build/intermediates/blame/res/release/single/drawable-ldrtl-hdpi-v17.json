@@ -1,14 +1,14 @@
 [
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-ldrtl-hdpi-v17/abc_ic_menu_cut_mtrl_alpha.png",
-        "source": "/Users/jbeadle/.android/build-cache/42e0c2054f47c34e97f32a389be696c42f425bd5/output/res/drawable-ldrtl-hdpi-v17/abc_ic_menu_cut_mtrl_alpha.png"
+        "source": "/Users/jbeadle/.android/build-cache/83464f9049a48e10e91cdcb4e624dd3904c14883/output/res/drawable-ldrtl-hdpi-v17/abc_ic_menu_cut_mtrl_alpha.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-ldrtl-hdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png",
-        "source": "/Users/jbeadle/.android/build-cache/42e0c2054f47c34e97f32a389be696c42f425bd5/output/res/drawable-ldrtl-hdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png"
+        "source": "/Users/jbeadle/.android/build-cache/83464f9049a48e10e91cdcb4e624dd3904c14883/output/res/drawable-ldrtl-hdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-ldrtl-hdpi-v17/abc_spinner_mtrl_am_alpha.9.png",
-        "source": "/Users/jbeadle/.android/build-cache/42e0c2054f47c34e97f32a389be696c42f425bd5/output/res/drawable-ldrtl-hdpi-v17/abc_spinner_mtrl_am_alpha.9.png"
+        "source": "/Users/jbeadle/.android/build-cache/83464f9049a48e10e91cdcb4e624dd3904c14883/output/res/drawable-ldrtl-hdpi-v17/abc_spinner_mtrl_am_alpha.9.png"
     }
 ]

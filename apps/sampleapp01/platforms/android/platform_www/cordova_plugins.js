@@ -12,9 +12,9 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "com.liveperson.messagingSDK": "0.1.0",
     "cordova-plugin-console": "1.0.6",
-    "cordova-plugin-whitelist": "1.3.2",
-    "com.liveperson.messagingSDK": "0.1.0"
+    "cordova-plugin-whitelist": "1.3.2"
 };
 // BOTTOM OF METADATA
 });

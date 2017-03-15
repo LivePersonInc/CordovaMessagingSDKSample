@@ -7,20 +7,20 @@
 	objects = {
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
+		0BF2BC1908AB4C458B09FEA4 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A337FAF20DE146978FB7E0F9 /* CDVLogger.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
 		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
-		0BF2BC1908AB4C458B09FEA4 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A337FAF20DE146978FB7E0F9 /* CDVLogger.m */; };
-		644FB61CD05041A78599F262 /* LPMessagingSDKPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5E6B448C97438695168882 /* LPMessagingSDKPlugin.swift */; };
-		3715255FCCF9406A9E99703E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891DC7D9F37846EE8627E293 /* ContainerViewController.swift */; };
-		EF88E8D29C7D49EE9A3635A2 /* LPSDKCordovaSample-Bridging-Header.h in Resources */ = {isa = PBXBuildFile; fileRef = 90CFC69089C24CDA9F8F0873 /* LPSDKCordovaSample-Bridging-Header.h */; };
-		7602ACFA1CC948F38887CB58 /* LPMessagingSDKModels.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6BF3E7FE19F49C984A7D4A7 /* LPMessagingSDKModels.bundle */; };
-		167DF9CCDE234C59A40BCED3 /* LPAMS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFE8C8EAF4444FE5A1F86150 /* LPAMS.framework */; };
-		0F8C3E73FCD542B0A27B1E0D /* LPInfra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E240C4F05014A0A9E316A65 /* LPInfra.framework */; };
-		A1ECA0E8057840B49431F6DB /* LPMessagingSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A227F07B57B54BBC8DCF48A6 /* LPMessagingSDK.framework */; };
+		B33D4DE7302C43CD880A752D /* LPMessagingSDKPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CDAF3E3834450B5DD9343 /* LPMessagingSDKPlugin.swift */; };
+		303E96D63BED49C5BC79E160 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EEFB9E06B0477E83721A80 /* ContainerViewController.swift */; };
+		B9DE122661C142C5868101C8 /* LPSDKCordovaSample-Bridging-Header.h in Resources */ = {isa = PBXBuildFile; fileRef = 450136972C3C46E0B1DC20C6 /* LPSDKCordovaSample-Bridging-Header.h */; };
+		57467A56DD754386B6ACF5D0 /* LPMessagingSDKModels.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B5E83A6B288402392856356 /* LPMessagingSDKModels.bundle */; };
+		26416DC9AAAA4C33A6C014B1 /* LPAMS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18777E09204C40F78B20B039 /* LPAMS.framework */; };
+		ED403E05203A47EDA4DBE14A /* LPInfra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2BEEE667094284BC25FBAD /* LPInfra.framework */; };
+		8287B77113844340A73FBC56 /* LPMessagingSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 028979867F2D4420B2321C54 /* LPMessagingSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,15 +47,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1EE226C71E785DCB00AA56EA /* LPMessagingSDK.framework in Embed Frameworks */,
-				1EE226C31E785DCB00AA56EA /* LPAMS.framework in Embed Frameworks */,
-				1EE226C51E785DCB00AA56EA /* LPInfra.framework in Embed Frameworks */,
-				13AFBE1BA042427F991A72CB /* LPAMS.framework in Frameworks */,
-				F22F65344A5842C79BDECCB7 /* LPInfra.framework in Frameworks */,
-				834448CF474A4EB6A500CA7C /* LPMessagingSDK.framework in Frameworks */,
-				167DF9CCDE234C59A40BCED3 /* LPAMS.framework in Frameworks */,
-				0F8C3E73FCD542B0A27B1E0D /* LPInfra.framework in Frameworks */,
-				A1ECA0E8057840B49431F6DB /* LPMessagingSDK.framework in Frameworks */,
+				1EF9A58E1E795538003FF2A0 /* LPAMS.framework in Embed Frameworks */,
+				1EF9A58F1E795538003FF2A0 /* LPInfra.framework in Embed Frameworks */,
+				1EF9A5901E795538003FF2A0 /* LPMessagingSDK.framework in Embed Frameworks */,
+				734E97D2E17046B7B228C0D5 /* LPAMS.framework in Frameworks */,
+				754707781FCD408C81C9F248 /* LPInfra.framework in Frameworks */,
+				F59A023978284BF19760A9C1 /* LPMessagingSDK.framework in Frameworks */,
+				26416DC9AAAA4C33A6C014B1 /* LPAMS.framework in Frameworks */,
+				ED403E05203A47EDA4DBE14A /* LPInfra.framework in Frameworks */,
+				8287B77113844340A73FBC56 /* LPMessagingSDK.framework in Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,19 +79,19 @@
 		32CA4F630368D1EE00C91783 /* SampleApp01-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SampleApp01-Prefix.pch"; sourceTree = "<group>"; };
 		6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDVLaunchScreen.storyboard; path = SampleApp01/CDVLaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* SampleApp01-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "SampleApp01-Info.plist"; path = "SampleApp01/SampleApp01-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = SOURCE_ROOT; };
+		A337FAF20DE146978FB7E0F9 /* CDVLogger.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = "cordova-plugin-console/CDVLogger.m"; sourceTree = "<group>"; };
+		C8621CB51B6749C5B11FCAE3 /* CDVLogger.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = "cordova-plugin-console/CDVLogger.h"; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = SampleApp01/config.xml; sourceTree = "<group>"; };
-		A337FAF20DE146978FB7E0F9 /* CDVLogger.m */ = {isa = PBXFileReference; name = "CDVLogger.m"; path = "cordova-plugin-console/CDVLogger.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		C8621CB51B6749C5B11FCAE3 /* CDVLogger.h */ = {isa = PBXFileReference; name = "CDVLogger.h"; path = "cordova-plugin-console/CDVLogger.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		9B5E6B448C97438695168882 /* LPMessagingSDKPlugin.swift */ = {isa = PBXFileReference; name = "LPMessagingSDKPlugin.swift"; path = "com.liveperson.messagingSDK/LPMessagingSDKPlugin.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
-		891DC7D9F37846EE8627E293 /* ContainerViewController.swift */ = {isa = PBXFileReference; name = "ContainerViewController.swift"; path = "com.liveperson.messagingSDK/ContainerViewController.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
-		90CFC69089C24CDA9F8F0873 /* LPSDKCordovaSample-Bridging-Header.h */ = {isa = PBXFileReference; name = "LPSDKCordovaSample-Bridging-Header.h"; path = "com.liveperson.messagingSDK/LPSDKCordovaSample-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		D6BF3E7FE19F49C984A7D4A7 /* LPMessagingSDKModels.bundle */ = {isa = PBXFileReference; name = "LPMessagingSDKModels.bundle"; path = "LPMessagingSDKModels.bundle"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.plug-in; explicitFileType = undefined; includeInIndex = 0; };
-		AFE8C8EAF4444FE5A1F86150 /* LPAMS.framework */ = {isa = PBXFileReference; name = "LPAMS.framework"; path = "SampleApp01/Plugins/com.liveperson.messagingSDK/LPAMS.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		5E240C4F05014A0A9E316A65 /* LPInfra.framework */ = {isa = PBXFileReference; name = "LPInfra.framework"; path = "SampleApp01/Plugins/com.liveperson.messagingSDK/LPInfra.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		A227F07B57B54BBC8DCF48A6 /* LPMessagingSDK.framework */ = {isa = PBXFileReference; name = "LPMessagingSDK.framework"; path = "SampleApp01/Plugins/com.liveperson.messagingSDK/LPMessagingSDK.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		B16CDAF3E3834450B5DD9343 /* LPMessagingSDKPlugin.swift */ = {isa = PBXFileReference; name = "LPMessagingSDKPlugin.swift"; path = "com.liveperson.messagingSDK/LPMessagingSDKPlugin.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		07EEFB9E06B0477E83721A80 /* ContainerViewController.swift */ = {isa = PBXFileReference; name = "ContainerViewController.swift"; path = "com.liveperson.messagingSDK/ContainerViewController.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		450136972C3C46E0B1DC20C6 /* LPSDKCordovaSample-Bridging-Header.h */ = {isa = PBXFileReference; name = "LPSDKCordovaSample-Bridging-Header.h"; path = "com.liveperson.messagingSDK/LPSDKCordovaSample-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		3B5E83A6B288402392856356 /* LPMessagingSDKModels.bundle */ = {isa = PBXFileReference; name = "LPMessagingSDKModels.bundle"; path = "LPMessagingSDKModels.bundle"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.plug-in; explicitFileType = undefined; includeInIndex = 0; };
+		18777E09204C40F78B20B039 /* LPAMS.framework */ = {isa = PBXFileReference; name = "LPAMS.framework"; path = "SampleApp01/Plugins/com.liveperson.messagingSDK/LPAMS.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		AD2BEEE667094284BC25FBAD /* LPInfra.framework */ = {isa = PBXFileReference; name = "LPInfra.framework"; path = "SampleApp01/Plugins/com.liveperson.messagingSDK/LPInfra.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		028979867F2D4420B2321C54 /* LPMessagingSDK.framework */ = {isa = PBXFileReference; name = "LPMessagingSDK.framework"; path = "SampleApp01/Plugins/com.liveperson.messagingSDK/LPMessagingSDK.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,9 +100,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
-				167DF9CCDE234C59A40BCED3 /* LPAMS.framework in Frameworks */,
-				0F8C3E73FCD542B0A27B1E0D /* LPInfra.framework in Frameworks */,
-				A1ECA0E8057840B49431F6DB /* LPMessagingSDK.framework in Frameworks */,
+				26416DC9AAAA4C33A6C014B1 /* LPAMS.framework in Frameworks */,
+				ED403E05203A47EDA4DBE14A /* LPInfra.framework in Frameworks */,
+				8287B77113844340A73FBC56 /* LPMessagingSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,7 +165,7 @@
 				3047A50E1AB8057F00498E2A /* config */,
 				8D1107310486CEB800E47090 /* SampleApp01-Info.plist */,
 				6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */,
-				D6BF3E7FE19F49C984A7D4A7 /* LPMessagingSDKModels.bundle */,
+				3B5E83A6B288402392856356 /* LPMessagingSDKModels.bundle */,
 			);
 			name = Resources;
 			path = SampleApp01/Resources;
@@ -174,9 +174,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AFE8C8EAF4444FE5A1F86150 /* LPAMS.framework */,
-				5E240C4F05014A0A9E316A65 /* LPInfra.framework */,
-				A227F07B57B54BBC8DCF48A6 /* LPMessagingSDK.framework */,
+				18777E09204C40F78B20B039 /* LPAMS.framework */,
+				AD2BEEE667094284BC25FBAD /* LPInfra.framework */,
+				028979867F2D4420B2321C54 /* LPMessagingSDK.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -204,9 +204,9 @@
 			children = (
 				A337FAF20DE146978FB7E0F9 /* CDVLogger.m */,
 				C8621CB51B6749C5B11FCAE3 /* CDVLogger.h */,
-				9B5E6B448C97438695168882 /* LPMessagingSDKPlugin.swift */,
-				891DC7D9F37846EE8627E293 /* ContainerViewController.swift */,
-				90CFC69089C24CDA9F8F0873 /* LPSDKCordovaSample-Bridging-Header.h */,
+				B16CDAF3E3834450B5DD9343 /* LPMessagingSDKPlugin.swift */,
+				07EEFB9E06B0477E83721A80 /* ContainerViewController.swift */,
+				450136972C3C46E0B1DC20C6 /* LPSDKCordovaSample-Bridging-Header.h */,
 			);
 			name = Plugins;
 			path = SampleApp01/Plugins;
@@ -253,7 +253,9 @@
 				LastUpgradeCheck = 820;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = GJFY6G9LKD;
 						LastSwiftMigration = 820;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -297,7 +299,7 @@
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */,
 				6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */,
-				7602ACFA1CC948F38887CB58 /* LPMessagingSDKModels.bundle in Resources */,
+				57467A56DD754386B6ACF5D0 /* LPMessagingSDKModels.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,11 +331,11 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
-				979D2E4A22314721A8477486 /* LPSDKCordovaSample-Bridging-Header.h in Sources */,
 				0BF2BC1908AB4C458B09FEA4 /* CDVLogger.m in Sources */,
-				644FB61CD05041A78599F262 /* LPMessagingSDKPlugin.swift in Sources */,
-				3715255FCCF9406A9E99703E /* ContainerViewController.swift in Sources */,
-				EF88E8D29C7D49EE9A3635A2 /* LPSDKCordovaSample-Bridging-Header.h in Resources */,
+				EF88E8D29C7D49EE9A3635A2 /* LPSDKCordovaSample-Bridging-Header.h in Sources */,
+				B33D4DE7302C43CD880A752D /* LPMessagingSDKPlugin.swift in Sources */,
+				303E96D63BED49C5BC79E160 /* ContainerViewController.swift in Sources */,
+				B9DE122661C142C5868101C8 /* LPSDKCordovaSample-Bridging-Header.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +359,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = GJFY6G9LKD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					SampleApp01/Plugins/com.liveperson.messagingSDK,
@@ -373,6 +377,12 @@
 					SampleApp01/Plugins/com.liveperson.messagingSDK,
 					SampleApp01/Plugins/com.liveperson.messagingSDK,
 					"$(PROJECT_DIR)/SampleApp01/Plugins/com.liveperson.messagingSDK",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
 					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
 					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
 					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
@@ -391,6 +401,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.liveperson.sampleapp01;
 				PRODUCT_NAME = SampleApp01;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -405,7 +417,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = GJFY6G9LKD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					SampleApp01/Plugins/com.liveperson.messagingSDK,
@@ -421,6 +435,12 @@
 					SampleApp01/Plugins/com.liveperson.messagingSDK,
 					SampleApp01/Plugins/com.liveperson.messagingSDK,
 					"$(PROJECT_DIR)/SampleApp01/Plugins/com.liveperson.messagingSDK",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
+					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
 					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
 					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",
 					"\"SampleApp01/Plugins/com.liveperson.messagingSDK\"",

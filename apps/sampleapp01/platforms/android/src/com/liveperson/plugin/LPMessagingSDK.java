@@ -184,6 +184,7 @@ public class LPMessagingSDK extends CordovaPlugin {
 
             @Override
             public void onTokenExpired() {
+                
                 onEvent("onTokenExpired");
             }
 

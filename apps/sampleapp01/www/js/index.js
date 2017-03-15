@@ -60,7 +60,8 @@ var app = {
         buttonElement.addEventListener("click", this.lpStartMessagingConversation.bind(this), false);
         console.log('Received Event: ' + id);
     },
-    successCallback: function(eventDescription) {
+    successCallback: function(eventDescription, data) {
+
         console.log(
             "successCallback fired! ",
             eventDescription
@@ -91,8 +92,15 @@ var app = {
     },
     lpMessagingSdkInit: function() {
         // lp_sdk_init
+
+        var sdkConfig = {
+            "remoteUserBubbleBackgroundColor": "purple",
+            "remoteUserBubbleBorderColor": "purple",
+            "remoteUserBubbleTextColor": "white"
+        };
+
         lpMessagingSDK.lp_conversation_api(
-            "lp_sdk_init", [this.settings.accountId],
+            "lp_sdk_init", [this.settings.accountId, sdkConfig],
             this.successCallback,
             this.errorCallback
         );

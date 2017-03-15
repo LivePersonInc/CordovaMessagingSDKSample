@@ -66,9 +66,9 @@ public class LPMessagingSDK extends CordovaPlugin {
 
                 break;
             case RECONNECT_WITH_NEW_TOKEN:
-                final String jwt = args.getString(0); // one arg which should be the new JWT token
-                Log.d(TAG, "Messaging SDK: RECONNECT_WITH_NEW_TOKEN"+jwt);
-                reconnect(jwt);
+                
+                Log.d(TAG, "Messaging SDK: RECONNECT_WITH_NEW_TOKEN"+args.getString(0));
+                reconnect(args.getString(0));
                 break;
             case SET_USER:
                 Log.d(TAG, "Messaging SDK: Set User, args:" + args);
@@ -184,6 +184,7 @@ public class LPMessagingSDK extends CordovaPlugin {
 
             @Override
             public void onTokenExpired() {
+                
                 onEvent("onTokenExpired");
             }
 

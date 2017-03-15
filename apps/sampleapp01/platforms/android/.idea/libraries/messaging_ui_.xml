@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="messaging_ui-">
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/cae81d6b61e3bfeac9caea935d408af7a80b2aea/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/cae81d6b61e3bfeac9caea935d408af7a80b2aea/output/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/lp_messaging_sdk/build/intermediates/exploded-aar/messaging_ui/res" />
+      <root url="jar://$PROJECT_DIR$/lp_messaging_sdk/build/intermediates/exploded-aar/messaging_ui/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

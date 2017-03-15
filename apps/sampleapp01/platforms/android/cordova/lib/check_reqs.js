@@ -26,6 +26,7 @@ var shelljs = require('shelljs'),
     Q     = require('q'),
     path  = require('path'),
     fs    = require('fs'),
+    os    = require('os'),
     ROOT  = path.join(__dirname, '..', '..');
 var CordovaError = require('cordova-common').CordovaError;
 
@@ -78,20 +79,44 @@ module.exports.check_ant = function() {
     });
 };
 
+module.exports.get_gradle_wrapper = function() {
+    var androidStudioPath;
+    if(os.platform() == 'darwin') {
+      androidStudioPath = path.join('/Applications', 'Android Studio.app', 'Contents', 'gradle');
+    } else if (os.platform() == 'win32') {
+      androidStudioPath = path.join(process.env['ProgramFiles'],'Android', 'Android Studio', 'gradle');
+    }
+
+    if(androidStudioPath !== null && fs.existsSync(androidStudioPath)) {
+      var dirs = fs.readdirSync(androidStudioPath);
+      if(dirs[0].split('-')[0] == 'gradle')
+      {
+        return path.join(androidStudioPath, dirs[0], 'bin', 'gradle');
+      }
+    } else {
+      //OK, let's try to check for Gradle!
+      return forgivingWhichSync('gradle');
+    }
+};
+
 // Returns a promise. Called only by build and clean commands.
 module.exports.check_gradle = function() {
     var sdkDir = process.env['ANDROID_HOME'];
+    var d = Q.defer();
     if (!sdkDir)
         return Q.reject(new CordovaError('Could not find gradle wrapper within Android SDK. Could not find Android SDK directory.\n' +
             'Might need to install Android SDK or set up \'ANDROID_HOME\' env variable.'));
 
-    var wrapperDir = path.join(sdkDir, 'tools', 'templates', 'gradle', 'wrapper');
-    if (!fs.existsSync(wrapperDir)) {
-        return Q.reject(new CordovaError('Could not find gradle wrapper within Android SDK. Might need to update your Android SDK.\n' +
-            'Looked here: ' + wrapperDir));
-    }
-    return Q.when();
+    var gradlePath = this.get_gradle_wrapper();
+    if(gradlePath.length !== 0)
+      d.resolve(gradlePath);
+    else
+      d.reject(new CordovaError('Could not find an installed version of Gradle either in Android Studio,\n' +
+                                'or on your system to install the gradle wrapper. Please include gradle \n' +
+                                'in your path, or install Android Studio'));
+    return d.promise;
 };
+
 
 // Returns a promise.
 module.exports.check_java = function() {
@@ -232,6 +257,8 @@ module.exports.check_android = function() {
 
 module.exports.getAbsoluteAndroidCmd = function () {
     var cmd = forgivingWhichSync('android');
+    if(cmd.length === 0)
+      cmd = forgivingWhichSync('avdmanager');
     if (process.platform === 'win32') {
         return '"' + cmd + '"';
     }
@@ -246,7 +273,11 @@ module.exports.check_android_target = function(originalError) {
     //   Google Inc.:Glass Development Kit Preview:20
     var valid_target = module.exports.get_target();
     var msg = 'Android SDK not found. Make sure that it is installed. If it is not at the default location, set the ANDROID_HOME environment variable.';
-    return tryCommand('android list targets --compact', msg)
+    //   Changing "targets" to "target" is stupid and makes more code.  Thanks Google!
+    var cmd = 'android list targets --compact';
+    if(forgivingWhichSync('avdmanager').length > 0)
+      cmd = 'avdmanager list target --compact';
+    return tryCommand(cmd, msg)
     .then(function(output) {
         var targets = output.split('\n');
         if (targets.indexOf(valid_target) >= 0) {
