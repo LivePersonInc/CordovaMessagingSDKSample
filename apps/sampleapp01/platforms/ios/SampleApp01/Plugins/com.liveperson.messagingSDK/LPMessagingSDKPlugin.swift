@@ -1,8 +1,8 @@
 //
-//  LPMessagingSDK.swift
+//  LPMessagingSDKPlugin.swift
 //  LPSDKCordovaSample
 //
-//  Created by Nir Lachman on 09/11/2016.
+//  Created by jbeadle.
 //
 //
 
@@ -11,7 +11,7 @@ import LPMessagingSDK
 import LPInfra
 import LPAMS
 
-@objc(LPMessagingSDKPlugin) class LPMessagingSDKPlugin: CDVPlugin, LPMessagingSDKdelegate {
+@objc(LPMessagingSDKPlugin) class LPMessagingSDKPlugin: CDVPlugin/*, LPMessagingSDKdelegate*/ {
     
 
     // adding delegates and callbacks for Cordova to notify javascript wrapper when functions complete
@@ -27,18 +27,41 @@ import LPAMS
         
     }
     
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
     func lp_sdk_init(_ command: CDVInvokedUrlCommand) {
         guard let brandID = command.arguments.first as? String else {
             print("Can't init without brandID")
             return
         }
-        
+
+        let config = command.arguments[1] as? [String:AnyObject]
+       
+        /*
+         examples pulling out config
+         print(config!)
+         print(config?["branding"])
+         print(config?["branding"]?["remoteUserBubbleBackgroundColor"])
+         print(config?["window"]?["useCustomViewController"])
+
+         */
         do {
             try LPMessagingSDK.instance.initialize(brandID)
+            setSDKConfigurations(config:config!)
+
         } catch let error as NSError {
             print("LPMessagingSDK Initialization error: \(error)")
         }
-        LPMessagingSDK.instance.delegate = self
+        
     }
     
     func start_lp_conversation(_ command: CDVInvokedUrlCommand) {
@@ -47,7 +70,9 @@ import LPAMS
             print("Can't start without brandID")
             return
         }
-        
+        // init our callbacks for javascript wrapper
+        self.set_lp_callbacks(command)
+
         // Enable authentication support
         // check if the second parameter to the function call contains a value?
         // this is expected to be the JWT token for enabling authenticated messaging conversations
@@ -59,15 +84,14 @@ import LPAMS
             self.showConversation(brandID)
         }
 
-        // init our callbacks for javascript wrapper
-        self.set_lp_callbacks(command)
-
+       
     }
 
     // Assign values to our objects for triggering JS callbacks in the wrapper once native methods complete
     func set_lp_callbacks(_ command: CDVInvokedUrlCommand) {
         self.callBackCommandDelegate = commandDelegate
         self.callBackCommand = command
+        LPMessagingSDKCallBackWrapper.sharedInstance.setLPMessagingCallBacks(callBackCommandDelegate, callBackCommand: callBackCommand)
     }
     
     func set_lp_user_profile(_ command: CDVInvokedUrlCommand) {
@@ -91,20 +115,18 @@ import LPAMS
     func showConversation(_ brandID: String, authenticationCode:String? = nil) {
         let container = ContainerViewController()
         container.brandID = brandID
-        container.authenticationCode = authenticationCode // assign the JWT token to the variable in the ContainerViewController class
-        container.callBackCommand = self.callBackCommand
-        container.callBackCommandDelegate = self.callBackCommandDelegate
-        // let navigationController = UINavigationController(rootViewController: container)
-        // UIApplication.shared.keyWindow?.rootViewController?.present(navigationController, animated: false, completion: nil)
-       
-
+        container.authenticationCode = authenticationCode
+        
         let conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(brandID)
         if authenticationCode == nil {
-            LPMessagingSDK.instance.delegate = self // callbacks fire in this controller class
+////            LPMessagingSDK.instance.delegate = self // callbacks fire in this controller class
             LPMessagingSDK.instance.showConversation(conversationQuery)
        }else{
             // callbacks will fire in the container ContainerViewController class
-           LPMessagingSDK.instance.showConversation(conversationQuery, authenticationCode: authenticationCode,containerViewController:container)
+//           LPMessagingSDK.instance.showConversation(conversationQuery, authenticationCode: authenticationCode,containerViewController:container)
+
+            LPMessagingSDK.instance.showConversation(conversationQuery,authenticationCode: authenticationCode)
+        
        }
     }
     
@@ -123,7 +145,7 @@ import LPAMS
 
      TODO: Add support for other config options as per SDK documentation
      */
-    func setSDKConfigurations() {
+    func setSDKConfigurations(config:[String:AnyObject]) {
         let configurations = LPConfig.defaultConfiguration
         configurations.remoteUserBubbleBackgroundColor = UIColor.purple
         configurations.remoteUserBubbleBorderColor = UIColor.purple
@@ -131,100 +153,16 @@ import LPAMS
         configurations.remoteUserAvatarIconColor = UIColor.white
         configurations.remoteUserAvatarBackgroundColor = UIColor.purple
         
-        configurations.brandName = "LPMessagingSampleBrand"
+        configurations.brandName = config["branding"]?["brandName"] as? String ?? "LPMessagingSampleBrand"
+        
+        print("****** BRAND NAME WAS SETUP FROM CONFIG !!! \(configurations.brandName)")
+        
         configurations.userBubbleBackgroundColor = UIColor.lightGray
         configurations.userBubbleTextColor = UIColor.white
         
         configurations.sendButtonEnabledTextColor = UIColor.purple
     }
     
-    func LPMessagingSDKCustomButtonTapped() {
-        print("LPMessagingSDKCustomButtonTapped")
-        sendEventToJavaScript(event: "LPMessagingSDKCustomButtonTapped")
-    }
-    
-    func LPMessagingSDKAgentDetails(_ agent: LPUser?) {
-        print("LPMessagingSDKAgentDetails: \(agent?.nickName)")
-        sendEventToJavaScript(event: "LPMessagingSDKAgentDetails: \(agent?.nickName)")
-    }
-    
-    func LPMessagingSDKActionsMenuToggled(_ toggled: Bool) {
-        print("LPMessagingSDKActionsMenuToggled")
-        sendEventToJavaScript(event: "LPMessagingSDKActionsMenuToggled")
-    }
-    
-    func LPMessagingSDKHasConnectionError(_ error: String?) {
-        print("LPMessagingSDKHasConnectionError")
-        sendEventToJavaScript(event: "LPMessagingSDKHasConnectionError")
-    }
-    
-    func LPMessagingSDKCSATScoreSubmissionDidFinish(_ brandID: String, rating: Int) {
-        print("LPMessagingSDKCSATScoreSubmissionDidFinish: \(brandID)")
-        sendEventToJavaScript(event: "LPMessagingSDKCSATScoreSubmissionDidFinish: \(brandID)")
-    }
-    
-    func LPMessagingSDKObseleteVersion(_ error: NSError) {
-        print("LPMessagingSDKObseleteVersion: \(error)")
-        sendEventToJavaScript(event:"LPMessagingSDKObseleteVersion: \(error)")
-    }
-    
-    func LPMessagingSDKAuthenticationFailed(_ error: NSError) {
-        print("LPMessagingSDKAuthenticationFailed: \(error)")
-        sendEventToJavaScript(event:"LPMessagingSDKAuthenticationFailed: \(error)")
-    }
-    
-    func LPMessagingSDKTokenExpired(_ brandID: String) {
-        print("LPMessagingSDKTokenExpired: \(brandID)")
-        sendEventToJavaScript(event:"onTokenExpired")
-    }
-    
-    func LPMessagingSDKError(_ error: NSError) {
-        print("LPMessagingSDKError: \(error)")
-        sendEventToJavaScript(event:"LPMessagingSDKError: \(error)")
-    }
-    
-    func LPMessagingSDKAgentIsTypingStateChanged(_ isTyping: Bool) {
-        print("LPMessagingSDKAgentIsTypingStateChanged: \(isTyping)")
-        sendEventToJavaScript(event:"LPMessagingSDKAgentIsTypingStateChanged: \(isTyping)")
-    }
-    
-    func LPMessagingSDKConversationStarted(_ conversationID: String?) {
-        print("LPMessagingSDKConversationStarted: \(conversationID)")
-        sendEventToJavaScript(event:"LPMessagingSDKConversationStarted: \(conversationID)")
-    }
-    
-    func LPMessagingSDKConversationEnded(_ conversationID: String?) {
-        print("LPMessagingSDKConversationEnded: \(conversationID)")
-        sendEventToJavaScript(event:"LPMessagingSDKConversationEnded: \(conversationID)")
-    }
-    
-    func LPMessagingSDKConversationCSATDismissedOnSubmittion(_ conversationID: String?) {
-        print("LPMessagingSDKConversationCSATDismissedOnSubmittion: \(conversationID)")
-        sendEventToJavaScript(event:"LPMessagingSDKConversationCSATDismissedOnSubmittion: \(conversationID)")
-    }
-    
-    func LPMessagingSDKConnectionStateChanged(_ isReady: Bool, brandID: String) {
-        print("LPMessagingSDKConnectionStateChanged: \(isReady), \(brandID)")
-        sendEventToJavaScript(event:"LPMessagingSDKConnectionStateChanged: \(isReady), \(brandID)")
-    }
-    
-    func LPMessagingSDKOffHoursStateChanged(_ isOffHours: Bool, brandID: String) {
-        print("LPMessagingSDKOffHoursStateChanged: \(isOffHours), \(brandID)")
-        sendEventToJavaScript(event:"LPMessagingSDKOffHoursStateChanged: \(isOffHours), \(brandID)")
-    }
-    
-    func LPMessagingSDKConversationViewControllerDidDismiss() {
-        print("LPMessagingSDKConversationViewControllerDidDismiss")
-        sendEventToJavaScript(event:"LPMessagingSDKConversationViewControllerDidDismiss")
-    }
-    func sendEventToJavaScript(event: String?) {
-        if (self.callBackCommandDelegate != nil && self.callBackCommand != nil) {
-           // sleep(10000)
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:event)
-            pluginResult?.setKeepCallbackAs(true)
-            self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
-           
-        }
-    }
+
     
 }

@@ -39,7 +39,7 @@ var app = {
         }
         this.receivedEvent('deviceready');
         // initialise LP Messaging SDK here
-        app.lpMessagingSdkInit();
+        this.lpMessagingSdkInit();
 
         // setup click event listener for start messaging button example
 
@@ -60,14 +60,21 @@ var app = {
         buttonElement.addEventListener("click", this.lpStartMessagingConversation.bind(this), false);
         console.log('Received Event: ' + id);
     },
-    successCallback: function(eventDescription, data) {
+    successCallback: function(data) {
 
         console.log(
             "successCallback fired! ",
-            eventDescription
+            eventData,
+            typeof(eventData)
         );
 
-        if (eventDescription == 'onTokenExpired') {
+        var eventData = JSON.parse(data);
+
+        if (eventData.eventName == "LPMessagingSDKConnectionStateChanged") {
+            console.log("************************************* LPMessagingSDKConnectionStateChanged callback fired! ", eventData.isReady)
+        }
+
+        if (eventData.eventName == 'onTokenExpired') {
             console.log("authenticated token has expired...refreshing...");
             this.lpGenerateNewAuthenticationToken();
         }
@@ -93,10 +100,20 @@ var app = {
     lpMessagingSdkInit: function() {
         // lp_sdk_init
 
-        var sdkConfig = {
+        var brandingOptions = {
             "remoteUserBubbleBackgroundColor": "purple",
             "remoteUserBubbleBorderColor": "purple",
-            "remoteUserBubbleTextColor": "white"
+            "remoteUserBubbleTextColor": "white",
+            "brandName": "TalkTalk"
+        };
+
+        var windowOptions = {
+            "useCustomViewController": "true"
+        };
+
+        var sdkConfig = {
+            "branding": brandingOptions,
+            "window": windowOptions
         };
 
         lpMessagingSDK.lp_conversation_api(
