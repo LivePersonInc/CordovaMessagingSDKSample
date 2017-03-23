@@ -45,7 +45,7 @@ import LPAMS
         }
 
         let config = command.arguments[1] as? [String:AnyObject]
-       
+        print("lpMessagingSdkInit brandID --> \(brandID)")
         /*
          examples pulling out config
          print(config!)
@@ -55,7 +55,7 @@ import LPAMS
 
          */
         do {
-            try LPMessagingSDK.instance.initialize(brandID)
+            try LPMessagingSDK.instance.initialize("90233546")
             setSDKConfigurations(config:config!)
 
         } catch let error as NSError {

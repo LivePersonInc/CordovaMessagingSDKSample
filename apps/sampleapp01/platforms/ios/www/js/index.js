@@ -64,14 +64,14 @@ var app = {
 
         console.log(
             "successCallback fired! ",
-            data,
-            typeof(data)
+            eventData,
+            typeof(eventData)
         );
-        
+
         var eventData = JSON.parse(data);
-        
-        if(eventData.eventName == "LPMessagingSDKConnectionStateChanged") {
-            console.log("************************************* LPMessagingSDKConnectionStateChanged callback fired! ",eventData.isReady)
+
+        if (eventData.eventName == "LPMessagingSDKConnectionStateChanged") {
+            console.log("************************************* LPMessagingSDKConnectionStateChanged callback fired! ", eventData.isReady)
         }
 
         if (eventData.eventName == 'onTokenExpired') {
@@ -106,15 +106,14 @@ var app = {
             "remoteUserBubbleTextColor": "white",
             "brandName": "TalkTalk"
         };
-        
+
         var windowOptions = {
-            "useCustomViewController" : "true"
+            "useCustomViewController": "true"
         };
-        
+
         var sdkConfig = {
-            "branding" : brandingOptions,
-            "window" : windowOptions,
-            "account" : this.settings.accountId
+            "branding": brandingOptions,
+            "window": windowOptions
         };
 
         lpMessagingSDK.lp_conversation_api(
