@@ -24,11 +24,7 @@ run cordova build ios command
 
 run in xcode or CLI
 
-    if you get a build/run error like this: 
-
-    then edit this file -- platforms/ios/cordova/lib/start-emulator and change the default iOS emulator to run
-    or
-    add iPhone 5s to your list of emulated devices
+    if you get a build/run error about missing simulators, then edit this file -- `<your app folder>/platforms/ios/cordova/lib/start-emulator` and change the default iOS emulator to run or add iPhone 5s to your list of emulated devices
 
 
 
