@@ -108,18 +108,32 @@ public class LPMessagingSDK extends CordovaPlugin {
                             Log.i(TAG, "SDK initialize completed successfully");
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cordova.getActivity());
                             sharedPreferences.edit().putString(LP_ACCOUNT_ID, accountId).apply();
+                            JSONObject json = new JSONObject();
+                            try {
+                                json.putOpt("eventName","LPMessagingSDKInitSuccess");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            onEvent(json);
                             cordova.getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     setCallBack();
-                                    mCallbackContext.success("Init End Successfully for account Id: " + accountId);
+                                   // mCallbackContext.success("Init End Successfully for account Id: " + accountId);
                                 }
                             });
-                        }
+                        }   
 
                         @Override
                         public void onInitFailed(Exception e) {
                             Log.i(TAG, "SDK initialize completed with error");
+                            JSONObject json = new JSONObject();
+                            try {
+                                json.putOpt("eventName","LPMessagingSDKInitError");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            onEvent(json);
                             cordova.getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

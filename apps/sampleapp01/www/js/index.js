@@ -74,10 +74,12 @@ var app = {
             console.log("************************************* LPMessagingSDKConnectionStateChanged callback fired! ", eventData.isReady)
         }
 
-        if (eventData.eventName == 'onTokenExpired') {
+        if (eventData.eventName == 'LPMessagingSDKTokenExpired') {
             console.log("authenticated token has expired...refreshing...");
             this.lpGenerateNewAuthenticationToken();
         }
+
+        console.log('successCallback fired ' + eventData.eventName);
 
     },
     errorCallback: function(eventDescription) {

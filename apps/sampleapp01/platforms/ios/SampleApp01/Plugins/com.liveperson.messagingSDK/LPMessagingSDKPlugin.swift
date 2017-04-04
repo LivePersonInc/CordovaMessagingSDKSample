@@ -57,8 +57,20 @@ import LPAMS
         do {
             try LPMessagingSDK.instance.initialize("90233546")
             setSDKConfigurations(config:config!)
+            self.set_lp_callbacks(command)
+            sendEventToJavaScript(dicValue:[
+                "eventName":"LPMessagingSDKInitSuccess",
+                "message" : "LPMessagingSDK Initialization successful:"
+                ])
 
         } catch let error as NSError {
+            // throw error callback here!
+            
+            sendEventToJavaScript(dicValue:[
+                "eventName":"LPMessagingSDKInitError",
+                "errorMessage" : "LPMessagingSDK Initialization error: \(error)"
+                ])
+
             print("LPMessagingSDK Initialization error: \(error)")
         }
         
@@ -160,9 +172,33 @@ import LPAMS
         configurations.userBubbleBackgroundColor = UIColor.lightGray
         configurations.userBubbleTextColor = UIColor.white
         
-        configurations.sendButtonEnabledTextColor = UIColor.purple
+        configurations.sendButtonEnabledColor = UIColor.purple
     }
     
-
+    private func sendEventToJavaScript(dicValue:[String:String]) {
+        print("********* dicValue == \(dicValue)")
+        
+        if (self.callBackCommandDelegate != nil && self.callBackCommand != nil) {
+            
+            let jsonString = self.convertDicToJSON(dic: dicValue)
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:jsonString)
+            
+            pluginResult?.setKeepCallbackAs(true)
+            self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
+            
+        }
+        
+    }
+    
+    func convertDicToJSON(dic:[String:String]) -> String? {
+        if let theJSONData = try? JSONSerialization.data(
+            withJSONObject: dic,
+            options: []) {
+            let theJSONText = String(data: theJSONData,
+                                     encoding: .ascii)
+            return theJSONText!
+        }
+        return nil
+    }
     
 }

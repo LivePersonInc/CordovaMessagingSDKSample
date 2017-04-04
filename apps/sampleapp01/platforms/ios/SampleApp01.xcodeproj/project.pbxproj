@@ -206,8 +206,8 @@
 				C8621CB51B6749C5B11FCAE3 /* CDVLogger.h */,
 				B16CDAF3E3834450B5DD9343 /* LPMessagingSDKPlugin.swift */,
 				07EEFB9E06B0477E83721A80 /* ContainerViewController.swift */,
-				450136972C3C46E0B1DC20C6 /* LPSDKCordovaSample-Bridging-Header.h */,
 				1EC10C9D1E7C4A15001F0534 /* LPMessagingSDKCallBackWrapper.swift */,
+				450136972C3C46E0B1DC20C6 /* LPSDKCordovaSample-Bridging-Header.h */,
 			);
 			name = Plugins;
 			path = SampleApp01/Plugins;
