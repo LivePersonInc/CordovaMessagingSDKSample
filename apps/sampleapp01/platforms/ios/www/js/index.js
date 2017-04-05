@@ -58,10 +58,13 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         var buttonElement = document.getElementById(this.settings.startMessagingConversationButtonId);
-        //        buttonElement.setAttribute('style', 'display:none;');
+        buttonElement.addEventListener("click", this.lpStartMessagingConversation.bind(this, 'jwt1'), false);
 
-        buttonElement.addEventListener("click", this.lpStartMessagingConversation.bind(this), false);
-        console.log('Received Event: ' + id);
+
+        var buttonElement2 = document.getElementById("start_lp_conversation_2nd_user");
+        buttonElement2.addEventListener("click", this.lpStartMessagingConversation.bind(this, 'jwt2'), false);
+
+
 
         var logoutElement = document.getElementById(this.settings.logoutButtonId);
         logoutElement.addEventListener("click", this.clearDeviceHistoryAndLogout.bind(this), false);
@@ -152,17 +155,21 @@ var app = {
         );
         console.log('lpMessagingSdkInit completed -- ', this.settings.accountId);
     },
-    lpStartMessagingConversation: function() {
+    lpStartMessagingConversation: function(customerId) {
 
         // HERE is where you would write your code to call your IDP and return your JWT token for an authenticated customer
         // in this sample app the token is hardcoded for this specific account.
-
+        console.log('lpStartMessagingConversation customerId ' + customerId);
+        // sub TALKTALK-04-APR-2017-1120
         var JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0wNC1BUFItMjAxNy0xMTIwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTEzMDUxMDAwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiJUQUxLVEFMSy0wNC1BUFItMjAxNy0xMTIwIiwiYmFsYW5jZSI6LTQwMC45OSwic29jaWFsSWQiOiIxMTI1NjMyNDc4MCIsImltZWkiOiIzNTQzNTQ2NTQzNTQ1Njg4IiwidXNlck5hbWUiOiJ1c2VyMDAwIiwiY29tcGFueVNpemUiOjUwMCwiYWNjb3VudE5hbWUiOiJiYW5rIGNvcnAiLCJyb2xlIjoiYnJva2VyIiwibGFzdFBheW1lbnREYXRlIjp7ImRheSI6MTUsIm1vbnRoIjoxMCwieWVhciI6MjAxNH0sInJlZ2lzdHJhdGlvbkRhdGUiOnsiZGF5IjoyMywibW9udGgiOjUsInllYXIiOjIwMTN9fX0seyJ0eXBlIjoicGVyc29uYWwiLCJwZXJzb25hbCI6eyJmaXJzdG5hbWUiOiJKb2huOTkiLCJsYXN0bmFtZSI6IkJlYWRsZTk5IiwiYWdlIjp7ImFnZSI6MzQsInllYXIiOjE5ODAsIm1vbnRoIjo0LCJkYXkiOjE1fSwiY29udGFjdHMiOlt7ImVtYWlsIjoiamJlYWRsZTk5QGxpdmVwZXJzb24uY29tIiwicGhvbmUiOiIrMSAyMTItNzg4LTg4NzcifV0sImdlbmRlciI6Ik1BTEUifX1dfQ.LlClhbOSl1SP2eNfxmeNHP4WEQytOG4hmXu2hSgQlWFUOvZ3hLDu6KzPiNq-tvN4gZ_a2xVrXMxVqvQa-gp2Bc8ZtMSo91HJi39AiAgbO7ETKZ8xbBkwKhs6DeWdhXyb5WHHwjnAN8ba_vWeKkQ3yHJ7bvi9W-q2LjfymATu6a4";
+
+        // sub TALKTALK-05-APR-2017-1800
+        var JWT2 = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0wNS1BUFItMjAxNy0xODAwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTEzMDUxMDAwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiJUQUxLVEFMSy0wNS1BUFItMjAxNy0xODAwIiwiYmFsYW5jZSI6LTQwMC45OSwic29jaWFsSWQiOiIxMTI1NjMyNDc4MCIsImltZWkiOiIzNTQzNTQ2NTQzNTQ1Njg4IiwidXNlck5hbWUiOiJ1c2VyMDAwIiwiY29tcGFueVNpemUiOjUwMCwiYWNjb3VudE5hbWUiOiJiYW5rIGNvcnAiLCJyb2xlIjoiYnJva2VyIiwibGFzdFBheW1lbnREYXRlIjp7ImRheSI6MTUsIm1vbnRoIjoxMCwieWVhciI6MjAxNH0sInJlZ2lzdHJhdGlvbkRhdGUiOnsiZGF5IjoyMywibW9udGgiOjUsInllYXIiOjIwMTN9fX0seyJ0eXBlIjoicGVyc29uYWwiLCJwZXJzb25hbCI6eyJmaXJzdG5hbWUiOiJUb255IiwibGFzdG5hbWUiOiJTdGFyayIsImFnZSI6eyJhZ2UiOjM0LCJ5ZWFyIjoxOTgwLCJtb250aCI6NCwiZGF5IjoxNX0sImNvbnRhY3RzIjpbeyJlbWFpbCI6ImpiZWFkbGU5OUBsaXZlcGVyc29uLmNvbSIsInBob25lIjoiKzEgMjEyLTc4OC04ODc3In1dLCJnZW5kZXIiOiJNQUxFIn19XX0.dy5sModDTo4qIxId8VYtAFA1ajnQvBa_2fDYzXLoXFpXsn-U-k64gtRH4gf5vWXryZ5BCAqKXJsYn6DlifrRWJHQaaxHn6BSOfAvbSS7dRS2c8IGfS7r-c5iQesX9RZPy7M3yJgnOf-1A6_wiF12BMl23U1uQxDTYfc_Z_hv0Nk"
 
         lpMessagingSDK.lp_conversation_api(
             "start_lp_conversation", [
                 this.settings.accountId,
-                JWT
+                customerId == "jwt1" ? JWT : JWT2
             ],
             this.successCallback,
             this.errorCallback
