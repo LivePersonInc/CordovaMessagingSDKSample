@@ -12,6 +12,7 @@ import com.liveperson.infra.callbacks.InitLivePersonCallBack;
 import com.liveperson.messaging.TaskType;
 import com.liveperson.messaging.model.AgentData;
 import com.liveperson.messaging.sdk.api.LivePerson;
+import com.liveperson.messaging.sdk.api.callbacks.LogoutLivePersonCallback;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
@@ -29,6 +30,9 @@ public class LPMessagingSDK extends CordovaPlugin {
     private static final String INIT = "lp_sdk_init";
     private static final String START_CONVERSATION = "start_lp_conversation";
     private static final String SET_USER = "set_lp_user_profile";
+
+    private static final String CLEAR_HISTORY_AND_LOGOUT = "lp_clear_history_and_logout";
+
     private static final String RECONNECT_WITH_NEW_TOKEN = "reconnect_with_new_token";
     public static final String LP_ACCOUNT_ID = "lp_account_id";
     public static final String LP_REGISTER_PUSHER = "register_pusher";
@@ -56,6 +60,33 @@ public class LPMessagingSDK extends CordovaPlugin {
                 final String accountId = args.getString(0);
                 Log.d(TAG, "Messaging SDK: init for account Id: " + accountId);
                 initSDK(accountId);
+                break;
+            case CLEAR_HISTORY_AND_LOGOUT:
+
+                LivePerson.logOut(cordova.getActivity(), "90233546", SDK_SAMPLE_APP_ID, new LogoutLivePersonCallback() {
+                    @Override
+                    public void onLogoutSucceed() {
+                        JSONObject json = new JSONObject();
+                        try {
+                            json.putOpt("eventName","LPMessagingSDKClearHistoryAndLogout");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        onEvent(json);
+                    }
+
+                    @Override
+                    public void onLogoutFailed() {
+                        JSONObject json = new JSONObject();
+                        try {
+                            json.putOpt("eventName","LPMessagingSDKClearHistoryAndLogoutFailed");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        onEvent(json);
+                    }
+                });
+
                 break;
             case START_CONVERSATION:
 
@@ -111,8 +142,8 @@ public class LPMessagingSDK extends CordovaPlugin {
                             JSONObject json = new JSONObject();
                             try {
                                 json.putOpt("eventName","LPMessagingSDKInitSuccess");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
                             }
                             onEvent(json);
                             cordova.getActivity().runOnUiThread(new Runnable() {
@@ -122,7 +153,7 @@ public class LPMessagingSDK extends CordovaPlugin {
                                    // mCallbackContext.success("Init End Successfully for account Id: " + accountId);
                                 }
                             });
-                        }   
+                        }
 
                         @Override
                         public void onInitFailed(Exception e) {
@@ -130,8 +161,8 @@ public class LPMessagingSDK extends CordovaPlugin {
                             JSONObject json = new JSONObject();
                             try {
                                 json.putOpt("eventName","LPMessagingSDKInitError");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
                             }
                             onEvent(json);
                             cordova.getActivity().runOnUiThread(new Runnable() {

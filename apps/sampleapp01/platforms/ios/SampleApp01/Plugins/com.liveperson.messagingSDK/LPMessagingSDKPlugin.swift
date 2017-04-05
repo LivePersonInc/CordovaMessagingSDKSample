@@ -75,6 +75,25 @@ import LPAMS
         }
         
     }
+
+    func lp_clear_history_and_logout(_ command: CDVInvokedUrlCommand) {
+        
+        var response:[String:String];
+        
+        response = ["eventName":"LPMessagingSDKClearHistoryAndLogout"];
+        let jsonString = self.convertDicToJSON(dic: response)
+        
+        self.set_lp_callbacks(command)
+        LPMessagingSDK.instance.logout()
+        
+        let pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_OK,
+            messageAs: jsonString
+        )
+
+        pluginResult?.setKeepCallbackAs(true)
+        self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
+    }
     
     func start_lp_conversation(_ command: CDVInvokedUrlCommand) {
         print("args = \(command.arguments)")

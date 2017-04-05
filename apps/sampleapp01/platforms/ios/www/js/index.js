@@ -20,7 +20,8 @@ var app = {
 
     settings: {
         accountId: "90233546", // replace with your account id
-        startMessagingConversationButtonId: "start_lp_conversation"
+        startMessagingConversationButtonId: "start_lp_conversation",
+        logoutButtonId: "logout_and_clear_history"
     },
     // Application Constructor
     initialize: function() {
@@ -57,8 +58,28 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         var buttonElement = document.getElementById(this.settings.startMessagingConversationButtonId);
+        //        buttonElement.setAttribute('style', 'display:none;');
+
         buttonElement.addEventListener("click", this.lpStartMessagingConversation.bind(this), false);
         console.log('Received Event: ' + id);
+
+        var logoutElement = document.getElementById(this.settings.logoutButtonId);
+        logoutElement.addEventListener("click", this.clearDeviceHistoryAndLogout.bind(this), false);
+
+    },
+    clearDeviceHistoryAndLogout: function() {
+        console.log("*** clearDeviceHistoryAndLogout ***");
+        lpMessagingSDK.lp_conversation_api(
+            "lp_clear_history_and_logout", [this.settings.accountId],
+            this.clearHistorySuccessCallback,
+            this.errorCallback
+        );
+
+    },
+    clearHistorySuccessCallback: function(data) {
+        console.log("clearDeviceHistoryAndLogout callback!");
+        var eventData = JSON.parse(data);
+        console.log("clearDeviceHistoryAndLogout " + data);
     },
     successCallback: function(data) {
 
@@ -77,6 +98,14 @@ var app = {
         if (eventData.eventName == 'LPMessagingSDKTokenExpired') {
             console.log("authenticated token has expired...refreshing...");
             this.lpGenerateNewAuthenticationToken();
+        }
+
+        if (eventData.eventName == 'LPMessagingSDKInitSuccess') {
+            console.log("*** LPMessagingSDKInitSuccess *** callback in JS");
+            var buttonElement = document.getElementById(this.settings.startMessagingConversationButtonId);
+            buttonElement.setAttribute('style', 'display:block;');
+            //buttonElement.setAttribute('class', 'ready');
+
         }
 
     },
