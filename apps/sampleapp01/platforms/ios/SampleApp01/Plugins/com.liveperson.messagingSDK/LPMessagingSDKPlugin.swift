@@ -55,8 +55,10 @@ import LPAMS
 
          */
         do {
-            try LPMessagingSDK.instance.initialize("90233546")
+            try LPMessagingSDK.instance.initialize(brandID)
+            
             setSDKConfigurations(config:config!)
+            
             self.set_lp_callbacks(command)
             sendEventToJavaScript(dicValue:[
                 "eventName":"LPMessagingSDKInitSuccess",
@@ -144,20 +146,12 @@ import LPAMS
      Show conversation screen and use this ViewController as a container
      */
     func showConversation(_ brandID: String, authenticationCode:String? = nil) {
-        let container = ContainerViewController()
-        container.brandID = brandID
-        container.authenticationCode = authenticationCode
         
         let conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(brandID)
         if authenticationCode == nil {
-////            LPMessagingSDK.instance.delegate = self // callbacks fire in this controller class
             LPMessagingSDK.instance.showConversation(conversationQuery)
-       }else{
-            // callbacks will fire in the container ContainerViewController class
-//           LPMessagingSDK.instance.showConversation(conversationQuery, authenticationCode: authenticationCode,containerViewController:container)
-
+        } else {
             LPMessagingSDK.instance.showConversation(conversationQuery,authenticationCode: authenticationCode)
-        
        }
     }
     
@@ -167,6 +161,10 @@ import LPAMS
     func setUserProfile(_ brandID: String, firstName: String?, lastName: String?, nickName: String?, uid: String?, profileImageURL: String?, phoneNumber: String?, employeeID: String?) {
         let user = LPUser(firstName: firstName, lastName: lastName, nickName: nickName,  uid: uid, profileImageURL: profileImageURL, phoneNumber: phoneNumber, employeeID: employeeID)
         LPMessagingSDK.instance.setUserProfile(user, brandID: brandID)
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKSetUserProfileSuccess",
+            "message" : "firstName: \(firstName), lastName: \(lastName), nickName: \(nickName),  uid: \(uid), profileImageURL: \(profileImageURL), phoneNumber: \(phoneNumber), employeeID: \(employeeID)"
+            ])
     }
     
     /**

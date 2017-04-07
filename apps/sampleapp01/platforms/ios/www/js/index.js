@@ -110,6 +110,10 @@ var app = {
             //buttonElement.setAttribute('class', 'ready');
 
         }
+        
+        if(eventData.eventName == "LPMessagingSDKSetUserProfileSuccess") {
+            console.log("*** LPMessagingSDKSetUserProfileSuccess ** ")
+        }
 
     },
     errorCallback: function(eventDescription) {
@@ -153,6 +157,20 @@ var app = {
             this.successCallback,
             this.errorCallback
         );
+        
+        lpMessagingSDK.lp_conversation_api(
+           "set_lp_user_profile", [
+                                   "123456",
+                                   "John",
+                                   "Doe",
+                                   "JD",
+                                   "https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg",
+                                   "555-444-12345"
+                                   ],
+           this.successCallback,
+           this.errorCallback
+       );
+        
         console.log('lpMessagingSdkInit completed -- ', this.settings.accountId);
     },
     lpStartMessagingConversation: function(customerId) {

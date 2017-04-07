@@ -1,5 +1,11 @@
 # Cordova Messaging Plugin
 
+Current Version: v1.3
+
+## v1.3 Release Notes:
+
+Are in the `/plugins/v1.3/MessagingSDKPlugin/README.md` file
+
 ## "Where do I find the latest version of the plugin?"
 
 Repo has been restructured.
@@ -7,9 +13,9 @@ The various versions of the plugin live here:
 
 `/plugins/`
 
-The latest release is here
+The latest release v1.3 is here
 
-`/plugins/iOS-hotfix-v2.1.2/MessagingSDKPlugin`
+`/plugins/v1.3/MessagingSDKPlugin`
 
 If you need to reinstall the plugin to your app, make sure you pull it from this folder to include the latest iOS frameworks.
 
@@ -18,7 +24,7 @@ e.g if you were working in the sampleapp01 example folder
 ```
 cd apps/sampleapp01
 cordova plugin remove com.liveperson.messagingSDK
-cordova plugin add ../../plugins/iOS-hotfix-v2.1.2/MessagingSDKPlugin
+cordova plugin add ../../plugins/v1.3/MessagingSDKPlugin
 ```
 
 ### iOS Install 
@@ -127,6 +133,24 @@ lpMessagingSDK.lp_conversation_api(
 
 `authenticationCode` is optional arg parameter. If omitted then the conversation will be **unauthenticated**
 
+
+### `"lp_clear_history_and_logout"`
+
+Used to clear the current user data and unregister the device from push notifications (once enabled in subsequent versions).
+
++ When the customer logs out of your app, call this method to clear the local device SDK history and unregister.
++ Then once the next user logs in, **remember to call `lp_sdk_init` before starting a new conversation for the next user when you supply the updated and relevant JWT token**
++ You must supply the account id for your LivePerson account number into this method
+
+```js
+lpMessagingSDK.lp_conversation_api(
+    "lp_clear_history_and_logout", [this.settings.accountId],
+    this.clearHistorySuccessCallback,
+    this.errorCallback
+);
+```
+
++ callback event name : `LPMessagingSDKClearHistoryAndLogout`
 
 ### `"reconnect_with_new_token"`
 
@@ -338,9 +362,16 @@ The following is a list of the expected `eventName` property passed to the `succ
 + `"LPMessagingSDKOffHoursStateChanged"`
   + `isOffHours` : true|false
   + `accountId` : string
-
-
 + `"LPMessagingSDKConversationViewControllerDidDismiss"`
+
+**NEW in v1.3**
+
++ `"LPMessagingSDKInitSuccess"`
++ `"LPMessagingSDKInitError"`
++ `"LPMessagingSDKClearHistoryAndLogout"`
++ `"LPMessagingSDKSetUserProfileSuccess"`
+
+
 
 ### !!! Not currently implemented in callbacks!!!
 
@@ -348,5 +379,5 @@ The following is a list of the expected `eventName` property passed to the `succ
 + `"LPMessagingSDKCSATCustomTitleView"`
 + `"LPMessagingSDKObseleteVersion"`
 
-These will be added in upcoming versions. Refer to native documentation and if you are missing a specific callback pleae let us know!
+Refer to native documentation and if you are missing a specific callback pleae let us know!
 
