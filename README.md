@@ -355,7 +355,7 @@ The following is a list of the expected `eventName` property passed to the `succ
   + `conversationID` : string
 + `"LPMessagingSDKConversationEnded"`
   + `conversationID` : string
-+ `"LPMessagingSDKConversationCSATDismissedOnSubmittion"`
++ `"LPMessagingSDKConversationCSATDismissedOnSubmission"`
   + `conversationID` : string
 + `"LPMessagingSDKConnectionStateChanged"`
   + `isReady` : true|false
@@ -364,20 +364,19 @@ The following is a list of the expected `eventName` property passed to the `succ
   + `accountId` : string
 + `"LPMessagingSDKConversationViewControllerDidDismiss"`
 
-**NEW in v1.3**
+**NEW in v1.4**
 
-+ `"LPMessagingSDKInitSuccess"`
-+ `"LPMessagingSDKInitError"`
++ `"LPMessagingSDKInit"`
 + `"LPMessagingSDKClearHistoryAndLogout"`
-+ `"LPMessagingSDKSetUserProfileSuccess"`
++ `"LPMessagingSDKSetUserProfile"`
 
-
++ `"LPMessagingSDKObseleteVersion"`
 
 ### !!! Not currently implemented in callbacks!!!
 
 + `"LPMessagingSDKAgentAvatarTapped"`
 + `"LPMessagingSDKCSATCustomTitleView"`
-+ `"LPMessagingSDKObseleteVersion"`
+
 
 Refer to native documentation and if you are missing a specific callback pleae let us know!
 

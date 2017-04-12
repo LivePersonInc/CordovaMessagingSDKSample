@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/debug/menu/lpmessaging_ui_caption_send_menu.xml",
+        "source": "/Users/jbeadle/.android/build-cache/28d22ef09e2c17adb652341e8dd4e1b6eb372990/output/res/menu/lpmessaging_ui_caption_send_menu.xml"
+    },
+    {
+        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/debug/menu/lpmessaging_ui_item_conversation_actions_menu.xml",
+        "source": "/Users/jbeadle/.android/build-cache/28d22ef09e2c17adb652341e8dd4e1b6eb372990/output/res/menu/lpmessaging_ui_item_conversation_actions_menu.xml"
+    },
+    {
+        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/debug/menu/lpmessaging_ui_item_copy_menu.xml",
+        "source": "/Users/jbeadle/.android/build-cache/28d22ef09e2c17adb652341e8dd4e1b6eb372990/output/res/menu/lpmessaging_ui_item_copy_menu.xml"
+    }
+]
