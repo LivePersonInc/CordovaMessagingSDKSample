@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_widthPercent="75%"
+            android:gravity="right"
             >
 
             <TextView

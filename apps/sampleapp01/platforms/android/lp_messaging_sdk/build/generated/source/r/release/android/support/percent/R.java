@@ -8,28 +8,28 @@ package android.support.percent;
 
 public final class R {
     public static final class attr {
-        public static int layout_aspectRatio = 1843;
-        public static int layout_heightPercent = 1827;
-        public static int layout_marginBottomPercent = 1837;
-        public static int layout_marginEndPercent = 1841;
-        public static int layout_marginLeftPercent = 1831;
-        public static int layout_marginPercent = 1829;
-        public static int layout_marginRightPercent = 1835;
-        public static int layout_marginStartPercent = 1839;
-        public static int layout_marginTopPercent = 1833;
-        public static int layout_widthPercent = 1825;
+        public static int layout_aspectRatio = 1990;
+        public static int layout_heightPercent = 1974;
+        public static int layout_marginBottomPercent = 1984;
+        public static int layout_marginEndPercent = 1988;
+        public static int layout_marginLeftPercent = 1978;
+        public static int layout_marginPercent = 1976;
+        public static int layout_marginRightPercent = 1982;
+        public static int layout_marginStartPercent = 1986;
+        public static int layout_marginTopPercent = 1980;
+        public static int layout_widthPercent = 1972;
     }
     public static final class styleable {
-        public static int[] PercentLayout_Layout = {1824,1826,1828,1830,1832,1834,1836,1838,1840,1842};
-        public static int PercentLayout_Layout_layout_aspectRatio = 1842;
-        public static int PercentLayout_Layout_layout_heightPercent = 1826;
-        public static int PercentLayout_Layout_layout_marginBottomPercent = 1836;
-        public static int PercentLayout_Layout_layout_marginEndPercent = 1840;
-        public static int PercentLayout_Layout_layout_marginLeftPercent = 1830;
-        public static int PercentLayout_Layout_layout_marginPercent = 1828;
-        public static int PercentLayout_Layout_layout_marginRightPercent = 1834;
-        public static int PercentLayout_Layout_layout_marginStartPercent = 1838;
-        public static int PercentLayout_Layout_layout_marginTopPercent = 1832;
-        public static int PercentLayout_Layout_layout_widthPercent = 1824;
+        public static int[] PercentLayout_Layout = {1971,1973,1975,1977,1979,1981,1983,1985,1987,1989};
+        public static int PercentLayout_Layout_layout_aspectRatio = 1989;
+        public static int PercentLayout_Layout_layout_heightPercent = 1973;
+        public static int PercentLayout_Layout_layout_marginBottomPercent = 1983;
+        public static int PercentLayout_Layout_layout_marginEndPercent = 1987;
+        public static int PercentLayout_Layout_layout_marginLeftPercent = 1977;
+        public static int PercentLayout_Layout_layout_marginPercent = 1975;
+        public static int PercentLayout_Layout_layout_marginRightPercent = 1981;
+        public static int PercentLayout_Layout_layout_marginStartPercent = 1985;
+        public static int PercentLayout_Layout_layout_marginTopPercent = 1979;
+        public static int PercentLayout_Layout_layout_widthPercent = 1971;
     }
 }

@@ -88,6 +88,14 @@ var app = {
         var eventData = JSON.parse(data);
         console.log("clearDeviceHistoryAndLogout " + data);
     },
+    globalSuccessCallbackHandler: function(data) {
+        var eventData = JSON.parse(data);
+        console.log("999 globalSuccessCallbackHandler");
+    },
+    globalErrorCallbackHandler: function(data) {
+        var eventData = JSON.parse(data);
+        console.log("999 globalErrorCallbackHandler");
+    },
     successCallback: function(data) {
         var eventData = JSON.parse(data);
         console.log(
@@ -168,6 +176,12 @@ var app = {
             ],
             this.successCallback,
             this.errorCallback
+        );
+
+        lpMessagingSDK.hello_world(
+            "lp_register_event_callback", [this.settings.accountId],
+            this.globalSuccessCallbackHandler,
+            this.globalErrorCallbackHandler
         );
 
         console.log('lpMessagingSdkInit completed -- ', this.settings.accountId);

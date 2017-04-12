@@ -25,6 +25,7 @@
             android:orientation="vertical"
             android:id="@+id/layout_message"
             app:layout_widthPercent="75%"
+            android:gravity="right"
             >
 
             <TextView

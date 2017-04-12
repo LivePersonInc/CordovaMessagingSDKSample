@@ -24,7 +24,9 @@
         android:layout_alignTop="@id/lpui_agent_bubbleAvatar"
         android:layout_toRightOf="@id/lpui_agent_bubbleAvatar"
         android:orientation="vertical"
-        app:layout_widthPercent="75%">
+        app:layout_widthPercent="75%"
+        android:gravity="right"
+        >
 
 
         <LinearLayout

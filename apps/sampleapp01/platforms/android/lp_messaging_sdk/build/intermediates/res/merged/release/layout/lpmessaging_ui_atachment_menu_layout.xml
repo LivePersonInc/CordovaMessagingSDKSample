@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_view"
     android:layout_alignParentBottom="true"
-    android:background="#f5f5f5"
+    android:background="@color/lp_attachment_menu_background_color"
     android:layout_height="@dimen/attachment_menu_height"
     android:layout_width="match_parent"
     android:translationY="@dimen/attachment_menu_height"
@@ -37,10 +37,11 @@
             android:id="@+id/gallery_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lp_accessibility_gallery"
-            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:text="@string/lp_attachment_menu_gallery_item_text"
             android:importantForAccessibility="no"
-            android:textSize="@dimen/small_text_size"/>
+            android:textSize="@dimen/small_text_size"
+            android:textColor="@color/lp_attachment_menu_item_text_color"/>
 
     </LinearLayout>
 
@@ -66,10 +67,11 @@
             android:id="@+id/camera_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lp_accessibility_camera"
-            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:text="@string/lp_attachment_menu_camera_item_text"
             android:importantForAccessibility="no"
-            android:textSize="@dimen/small_text_size"/>
+            android:textSize="@dimen/small_text_size"
+            android:textColor="@color/lp_attachment_menu_item_text_color"/>
 
     </LinearLayout>
 
