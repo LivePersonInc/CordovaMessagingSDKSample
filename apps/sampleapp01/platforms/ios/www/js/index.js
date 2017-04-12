@@ -74,8 +74,14 @@ var app = {
         console.log("999 clearDeviceHistoryAndLogout ***");
         lpMessagingSDK.lp_conversation_api(
             "lp_clear_history_and_logout", [this.settings.accountId],
-            this.clearHistorySuccessCallback,
-            this.errorCallback
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique clearDeviceHistoryAndLogout SDK callback");
+            },
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique clearDeviceHistoryAndLogout SDK error callback");
+            }
         );
 
     },
@@ -108,14 +114,14 @@ var app = {
             eventDescription
         );
     },
-    globalSuccessCallback: function(data) {
+    globalAsyncEventsSuccessCallback: function(data) {
         console.log(
-            '999 globalSuccessCallback --> ' + data
+            '999 globalAsyncEventsSuccessCallback --> ' + data
         );
     },
-    globalErrorCallback: function(data) {
+    globalAsyncEventsErrorCallback: function(data) {
         console.log(
-            '999 globalErrorCallback --> ' + data
+            '999 globalAsyncEventsErrorCallback --> ' + data
         );
     },
     lpGenerateNewAuthenticationToken: function() {
@@ -182,8 +188,8 @@ var app = {
 
         lpMessagingSDK.lp_register_event_callback(
             [this.settings.accountId],
-            this.globalSuccessCallback,
-            this.globalErrorCallback
+            this.globalAsyncEventsSuccessCallback,
+            this.globalAsyncEventsErrorCallback
         );
 
         console.log('999 post lp_register_event_callback...');
