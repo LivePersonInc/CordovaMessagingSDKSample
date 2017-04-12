@@ -20,7 +20,9 @@ var app = {
 
     settings: {
         accountId: "90233546", // replace with your account id
-        startMessagingConversationButtonId: "start_lp_conversation"
+        startMessagingConversationButtonId: "start_lp_conversation",
+        logoutButtonId: "logout_and_clear_history",
+        initSdkButtonId: "init_lp_sdk"
     },
     // Application Constructor
     initialize: function() {
@@ -39,7 +41,7 @@ var app = {
         }
         this.receivedEvent('deviceready');
         // initialise LP Messaging SDK here
-        this.lpMessagingSdkInit();
+        app.lpMessagingSdkInit();
 
         // setup click event listener for start messaging button example
 
@@ -53,45 +55,82 @@ var app = {
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
         console.log('receivedElement', receivedElement);
+        console.log('Received Event: ' + id);
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
         var buttonElement = document.getElementById(this.settings.startMessagingConversationButtonId);
-        buttonElement.addEventListener("click", this.lpStartMessagingConversation.bind(this), false);
-        console.log('Received Event: ' + id);
-    },
-    successCallback: function(data) {
+        buttonElement.addEventListener("click", this.lpStartMessagingConversation.bind(this, 'jwt1'), false);
 
-        console.log(
-            "successCallback fired! ",
-            eventData,
-            typeof(eventData)
+
+        var buttonElement2 = document.getElementById("start_lp_conversation_2nd_user");
+        buttonElement2.addEventListener("click", this.lpStartMessagingConversation.bind(this, 'jwt2'), false);
+
+
+        var logoutElement = document.getElementById(this.settings.logoutButtonId);
+        logoutElement.addEventListener("click", this.clearDeviceHistoryAndLogout.bind(this), false);
+
+        var initSdkElement = document.getElementById(this.settings.initSdkButtonId);
+        initSdkElement.addEventListener("click", this.lpMessagingSdkInit.bind(this), false);
+    },
+
+    clearDeviceHistoryAndLogout: function() {
+        console.log("*** clearDeviceHistoryAndLogout ***");
+        lpMessagingSDK.lp_conversation_api(
+            "lp_clear_history_and_logout", [this.settings.accountId],
+            this.clearHistorySuccessCallback,
+            this.errorCallback
         );
 
+    },
+    clearHistorySuccessCallback: function(data) {
+        console.log("clearDeviceHistoryAndLogout callback!");
         var eventData = JSON.parse(data);
+        console.log("clearDeviceHistoryAndLogout " + data);
+    },
+    globalSuccessCallbackHandler: function(data) {
+        var eventData = JSON.parse(data);
+        console.log("999 globalSuccessCallbackHandler");
+    },
+    globalErrorCallbackHandler: function(data) {
+        var eventData = JSON.parse(data);
+        console.log("999 globalErrorCallbackHandler");
+    },
+    successCallback: function(data) {
+        var eventData = JSON.parse(data);
+        console.log(
+            " LPMessagingSDK ANDROID successCallback fired! " + eventData.eventName
+        );
 
-        if (eventData.eventName == "LPMessagingSDKConnectionStateChanged") {
-            console.log("************************************* LPMessagingSDKConnectionStateChanged callback fired! ", eventData.isReady)
-        }
+        // onConversationResolved
 
+        console.log(eventData.eventName);
         if (eventData.eventName == 'LPMessagingSDKTokenExpired') {
             console.log("authenticated token has expired...refreshing...");
             this.lpGenerateNewAuthenticationToken();
         }
 
-        console.log('successCallback fired ' + eventData.eventName);
+        if (eventData.eventName == 'LPMessagingSDKConnectionStateChanged') {
+            console.log("****** LPMessagingSDK ANDROID callback test --- LPMessagingSDKConnectionStateChanged.." + eventData.isReady);
+
+        }
+
+        if (eventData.eventName == 'LPMessagingSDKInitSuccess') {
+            console.log("****** LPMessagingSDKInitSuccess callback OK --- ");
+
+
+        }
 
     },
     errorCallback: function(eventDescription) {
         console.log(
-            "errorCallback fired! ",
-            eventDescription
+            "errorCallback fired! " + eventDescription
         );
     },
     lpGenerateNewAuthenticationToken: function() {
         // code to generate new fresh JWT would go here...
         // TODO -- implement auth0 API call for refresh token via AJAX/jQuery etc to get a new token
-        var jwt = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSQlMtMTIzLTQ1Ni03ODktMDEyIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE1MTQ3MTg2NzEwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiIxMzg3NjZBQyIsImJhbGFuY2UiOi00MDAuOTksInNvY2lhbElkIjoiMTEyNTYzMjQ3ODAiLCJpbWVpIjoiMzU0MzU0NjU0MzU0NTY4OCIsInVzZXJOYW1lIjoidXNlcjAwMCIsImNvbXBhbnlTaXplIjo1MDAsImFjY291bnROYW1lIjoiYmFuayBjb3JwIiwicm9sZSI6ImJyb2tlciIsImxhc3RQYXltZW50RGF0ZSI6eyJkYXkiOjE1LCJtb250aCI6MTAsInllYXIiOjIwMTR9LCJyZWdpc3RyYXRpb25EYXRlIjp7ImRheSI6MjMsIm1vbnRoIjo1LCJ5ZWFyIjoyMDEzfX19LHsidHlwZSI6InBlcnNvbmFsIiwicGVyc29uYWwiOnsiZmlyc3RuYW1lIjoiSm9objk5IiwibGFzdG5hbWUiOiJCZWFkbGU5OSIsImFnZSI6eyJhZ2UiOjM0LCJ5ZWFyIjoxOTgwLCJtb250aCI6NCwiZGF5IjoxNX0sImNvbnRhY3RzIjpbeyJlbWFpbCI6ImpiZWFkbGU5OUBsaXZlcGVyc29uLmNvbSIsInBob25lIjoiKzEgMjEyLTc4OC04ODc3In1dLCJnZW5kZXIiOiJNQUxFIn19XX0.vZeZf8vGG1T2vYV7ysOCU6Y8cocuvWJ-SJOeTly_KS2Dy0d-uNJuxRdCuxpaXk_9hys79IrKWhsl-y3K7gyM7mdr1v2WXoBWYYGohtAkPJqj67bvsG3OKLEKI_rFIm8M2Jqj1lCv_31akNRfYfvpMxh6n-PC__aUSPrj5FyDYtih0sewHqFS_rDg4SEpE5eP45QkleY0hfUBePTF5eKmF4FLnJNGbhyjOf8rsIWyhVLY8dEUyilB0XjSkkAvkRHBMUPdTVHU3IE5Yz9QgnZmEr7AQAf83mBEAzQUyturmBVfKajfEJ5GYaVaql5STdvRfTfvX73swu3r3ueKMoDHaw";
+        var jwt = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0wNC1BUFItMjAxNy0xMTIwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTEzMDUxMDAwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiJUQUxLVEFMSy0wNC1BUFItMjAxNy0xMTIwIiwiYmFsYW5jZSI6LTQwMC45OSwic29jaWFsSWQiOiIxMTI1NjMyNDc4MCIsImltZWkiOiIzNTQzNTQ2NTQzNTQ1Njg4IiwidXNlck5hbWUiOiJ1c2VyMDAwIiwiY29tcGFueVNpemUiOjUwMCwiYWNjb3VudE5hbWUiOiJiYW5rIGNvcnAiLCJyb2xlIjoiYnJva2VyIiwibGFzdFBheW1lbnREYXRlIjp7ImRheSI6MTUsIm1vbnRoIjoxMCwieWVhciI6MjAxNH0sInJlZ2lzdHJhdGlvbkRhdGUiOnsiZGF5IjoyMywibW9udGgiOjUsInllYXIiOjIwMTN9fX0seyJ0eXBlIjoicGVyc29uYWwiLCJwZXJzb25hbCI6eyJmaXJzdG5hbWUiOiJKb2huOTkiLCJsYXN0bmFtZSI6IkJlYWRsZTk5IiwiYWdlIjp7ImFnZSI6MzQsInllYXIiOjE5ODAsIm1vbnRoIjo0LCJkYXkiOjE1fSwiY29udGFjdHMiOlt7ImVtYWlsIjoiamJlYWRsZTk5QGxpdmVwZXJzb24uY29tIiwicGhvbmUiOiIrMSAyMTItNzg4LTg4NzcifV0sImdlbmRlciI6Ik1BTEUifX1dfQ.LlClhbOSl1SP2eNfxmeNHP4WEQytOG4hmXu2hSgQlWFUOvZ3hLDu6KzPiNq-tvN4gZ_a2xVrXMxVqvQa-gp2Bc8ZtMSo91HJi39AiAgbO7ETKZ8xbBkwKhs6DeWdhXyb5WHHwjnAN8ba_vWeKkQ3yHJ7bvi9W-q2LjfymATu6a4";
         lpMessagingSDK.lp_conversation_api(
             "reconnect_with_new_token", [jwt],
             this.successCallback,
@@ -115,31 +154,59 @@ var app = {
 
         var sdkConfig = {
             "branding": brandingOptions,
-            "window": windowOptions
+            "window": windowOptions,
+            "account": this.settings.accountId
         };
+
 
         lpMessagingSDK.lp_conversation_api(
             "lp_sdk_init", [this.settings.accountId, sdkConfig],
             this.successCallback,
             this.errorCallback
         );
-        console.log('lpMessagingSdkInit completed -- ', this.settings.accountId);
-    },
-    lpStartMessagingConversation: function() {
-
-        // HERE is where you would write your code to call your IDP and return your JWT token for an authenticated customer
-        // in this sample app the token is hardcoded for this specific account.
-
-        var JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSQlMtMTIzLTQ1Ni03ODktMDEyIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE1MTQ3MTg2NzEwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiIxMzg3NjZBQyIsImJhbGFuY2UiOi00MDAuOTksInNvY2lhbElkIjoiMTEyNTYzMjQ3ODAiLCJpbWVpIjoiMzU0MzU0NjU0MzU0NTY4OCIsInVzZXJOYW1lIjoidXNlcjAwMCIsImNvbXBhbnlTaXplIjo1MDAsImFjY291bnROYW1lIjoiYmFuayBjb3JwIiwicm9sZSI6ImJyb2tlciIsImxhc3RQYXltZW50RGF0ZSI6eyJkYXkiOjE1LCJtb250aCI6MTAsInllYXIiOjIwMTR9LCJyZWdpc3RyYXRpb25EYXRlIjp7ImRheSI6MjMsIm1vbnRoIjo1LCJ5ZWFyIjoyMDEzfX19LHsidHlwZSI6InBlcnNvbmFsIiwicGVyc29uYWwiOnsiZmlyc3RuYW1lIjoiSm9objk5IiwibGFzdG5hbWUiOiJCZWFkbGU5OSIsImFnZSI6eyJhZ2UiOjM0LCJ5ZWFyIjoxOTgwLCJtb250aCI6NCwiZGF5IjoxNX0sImNvbnRhY3RzIjpbeyJlbWFpbCI6ImpiZWFkbGU5OUBsaXZlcGVyc29uLmNvbSIsInBob25lIjoiKzEgMjEyLTc4OC04ODc3In1dLCJnZW5kZXIiOiJNQUxFIn19XX0.vZeZf8vGG1T2vYV7ysOCU6Y8cocuvWJ-SJOeTly_KS2Dy0d-uNJuxRdCuxpaXk_9hys79IrKWhsl-y3K7gyM7mdr1v2WXoBWYYGohtAkPJqj67bvsG3OKLEKI_rFIm8M2Jqj1lCv_31akNRfYfvpMxh6n-PC__aUSPrj5FyDYtih0sewHqFS_rDg4SEpE5eP45QkleY0hfUBePTF5eKmF4FLnJNGbhyjOf8rsIWyhVLY8dEUyilB0XjSkkAvkRHBMUPdTVHU3IE5Yz9QgnZmEr7AQAf83mBEAzQUyturmBVfKajfEJ5GYaVaql5STdvRfTfvX73swu3r3ueKMoDHaw";
 
         lpMessagingSDK.lp_conversation_api(
-            "start_lp_conversation", [
-                this.settings.accountId,
-                JWT
+            "set_lp_user_profile", [
+                "123456",
+                "John",
+                "Doe",
+                "JD",
+                "https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg",
+                "555-444-12345"
             ],
             this.successCallback,
             this.errorCallback
         );
+
+        lpMessagingSDK.hello_world(
+            "lp_register_event_callback", [this.settings.accountId],
+            this.globalSuccessCallbackHandler,
+            this.globalErrorCallbackHandler
+        );
+
+        console.log('lpMessagingSdkInit completed -- ', this.settings.accountId);
+    },
+    lpStartMessagingConversation: function(customerId) {
+
+        // HERE is where you would write your code to call your IDP and return your JWT token for an authenticated customer
+        // in this sample app the token is hardcoded for this specific account.
+        console.log('lpStartMessagingConversation customerId ' + customerId);
+        // sub TALKTALK-04-APR-2017-1120
+        var JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0wNC1BUFItMjAxNy0xMTIwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTEzMDUxMDAwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiJUQUxLVEFMSy0wNC1BUFItMjAxNy0xMTIwIiwiYmFsYW5jZSI6LTQwMC45OSwic29jaWFsSWQiOiIxMTI1NjMyNDc4MCIsImltZWkiOiIzNTQzNTQ2NTQzNTQ1Njg4IiwidXNlck5hbWUiOiJ1c2VyMDAwIiwiY29tcGFueVNpemUiOjUwMCwiYWNjb3VudE5hbWUiOiJiYW5rIGNvcnAiLCJyb2xlIjoiYnJva2VyIiwibGFzdFBheW1lbnREYXRlIjp7ImRheSI6MTUsIm1vbnRoIjoxMCwieWVhciI6MjAxNH0sInJlZ2lzdHJhdGlvbkRhdGUiOnsiZGF5IjoyMywibW9udGgiOjUsInllYXIiOjIwMTN9fX0seyJ0eXBlIjoicGVyc29uYWwiLCJwZXJzb25hbCI6eyJmaXJzdG5hbWUiOiJKb2huOTkiLCJsYXN0bmFtZSI6IkJlYWRsZTk5IiwiYWdlIjp7ImFnZSI6MzQsInllYXIiOjE5ODAsIm1vbnRoIjo0LCJkYXkiOjE1fSwiY29udGFjdHMiOlt7ImVtYWlsIjoiamJlYWRsZTk5QGxpdmVwZXJzb24uY29tIiwicGhvbmUiOiIrMSAyMTItNzg4LTg4NzcifV0sImdlbmRlciI6Ik1BTEUifX1dfQ.LlClhbOSl1SP2eNfxmeNHP4WEQytOG4hmXu2hSgQlWFUOvZ3hLDu6KzPiNq-tvN4gZ_a2xVrXMxVqvQa-gp2Bc8ZtMSo91HJi39AiAgbO7ETKZ8xbBkwKhs6DeWdhXyb5WHHwjnAN8ba_vWeKkQ3yHJ7bvi9W-q2LjfymATu6a4";
+
+        // sub TALKTALK-05-APR-2017-1800
+        var JWT2 = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0wNS1BUFItMjAxNy0xODAwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTEzMDUxMDAwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiJUQUxLVEFMSy0wNS1BUFItMjAxNy0xODAwIiwiYmFsYW5jZSI6LTQwMC45OSwic29jaWFsSWQiOiIxMTI1NjMyNDc4MCIsImltZWkiOiIzNTQzNTQ2NTQzNTQ1Njg4IiwidXNlck5hbWUiOiJ1c2VyMDAwIiwiY29tcGFueVNpemUiOjUwMCwiYWNjb3VudE5hbWUiOiJiYW5rIGNvcnAiLCJyb2xlIjoiYnJva2VyIiwibGFzdFBheW1lbnREYXRlIjp7ImRheSI6MTUsIm1vbnRoIjoxMCwieWVhciI6MjAxNH0sInJlZ2lzdHJhdGlvbkRhdGUiOnsiZGF5IjoyMywibW9udGgiOjUsInllYXIiOjIwMTN9fX0seyJ0eXBlIjoicGVyc29uYWwiLCJwZXJzb25hbCI6eyJmaXJzdG5hbWUiOiJUb255IiwibGFzdG5hbWUiOiJTdGFyayIsImFnZSI6eyJhZ2UiOjM0LCJ5ZWFyIjoxOTgwLCJtb250aCI6NCwiZGF5IjoxNX0sImNvbnRhY3RzIjpbeyJlbWFpbCI6ImpiZWFkbGU5OUBsaXZlcGVyc29uLmNvbSIsInBob25lIjoiKzEgMjEyLTc4OC04ODc3In1dLCJnZW5kZXIiOiJNQUxFIn19XX0.dy5sModDTo4qIxId8VYtAFA1ajnQvBa_2fDYzXLoXFpXsn-U-k64gtRH4gf5vWXryZ5BCAqKXJsYn6DlifrRWJHQaaxHn6BSOfAvbSS7dRS2c8IGfS7r-c5iQesX9RZPy7M3yJgnOf-1A6_wiF12BMl23U1uQxDTYfc_Z_hv0Nk"
+
+        lpMessagingSDK.lp_conversation_api(
+            "start_lp_conversation", [
+                this.settings.accountId,
+                customerId == "jwt1" ? JWT : JWT2
+            ],
+            this.successCallback,
+            this.errorCallback
+        );
+
+
 
         console.log('lpStartMessagingConversation completed ', JWT);
     }

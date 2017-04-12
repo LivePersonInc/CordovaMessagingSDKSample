@@ -12,22 +12,22 @@
             <prop name="cdvMinSdkVersion" type="Object">null</prop>
             <prop name="cdvPluginPostBuildExtras" type="java.util.ArrayList">[]</prop>
             <prop name="cdvBuildToolsVersion">25.0.2</prop>
-            <prop name="getConfigXml" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure19@703ce5cd</prop>
-            <prop name="extractIntFromManifest" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure14@435cb903</prop>
-            <prop name="ensureValueExists" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure17@164ecab</prop>
-            <prop name="privateHelpers" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure11@357359ee</prop>
+            <prop name="getConfigXml" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure19@455a504d</prop>
+            <prop name="extractIntFromManifest" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure14@78be78ed</prop>
+            <prop name="ensureValueExists" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure17@7590ce86</prop>
+            <prop name="privateHelpers" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure11@432282af</prop>
             <prop name="cdvCompileSdkVersion">android-25</prop>
-            <prop name="findLatestInstalledBuildTools" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure13@22f6d000</prop>
-            <prop name="extractStringFromManifest" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure15@4c4e1fc</prop>
+            <prop name="findLatestInstalledBuildTools" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure13@546d6abe</prop>
+            <prop name="extractStringFromManifest" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure15@5f1f19ce</prop>
             <prop name="cdvReleaseSigningPropertiesFile" type="Object">null</prop>
             <prop name="cdvBuildArch" type="Object">null</prop>
             <prop name="cdvDebugSigningPropertiesFile" type="Object">null</prop>
-            <prop name="getConfigPreference" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure20@d70c5e0</prop>
-            <prop name="promptForPassword" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure16@1992729e</prop>
+            <prop name="getConfigPreference" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure20@2c881855</prop>
+            <prop name="promptForPassword" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure16@7be8c091</prop>
             <prop name="cdvBuildMultipleApks" type="java.lang.Boolean">false</prop>
             <prop name="cdvVersionCode" type="Object">null</prop>
-            <prop name="cdvHelpers" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure18@3afabb51</prop>
-            <prop name="getProjectTarget" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure12@282f0e9</prop>
+            <prop name="cdvHelpers" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure18@446f7dc8</prop>
+            <prop name="getProjectTarget" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure12@6399cde2</prop>
             <task name="projects" type="org.gradle.api.tasks.diagnostics.ProjectReportTask">Displays the sub-projects of root project 'android'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
             <task name="packageReleaseResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="validateSigningDebugAndroidTest" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
@@ -306,17 +306,17 @@
             <ext name="android" type="com.android.build.gradle.LibraryExtension" />
             <ext name="bintray" type="com.jfrog.bintray.gradle.BintrayExtension" />
             <prop name="cdvBuildToolsVersion">25.0.2</prop>
-            <prop name="getConfigXml" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure19@64cb185b</prop>
-            <prop name="extractIntFromManifest" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure14@2a7d4a0c</prop>
-            <prop name="getConfigPreference" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure20@58ac9a1b</prop>
-            <prop name="promptForPassword" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure16@1a2ecbfa</prop>
-            <prop name="ensureValueExists" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure17@261b0124</prop>
-            <prop name="privateHelpers" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure11@66f602c1</prop>
+            <prop name="getConfigXml" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure19@7c7fb3ae</prop>
+            <prop name="extractIntFromManifest" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure14@7009e3df</prop>
+            <prop name="getConfigPreference" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure20@d5f99a4</prop>
+            <prop name="promptForPassword" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure16@12ead104</prop>
+            <prop name="ensureValueExists" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure17@1389e234</prop>
+            <prop name="privateHelpers" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure11@2c21ec81</prop>
             <prop name="cdvCompileSdkVersion">android-25</prop>
-            <prop name="findLatestInstalledBuildTools" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure13@5ab62046</prop>
-            <prop name="cdvHelpers" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure18@36ab51f1</prop>
-            <prop name="getProjectTarget" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure12@48477421</prop>
-            <prop name="extractStringFromManifest" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure15@1ef197e2</prop>
+            <prop name="findLatestInstalledBuildTools" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure13@5dc2d218</prop>
+            <prop name="cdvHelpers" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure18@19645a55</prop>
+            <prop name="getProjectTarget" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure12@45a0830f</prop>
+            <prop name="extractStringFromManifest" type="groovy.lang.Closure">cordova_8y7p6qgc25obrw4lm2p52tdvx$_run_closure1$_closure15@66462ade</prop>
             <task name="mergeDebugProguardFiles" type="com.android.build.gradle.internal.tasks.MergeFileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="projects" type="org.gradle.api.tasks.diagnostics.ProjectReportTask">Displays the sub-projects of project ':CordovaLib'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
             <task name="packageReleaseResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>

@@ -11,14 +11,20 @@ import LPMessagingSDK
 import LPInfra
 import LPAMS
 
-@objc(LPMessagingSDKPlugin) class LPMessagingSDKPlugin: CDVPlugin/*, LPMessagingSDKdelegate*/ {
+@objc(LPMessagingSDKPlugin) class LPMessagingSDKPlugin: CDVPlugin, LPMessagingSDKdelegate {
     
 
     // adding delegates and callbacks for Cordova to notify javascript wrapper when functions complete
     var callBackCommandDelegate: CDVCommandDelegate?
     var callBackCommand:CDVInvokedUrlCommand?
 
-
+    var connectionErrorCallbackDelegate: CDVCommandDelegate?
+    var connectionErrorCallbackCommand:CDVInvokedUrlCommand?
+    
+    var globalCallbackCommandDelegate: CDVCommandDelegate?
+    var globalCallbackCommand: CDVInvokedUrlCommand?
+    
+    
     override init() {
         super.init()
     }
@@ -38,6 +44,57 @@ import LPAMS
         return nil
     }
     
+    
+    func lp_register_event_callback(_ command: CDVInvokedUrlCommand) {
+        self.globalCallbackCommandDelegate = commandDelegate
+        self.globalCallbackCommand = command
+        
+        // return NO_RESULT for now and then use this delegate in all async callbacks for other events.
+        let pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_NO_RESULT,
+            messageAs: "999 lp_register_event_callback"
+        )
+        
+        pluginResult?.setKeepCallbackAs(true)
+        
+        self.globalCallbackCommandDelegate!.send(
+            pluginResult,
+            callbackId: self.globalCallbackCommand!.callbackId
+        )
+        
+        print("999 iOS lp_register_event_callback \n")
+
+    }
+    
+    func lp_register_connection_error_callback(_ command: CDVInvokedUrlCommand) {
+        self.connectionErrorCallbackDelegate = commandDelegate
+        self.connectionErrorCallbackCommand = command
+        
+        /*
+ 
+ // Don't return any result now, since status results will be sent when events come in from broadcast receiver
+ PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+ pluginResult.setKeepCallback(true);
+ callbackContext.sendPluginResult(pluginResult);
+ return true;
+ 
+ */
+        var response:[String:String];
+        
+        response = ["eventName":"LPMessagingSDKHasConnectionError"];
+        let jsonString = self.convertDicToJSON(dic: response)
+        
+
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_NO_RESULT, messageAs:jsonString)
+        pluginResult?.setKeepCallbackAs(true)
+        self.connectionErrorCallbackDelegate?.send(pluginResult, callbackId: self.connectionErrorCallbackCommand?.callbackId)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            // your code here
+            self.LPMessagingSDKHasConnectionError("CONNECTION ERROR TEST")
+        }
+    }
+ 
     func lp_sdk_init(_ command: CDVInvokedUrlCommand) {
         guard let brandID = command.arguments.first as? String else {
             print("Can't init without brandID")
@@ -58,22 +115,67 @@ import LPAMS
             try LPMessagingSDK.instance.initialize(brandID)
             
             setSDKConfigurations(config:config!)
+            LPMessagingSDK.instance.delegate = self
+            // self.set_lp_callbacks(command)
+//            sendEventToJavaScript(dicValue:[
+//                "eventName":"LPMessagingSDKInitSuccess",
+//                "message" : "LPMessagingSDK Initialization successful:"
+//                ])
             
-            self.set_lp_callbacks(command)
-            sendEventToJavaScript(dicValue:[
-                "eventName":"LPMessagingSDKInitSuccess",
-                "message" : "LPMessagingSDK Initialization successful:"
-                ])
+            // let jsonString = self.convertDicToJSON(dic: dicValue)
+            // let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:jsonString)
+            
+            // pluginResult?.setKeepCallbackAs(true)
+            // self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
+
+            var response:[String:String];
+        
+            response = ["eventName":"LPMessagingSDKInitSuccess"];
+            let jsonString = self.convertDicToJSON(dic: response)
+
+            var pluginResultInitSdk = CDVPluginResult(
+                status: CDVCommandStatus_OK,
+                messageAs:jsonString
+            )
+
+            self.commandDelegate!.send(
+                pluginResultInitSdk,
+                callbackId: command.callbackId
+            )
+            
+            print("999 iOS LPMessagingSDKInitSuccess")
+
 
         } catch let error as NSError {
             // throw error callback here!
+            // check if this fires the error callback
+            // sendEventToJavaScript(dicValue:[
+            //     "eventName":"LPMessagingSDKInitError",
+            //     "errorMessage" : "LPMessagingSDK Initialization error: \(error)"
+            //     ])
             
-            sendEventToJavaScript(dicValue:[
-                "eventName":"LPMessagingSDKInitError",
-                "errorMessage" : "LPMessagingSDK Initialization error: \(error)"
-                ])
+            // let jsonString = self.convertDicToJSON(dic: dicValue)
+            // let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs:jsonString)
+            
+            // pluginResult?.setKeepCallbackAs(true)
+            // self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
 
-            print("LPMessagingSDK Initialization error: \(error)")
+            var response:[String:String];
+        
+            response = ["eventName":"LPMessagingSDKInitSuccess"];
+            let jsonString = self.convertDicToJSON(dic: response)
+
+            var pluginResultInitSdk = CDVPluginResult(
+                status: CDVCommandStatus_ERROR,
+                messageAs:jsonString
+            )
+
+            self.commandDelegate!.send(
+                pluginResultInitSdk,
+                callbackId: command.callbackId
+            )
+
+            print("999 ios LPMessagingSDK Initialization error: \(error)")
         }
         
     }
@@ -104,7 +206,7 @@ import LPAMS
             return
         }
         // init our callbacks for javascript wrapper
-        self.set_lp_callbacks(command)
+        //self.set_lp_callbacks(command)
 
         // Enable authentication support
         // check if the second parameter to the function call contains a value?
@@ -116,15 +218,31 @@ import LPAMS
         }else{
             self.showConversation(brandID)
         }
-
+        
+        var response:[String:String];
+        
+        response = ["eventName":"start_lp_conversation"];
+        let jsonString = self.convertDicToJSON(dic: response)
+        
+               
+        let pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_OK,
+            messageAs: jsonString
+        )
+        
+        pluginResult?.setKeepCallbackAs(true)
+        self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
        
     }
 
     // Assign values to our objects for triggering JS callbacks in the wrapper once native methods complete
     func set_lp_callbacks(_ command: CDVInvokedUrlCommand) {
+        
         self.callBackCommandDelegate = commandDelegate
         self.callBackCommand = command
-        LPMessagingSDKCallBackWrapper.sharedInstance.setLPMessagingCallBacks(callBackCommandDelegate, callBackCommand: callBackCommand)
+        LPMessagingSDK.instance.delegate = self
+
+//        LPMessagingSDKCallBackWrapper.sharedInstance.setLPMessagingCallBacks(callBackCommandDelegate, callBackCommand: callBackCommand)
     }
     
     func set_lp_user_profile(_ command: CDVInvokedUrlCommand) {
@@ -139,6 +257,24 @@ import LPAMS
         let imageURL = command.argument(at: 4) as? String
         let phoneNumber = command.argument(at: 5) as? String
         self.setUserProfile(brandID, firstName: firstName, lastName: lastName, nickName: nickName, uid: nil, profileImageURL: imageURL, phoneNumber: phoneNumber, employeeID: nil)
+        print("999 iOS setUserProfile")
+
+        var response:[String:String];
+        
+        response = ["eventName":"999 set_lp_user_profile"];
+        let jsonString = self.convertDicToJSON(dic: response)
+        
+        var pluginResultSetUserProfile = CDVPluginResult(
+            status: CDVCommandStatus_OK,
+            messageAs:jsonString
+        )
+        
+        self.commandDelegate!.send(
+            pluginResultSetUserProfile,
+            callbackId: command.callbackId
+        )
+
+        
     }
     
     // MARK: MessagingSDK API
@@ -216,6 +352,174 @@ import LPAMS
             return theJSONText!
         }
         return nil
+    }
+    
+    internal func LPMessagingSDKCustomButtonTapped() {
+        print("LPMessagingSDKCustomButtonTapped")
+        
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKCustomButtonTapped"
+            ])
+    }
+    
+    internal func LPMessagingSDKAgentDetails(_ agent: LPUser?) {
+        print("LPMessagingSDKAgentDetails: \(agent?.nickName)")
+        
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKAgentDetails",
+            "agentName" : String(describing: agent?.nickName)
+            ])
+    }
+    
+    internal func LPMessagingSDKActionsMenuToggled(_ toggled: Bool) {
+        print("LPMessagingSDKActionsMenuToggled")
+        
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKActionsMenuToggled",
+            "toggled" : String(describing: toggled)
+            ])
+        
+    }
+    
+    internal func LPMessagingSDKHasConnectionError(_ error: String?) {
+        print("LPMessagingSDKHasConnectionError")
+        var response:[String:String];
+        
+        response = ["eventName":"LPMessagingSDKHasConnectionError"];
+        let jsonString = self.convertDicToJSON(dic: response)
+        
+
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:jsonString)
+        pluginResult?.setKeepCallbackAs(true)
+        self.globalCallbackCommandDelegate?.send(pluginResult, callbackId: self.globalCallbackCommand?.callbackId)
+
+        
+    }
+    
+    internal func LPMessagingSDKCSATScoreSubmissionDidFinish(_ brandID: String, rating: Int) {
+        print("LPMessagingSDKCSATScoreSubmissionDidFinish: \(brandID)")
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKCSATScoreSubmissionDidFinish",
+            "rating" : String(rating),
+            "accountId" : brandID
+            ])
+    }
+    
+    internal func LPMessagingSDKObseleteVersion(_ error: NSError) {
+        print("LPMessagingSDKObseleteVersion: \(error)")
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKObseleteVersion",
+            "error" : String(describing: error)
+            ])
+    }
+    
+    internal func LPMessagingSDKAuthenticationFailed(_ error: NSError) {
+        print("LPMessagingSDKAuthenticationFailed: \(error)")
+        
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKAuthenticationFailed",
+            "error" : String(describing: error)
+            ])
+    }
+    
+    internal func LPMessagingSDKTokenExpired(_ brandID: String) {
+        print("LPMessagingSDKTokenExpired: \(brandID)")
+        
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKTokenExpired",
+            "accountId" : String(brandID)
+            ])
+    }
+    
+    internal func LPMessagingSDKError(_ error: NSError) {
+        print("LPMessagingSDKError: \(error)")
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKError",
+            "error" : String(describing: error)
+            ])
+    }
+    
+    internal func LPMessagingSDKAgentIsTypingStateChanged(_ isTyping: Bool) {
+        print("LPMessagingSDKAgentIsTypingStateChanged: \(isTyping)")
+        var response:[String:String];
+        
+        response = ["eventName":"LPMessagingSDKAgentIsTypingState=\(isTyping)"];
+        let jsonString = self.convertDicToJSON(dic: response)
+        
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:jsonString)
+        pluginResult?.setKeepCallbackAs(true)
+        self.globalCallbackCommandDelegate?.send(pluginResult, callbackId: self.globalCallbackCommand?.callbackId)
+
+    }
+    
+    internal func LPMessagingSDKConversationStarted(_ conversationID: String?) {
+        print("LPMessagingSDKConversationStarted: \(conversationID)")
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKConversationStarted",
+            "conversationID" : conversationID ?? ""
+            ])
+    }
+    
+    internal func LPMessagingSDKConversationEnded(_ conversationID: String?) {
+        print("LPMessagingSDKConversationEnded: \(conversationID)")
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKConversationEnded",
+            "conversationID" : conversationID ?? ""
+            ])
+    }
+    
+    internal func LPMessagingSDKConversationCSATDismissedOnSubmittion(_ conversationID: String?) {
+        print("LPMessagingSDKConversationCSATDismissedOnSubmittion: \(conversationID)")
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKConversationCSATDismissedOnSubmittion",
+            "conversationID" : conversationID ?? ""
+            ])
+    }
+    
+    internal func LPMessagingSDKConnectionStateChanged(_ isReady: Bool, brandID: String) {
+        print("999 LPMessagingSDKConnectionStateChanged: \(isReady), \(brandID)")
+        // sendEventToJavaScript(dicValue:[
+        //     "eventName":"LPMessagingSDKConnectionStateChanged",
+        //     "isReady" : String(isReady),
+        //     "accountId" : brandID
+        //     ])
+        
+        
+        var response:[String:String];
+        
+        response = ["eventName":"LPMessagingSDKConnectionStateChanged","connectionState":"\(isReady)"];
+        let jsonString = self.convertDicToJSON(dic: response)
+        
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:jsonString)
+        pluginResult?.setKeepCallbackAs(true)
+        self.globalCallbackCommandDelegate?.send(pluginResult, callbackId: self.globalCallbackCommand?.callbackId)
+
+
+    }
+    
+    internal func LPMessagingSDKOffHoursStateChanged(_ isOffHours: Bool, brandID: String) {
+        print("LPMessagingSDKOffHoursStateChanged: \(isOffHours), \(brandID)")
+        sendEventToJavaScript(dicValue:[
+            "eventName":"LPMessagingSDKOffHoursStateChanged",
+            "isOffHours" : String(isOffHours),
+            "accountId" : brandID
+            ])
+    }
+    
+    internal func LPMessagingSDKConversationViewControllerDidDismiss() {
+        print("LPMessagingSDKConversationViewControllerDidDismiss")
+        
+//        sendEventToJavaScript(dicValue:["eventName":"LPMessagingSDKConversationViewControllerDidDismiss"])
+        var response:[String:String];
+        
+        response = ["eventName":"LPMessagingSDKConversationViewControllerDidDismiss"];
+        let jsonString = self.convertDicToJSON(dic: response)
+        
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:jsonString)
+        pluginResult?.setKeepCallbackAs(true)
+        self.globalCallbackCommandDelegate?.send(pluginResult, callbackId: self.globalCallbackCommand?.callbackId)
+
+        
     }
     
 }

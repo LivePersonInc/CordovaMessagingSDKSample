@@ -6,7 +6,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.liveperson.api.LivePersonCallback;
+import com.liveperson.api.LivePersonCallbackImpl;
+import com.liveperson.api.sdk.LPConversationData;
 import com.liveperson.infra.InitLivePersonProperties;
 import com.liveperson.infra.callbacks.InitLivePersonCallBack;
 import com.liveperson.messaging.TaskType;
@@ -39,6 +40,7 @@ public class LPMessagingSDK extends CordovaPlugin {
     public static final String LP_REGISTER_PUSHER = "register_pusher";
 
     CallbackContext mCallbackContext;
+    CallbackContext mGlobalCallbackContext;
 
     /**
      * Liveperson messaging API calls from the JS
@@ -140,18 +142,20 @@ public class LPMessagingSDK extends CordovaPlugin {
                             Log.i(TAG, "SDK initialize completed successfully");
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cordova.getActivity());
                             sharedPreferences.edit().putString(LP_ACCOUNT_ID, accountId).apply();
-                            JSONObject json = new JSONObject();
-                            try {
-                                json.putOpt("eventName","LPMessagingSDKInitSuccess");
-                            } catch (JSONException e1) {
-                                e1.printStackTrace();
-                            }
-                            onEvent(json);
+//                            JSONObject json = new JSONObject();
+//                            try {
+//                                json.putOpt("eventName","LPMessagingSDKInitSuccess");
+//                            } catch (JSONException e1) {
+//                                e1.printStackTrace();
+//                            }
+//                            onEvent(json);
+
+
                             cordova.getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     setCallBack();
-                                   // mCallbackContext.success("Init End Successfully for account Id: " + accountId);
+
                                 }
                             });
                         }
@@ -159,13 +163,13 @@ public class LPMessagingSDK extends CordovaPlugin {
                         @Override
                         public void onInitFailed(Exception e) {
                             Log.i(TAG, "SDK initialize completed with error");
-                            JSONObject json = new JSONObject();
-                            try {
-                                json.putOpt("eventName","LPMessagingSDKInitError");
-                            } catch (JSONException e1) {
-                                e1.printStackTrace();
-                            }
-                            onEvent(json);
+//                            JSONObject json = new JSONObject();
+//                            try {
+//                                json.putOpt("eventName","LPMessagingSDKInitError");
+//                            } catch (JSONException e1) {
+//                                e1.printStackTrace();
+//                            }
+//                            onEvent(json);
                             cordova.getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -243,207 +247,79 @@ public class LPMessagingSDK extends CordovaPlugin {
      * Callbacks that call when the conversation activity running
      */
     private void setCallBack() {
-        LivePerson.setCallback(new LivePersonCallback() {
+        LivePerson.setCallback(new LivePersonCallbackImpl() {
             @Override
             public void onError(TaskType type, String message) {
-//                onEvent("problem " + type.name());
-
-
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKError");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                onEvent(json);
 
             }
 
             @Override
             public void onTokenExpired() {
 
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKTokenExpired");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                onEvent(json);
+                // Change authentication key here
+                // LivePerson.reconnect(SampleAppStorage.getInstance(MainActivity.this).getAuthCode());
+            }
+
+            @Override
+            public void onConversationStarted(LPConversationData convData) {
+
 
             }
 
             @Override
-            public void onConversationStarted() {
-
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKConversationStarted");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onConversationResolved(LPConversationData convData) {
 
 
-                onEvent(json);
-
-            }
-
-            @Override
-            public void onConversationResolved() {
-
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKConversationEnded");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-                onEvent(json);
             }
 
             @Override
             public void onConnectionChanged(boolean isConnected) {
-                // onEvent("onConnectionChanged");
-//                Map<String,String> eventData = new HashMap<>();
-//                eventData.put("eventName","onConnectionChanged");
-//                eventData.put("isReady","isConnected");
 
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKConnectionStateChanged");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    json.put("isReady",isConnected);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                onEvent(json);
             }
 
             @Override
             public void onAgentTyping(boolean isTyping) {
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKAgentIsTypingStateChanged");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    json.put("isTyping",isTyping);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                onEvent(json);
+
             }
 
             @Override
             public void onAgentDetailsChanged(AgentData agentData) {
 
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKAgentDetails");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-//                try {
-//                    json.put("agentData",agentData.);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-                onEvent(json);
             }
 
             @Override
             public void onCsatDismissed() {
 
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKConversationCSATDismissedOnSubmittion");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                onEvent(json);
             }
 
             @Override
             public void onCsatSubmitted(String conversationId) {
 
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKCSATScoreSubmissionDidFinish");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    json.putOpt("conversationId",conversationId);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                onEvent(json);
             }
 
             @Override
             public void onConversationMarkedAsUrgent() {
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKConversationMarkedAsUrgent");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                onEvent(json);
 
             }
 
             @Override
             public void onConversationMarkedAsNormal() {
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKConversationMarkedAsNotUrgent");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                onEvent(json);
             }
 
             @Override
             public void onOfflineHoursChanges(boolean isOfflineHoursOn) {
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","LPMessagingSDKOffHoursStateChanged");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    json.putOpt("isOfflineHoursOn",isOfflineHoursOn);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                onEvent(json);
+
             }
 
             @Override
             public void onAgentAvatarTapped(AgentData agentData) {
-                JSONObject json = new JSONObject();
-                try {
-                    json.putOpt("eventName","onAgentAvatarTapped");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                onEvent(json);
+
             }
         });
     }
-
     /**
      * Call this method to fire e=vent back to the JS during active conversation
      * @param event

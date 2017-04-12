@@ -71,7 +71,7 @@ var app = {
 
     },
     clearDeviceHistoryAndLogout: function() {
-        console.log("*** clearDeviceHistoryAndLogout ***");
+        console.log("999 clearDeviceHistoryAndLogout ***");
         lpMessagingSDK.lp_conversation_api(
             "lp_clear_history_and_logout", [this.settings.accountId],
             this.clearHistorySuccessCallback,
@@ -80,40 +80,26 @@ var app = {
 
     },
     clearHistorySuccessCallback: function(data) {
-        console.log("clearDeviceHistoryAndLogout callback!");
+        console.log("999 clearDeviceHistoryAndLogout callback!");
         var eventData = JSON.parse(data);
-        console.log("clearDeviceHistoryAndLogout " + data);
+        console.log("999 clearDeviceHistoryAndLogout " + data);
     },
     successCallback: function(data) {
 
-        console.log(
-            "successCallback fired! ",
-            eventData,
-            typeof(eventData)
-        );
+        console.log("999 successCallback fired! " + data);
 
         var eventData = JSON.parse(data);
 
         if (eventData.eventName == "LPMessagingSDKConnectionStateChanged") {
-            console.log("************************************* LPMessagingSDKConnectionStateChanged callback fired! ", eventData.isReady)
+            console.log("999 ************************************* LPMessagingSDKConnectionStateChanged callback fired! ", eventData.isReady)
         }
 
         if (eventData.eventName == 'LPMessagingSDKTokenExpired') {
-            console.log("authenticated token has expired...refreshing...");
+            console.log("999 authenticated token has expired...refreshing...");
             this.lpGenerateNewAuthenticationToken();
         }
 
-        if (eventData.eventName == 'LPMessagingSDKInitSuccess') {
-            console.log("*** LPMessagingSDKInitSuccess *** callback in JS");
-            var buttonElement = document.getElementById(this.settings.startMessagingConversationButtonId);
-            buttonElement.setAttribute('style', 'display:block;');
-            //buttonElement.setAttribute('class', 'ready');
-
-        }
-        
-        if(eventData.eventName == "LPMessagingSDKSetUserProfileSuccess") {
-            console.log("*** LPMessagingSDKSetUserProfileSuccess ** ")
-        }
+        console.log('999 successCallback fired ' + eventData.eventName);
 
     },
     errorCallback: function(eventDescription) {
@@ -122,10 +108,20 @@ var app = {
             eventDescription
         );
     },
+    globalSuccessCallback: function(data) {
+        console.log(
+            '999 globalSuccessCallback --> ' + data
+        );
+    },
+    globalErrorCallback: function(data) {
+        console.log(
+            '999 globalErrorCallback --> ' + data
+        );
+    },
     lpGenerateNewAuthenticationToken: function() {
         // code to generate new fresh JWT would go here...
         // TODO -- implement auth0 API call for refresh token via AJAX/jQuery etc to get a new token
-        var jwt = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0wNC1BUFItMjAxNy0xMTIwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTEzMDUxMDAwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiJUQUxLVEFMSy0wNC1BUFItMjAxNy0xMTIwIiwiYmFsYW5jZSI6LTQwMC45OSwic29jaWFsSWQiOiIxMTI1NjMyNDc4MCIsImltZWkiOiIzNTQzNTQ2NTQzNTQ1Njg4IiwidXNlck5hbWUiOiJ1c2VyMDAwIiwiY29tcGFueVNpemUiOjUwMCwiYWNjb3VudE5hbWUiOiJiYW5rIGNvcnAiLCJyb2xlIjoiYnJva2VyIiwibGFzdFBheW1lbnREYXRlIjp7ImRheSI6MTUsIm1vbnRoIjoxMCwieWVhciI6MjAxNH0sInJlZ2lzdHJhdGlvbkRhdGUiOnsiZGF5IjoyMywibW9udGgiOjUsInllYXIiOjIwMTN9fX0seyJ0eXBlIjoicGVyc29uYWwiLCJwZXJzb25hbCI6eyJmaXJzdG5hbWUiOiJKb2huOTkiLCJsYXN0bmFtZSI6IkJlYWRsZTk5IiwiYWdlIjp7ImFnZSI6MzQsInllYXIiOjE5ODAsIm1vbnRoIjo0LCJkYXkiOjE1fSwiY29udGFjdHMiOlt7ImVtYWlsIjoiamJlYWRsZTk5QGxpdmVwZXJzb24uY29tIiwicGhvbmUiOiIrMSAyMTItNzg4LTg4NzcifV0sImdlbmRlciI6Ik1BTEUifX1dfQ.LlClhbOSl1SP2eNfxmeNHP4WEQytOG4hmXu2hSgQlWFUOvZ3hLDu6KzPiNq-tvN4gZ_a2xVrXMxVqvQa-gp2Bc8ZtMSo91HJi39AiAgbO7ETKZ8xbBkwKhs6DeWdhXyb5WHHwjnAN8ba_vWeKkQ3yHJ7bvi9W-q2LjfymATu6a4";
+        var jwt = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSQlMtMTIzLTQ1Ni03ODktMDEyIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE1MTQ3MTg2NzEwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiIxMzg3NjZBQyIsImJhbGFuY2UiOi00MDAuOTksInNvY2lhbElkIjoiMTEyNTYzMjQ3ODAiLCJpbWVpIjoiMzU0MzU0NjU0MzU0NTY4OCIsInVzZXJOYW1lIjoidXNlcjAwMCIsImNvbXBhbnlTaXplIjo1MDAsImFjY291bnROYW1lIjoiYmFuayBjb3JwIiwicm9sZSI6ImJyb2tlciIsImxhc3RQYXltZW50RGF0ZSI6eyJkYXkiOjE1LCJtb250aCI6MTAsInllYXIiOjIwMTR9LCJyZWdpc3RyYXRpb25EYXRlIjp7ImRheSI6MjMsIm1vbnRoIjo1LCJ5ZWFyIjoyMDEzfX19LHsidHlwZSI6InBlcnNvbmFsIiwicGVyc29uYWwiOnsiZmlyc3RuYW1lIjoiSm9objk5IiwibGFzdG5hbWUiOiJCZWFkbGU5OSIsImFnZSI6eyJhZ2UiOjM0LCJ5ZWFyIjoxOTgwLCJtb250aCI6NCwiZGF5IjoxNX0sImNvbnRhY3RzIjpbeyJlbWFpbCI6ImpiZWFkbGU5OUBsaXZlcGVyc29uLmNvbSIsInBob25lIjoiKzEgMjEyLTc4OC04ODc3In1dLCJnZW5kZXIiOiJNQUxFIn19XX0.vZeZf8vGG1T2vYV7ysOCU6Y8cocuvWJ-SJOeTly_KS2Dy0d-uNJuxRdCuxpaXk_9hys79IrKWhsl-y3K7gyM7mdr1v2WXoBWYYGohtAkPJqj67bvsG3OKLEKI_rFIm8M2Jqj1lCv_31akNRfYfvpMxh6n-PC__aUSPrj5FyDYtih0sewHqFS_rDg4SEpE5eP45QkleY0hfUBePTF5eKmF4FLnJNGbhyjOf8rsIWyhVLY8dEUyilB0XjSkkAvkRHBMUPdTVHU3IE5Yz9QgnZmEr7AQAf83mBEAzQUyturmBVfKajfEJ5GYaVaql5STdvRfTfvX73swu3r3ueKMoDHaw";
         lpMessagingSDK.lp_conversation_api(
             "reconnect_with_new_token", [jwt],
             this.successCallback,
@@ -151,27 +147,62 @@ var app = {
             "branding": brandingOptions,
             "window": windowOptions
         };
-
+        //here2
         lpMessagingSDK.lp_conversation_api(
             "lp_sdk_init", [this.settings.accountId, sdkConfig],
-            this.successCallback,
-            this.errorCallback
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique lp_sdk_init SDK callback");
+            },
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique lp_sdk_init SDK error callback");
+            }
         );
-        
+
         lpMessagingSDK.lp_conversation_api(
-           "set_lp_user_profile", [
-                                   "123456",
-                                   "John",
-                                   "Doe",
-                                   "JD",
-                                   "https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg",
-                                   "555-444-12345"
-                                   ],
-           this.successCallback,
-           this.errorCallback
-       );
-        
-        console.log('lpMessagingSdkInit completed -- ', this.settings.accountId);
+            "set_lp_user_profile", [
+                this.settings.accountId,
+                "John",
+                "Doe",
+                "JD",
+                "https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg",
+                "555-444-12345"
+            ],
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique set_lp_user_profile SDK callback");
+            },
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique set_lp_user_profile SDK error callback");
+            }
+        );
+
+
+        lpMessagingSDK.lp_register_event_callback(
+            [this.settings.accountId],
+            this.globalSuccessCallback,
+            this.globalErrorCallback
+        );
+
+        console.log('999 post lp_register_event_callback...');
+        console.log(
+            '999 pre hello world call in js'
+        );
+        lpMessagingSDK.hello_world(
+            "hello_world", [this.settings.accountId],
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique hello_world  callback");
+            },
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique hello_world  error callback");
+            }
+        );
+        console.log("999 post hello.world call");
+        console.log('999 js lpMessagingSdkInit completed -- ', this.settings.accountId);
     },
     lpStartMessagingConversation: function(customerId) {
 
@@ -189,8 +220,14 @@ var app = {
                 this.settings.accountId,
                 customerId == "jwt1" ? JWT : JWT2
             ],
-            this.successCallback,
-            this.errorCallback
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique start_lp_conversation SDK callback");
+            },
+            function(data) {
+                var eventData = JSON.parse(data);
+                console.log("999 js ... unique start_lp_conversation SDK error callback");
+            }
         );
 
         console.log('lpStartMessagingConversation completed ', JWT);
