@@ -1,10 +1,10 @@
 # Cordova Messaging Plugin
 
-Current Version: v1.3
+Current Version: v1.4
 
-## v1.3 Release Notes:
+## v1.4 Release Notes:
 
-Are in the `/plugins/v1.3/MessagingSDKPlugin/README.md` file
+Are in the `/plugins/v1.4/MessagingSDKPlugin/README.md` file
 
 ## "Where do I find the latest version of the plugin?"
 
@@ -13,9 +13,9 @@ The various versions of the plugin live here:
 
 `/plugins/`
 
-The latest release v1.3 is here
+The latest release v1.4 is here
 
-`/plugins/v1.3/MessagingSDKPlugin`
+`/plugins/v1.4/MessagingSDKPlugin`
 
 If you need to reinstall the plugin to your app, make sure you pull it from this folder to include the latest iOS frameworks.
 
@@ -24,7 +24,7 @@ e.g if you were working in the sampleapp01 example folder
 ```
 cd apps/sampleapp01
 cordova plugin remove com.liveperson.messagingSDK
-cordova plugin add ../../plugins/v1.3/MessagingSDKPlugin
+cordova plugin add ../../plugins/v1.4/MessagingSDKPlugin
 ```
 
 ### iOS Install 
@@ -56,6 +56,8 @@ You will still need to follow the usual steps for adding the embedded binary `.f
 
 The plugin itself does NOT include any copies of the Android SDK `aars` libraries. You should download the [latest version of the Android SDK from here on github](https://github.com/LP-Messaging/Android-Messaging-SDK/releases). Once downloaded, follow the instructions in the `/docs` folder for adding the Messaging SDK to your Android Cordova app in Android studio.
 
+## TODO -- update for v.2.1.1
+
 Android v2.1.0 `aars` files are located in `/sdk-libs/android/v2.1.0` for your convenience **BUT ALWAYS CHECK GITHUB RELEASES LINK ABOVE FOR THE LATEST VERSION**
 
 ----------
@@ -63,6 +65,10 @@ Android v2.1.0 `aars` files are located in `/sdk-libs/android/v2.1.0` for your c
 ## Sample Apps Included
 
 Within the `apps/` folder at the root of this repo you will find some sample apps demoing the plugin. Here is a breakdown.
+
+### `apps/sampleapp03`
+
+**TODO/ document !**
 
 ### `apps/sampleapp01`
 
