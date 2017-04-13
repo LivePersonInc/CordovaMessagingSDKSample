@@ -1,15 +1,15 @@
 [
     {
-        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/layout/abc_list_menu_item_checkbox.xml",
-        "source": "/Users/jbeadle/.android/build-cache/e01c35bf5a22e66e9a25ead649ac299889dd81df/output/res/layout/abc_list_menu_item_checkbox.xml"
+        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/layout/lpinfra_ui_chat_header_layout.xml",
+        "source": "/Users/jbeadle/.android/build-cache/2bf2e5b635c607515980502c98421a7c41d4879e/output/res/layout/lpinfra_ui_chat_header_layout.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/layout/lpmessaging_ui_activity_conversation.xml",
         "source": "/Users/jbeadle/.android/build-cache/77c8d5bd7b64d380aa45a310acce2c824cab75e1/output/res/layout/lpmessaging_ui_activity_conversation.xml"
     },
     {
-        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/layout/lpinfra_ui_chat_header_layout.xml",
-        "source": "/Users/jbeadle/.android/build-cache/2bf2e5b635c607515980502c98421a7c41d4879e/output/res/layout/lpinfra_ui_chat_header_layout.xml"
+        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/layout/abc_list_menu_item_checkbox.xml",
+        "source": "/Users/jbeadle/.android/build-cache/e01c35bf5a22e66e9a25ead649ac299889dd81df/output/res/layout/abc_list_menu_item_checkbox.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/layout/abc_popup_menu_header_item_layout.xml",

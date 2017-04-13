@@ -30,6 +30,8 @@ buildscript {
     // http://tools.android.com/tech-docs/new-build-system/version-compatibility
     // and https://issues.apache.org/jira/browse/CB-8143
     dependencies {
+		classpath "com.google.gms:google-services:3.0.0"
+		classpath "com.google.gms:google-services:3.0.0"
         classpath 'com.android.tools.build:gradle:2.3.1'
     }
 }
@@ -89,6 +91,7 @@ ext {
 
 // PLUGIN GRADLE EXTENSIONS START
 apply from: "com.liveperson.messagingSDK/sampleapp03-lpMessagingBuild.gradle"
+apply from: "phonegap-plugin-push/sampleapp03-push.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -250,6 +253,9 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     debugCompile(project(path: "CordovaLib", configuration: "debug"))
     releaseCompile(project(path: "CordovaLib", configuration: "release"))
+    compile "com.android.support:support-v13:25.1.0"
+    compile "me.leolin:ShortcutBadger:1.1.11@aar"
+    compile "com.google.firebase:firebase-messaging:9.8.0"
     // SUB-PROJECT DEPENDENCIES END
 }
 

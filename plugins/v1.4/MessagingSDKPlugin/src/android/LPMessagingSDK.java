@@ -27,7 +27,7 @@ import java.util.Map;
 public class LPMessagingSDK extends CordovaPlugin {
 
     private static final String TAG = LPMessagingSDK.class.getSimpleName();
-    private static final String SDK_SAMPLE_APP_ID = "com.liveperson.cordova.sample.app";
+    private static final String SDK_SAMPLE_APP_ID = "com.liveperson.sampleapp03";
 
     private static final String INIT = "lp_sdk_init";
     private static final String START_CONVERSATION = "start_lp_conversation";
@@ -43,7 +43,7 @@ public class LPMessagingSDK extends CordovaPlugin {
 
     CallbackContext mCallbackContext;
     CallbackContext mGlobalCallbackContext;
-
+    CallbackContext mRegisterLpPusherCallbackContext;
     /**
      * Liveperson messaging API calls from the JS
      * @param action - supported action: lp_sdk_init, start_lp_conversation
@@ -129,12 +129,23 @@ public class LPMessagingSDK extends CordovaPlugin {
                 setProfile(callbackContext, args);
                 break;
             case LP_REGISTER_PUSHER:
-                mCallbackContext = callbackContext;
+                mRegisterLpPusherCallbackContext = callbackContext;
                 final String account = args.getString(0);
                 final String token = args.getString(1);
-                Log.d(TAG, "Messaging SDK: Register pusher for for account: " + account +", token: " + token);
+                Log.d(TAG, "@@@ Android ...LPMessaging SDK: register_pusher for  account: " + account +", token: " + token);
                 LivePerson.registerLPPusher(account, SDK_SAMPLE_APP_ID, token);
-                mCallbackContext.success("FCM token registration end successfully");
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("eventName","LPMessagingSDKRegisterLpPusher");
+                    json.put("deviceToken",token);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                PluginResult resultLpPusher = new PluginResult(PluginResult.Status.OK, json.toString());
+                resultLpPusher.setKeepCallback(true);
+                mRegisterLpPusherCallbackContext.sendPluginResult(resultLpPusher);
+
                 break;
             default:
                 mCallbackContext = callbackContext;
@@ -208,8 +219,17 @@ public class LPMessagingSDK extends CordovaPlugin {
     }
 
     private void reconnect(String jwt) {
-
+        final JSONObject json = new JSONObject();
+        try {
+            json.put("eventName","LPMessagingSDKReconnectWithNewToken");
+            json.put("token",jwt);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
         LivePerson.reconnect(jwt);
+        PluginResult result = new PluginResult(PluginResult.Status.OK, json.toString());
+        result.setKeepCallback(true);
+        mCallbackContext.sendPluginResult(result);
     }
 
     /**
@@ -221,7 +241,8 @@ public class LPMessagingSDK extends CordovaPlugin {
                 public void run() {
                     final JSONObject json = new JSONObject();
                     try {
-                        json.put("eventName","start_lp_conversation");
+                        json.put("eventName","LPMessagingSDKStartConversation");
+                        json.put("type","unauthenticated");
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }
@@ -248,7 +269,7 @@ public class LPMessagingSDK extends CordovaPlugin {
             public void run() {
                 final JSONObject json = new JSONObject();
                 try {
-                    json.put("eventName","start_lp_conversation");
+                    json.put("eventName","LPMessagingSDKStartConversation");
                     json.put("type","authenticated");
 
                 } catch (JSONException e1) {
@@ -415,19 +436,39 @@ public class LPMessagingSDK extends CordovaPlugin {
 
             @Override
             public void onAgentTyping(boolean isTyping) {
+                final JSONObject eventJson = new JSONObject();
+                try {
+                    eventJson.put("eventName","LPMessagingSDKAgentIsTypingStateChanged");
+                    eventJson.put("isTyping",isTyping);
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
 
+                PluginResult result = new PluginResult(PluginResult.Status.OK, eventJson.toString());
+                result.setKeepCallback(true);
+                mGlobalCallbackContext.sendPluginResult(result);
             }
 
             @Override
             public void onAgentDetailsChanged(AgentData agentData) {
+                final JSONObject eventJson = new JSONObject();
+                try {
+                    eventJson.put("eventName","LPMessagingSDKAgentDetails");
+                    eventJson.put("agent",agentData.toString());
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
 
+                PluginResult result = new PluginResult(PluginResult.Status.OK, eventJson.toString());
+                result.setKeepCallback(true);
+                mGlobalCallbackContext.sendPluginResult(result);
             }
 
             @Override
             public void onCsatDismissed() {
                 final JSONObject eventJson = new JSONObject();
                 try {
-                    eventJson.put("eventName","onCsatDismissed");
+                    eventJson.put("eventName","LPMessagingSDKCsatDismissed");
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
@@ -455,40 +496,65 @@ public class LPMessagingSDK extends CordovaPlugin {
 
             @Override
             public void onConversationMarkedAsUrgent() {
+                final JSONObject eventJson = new JSONObject();
+                try {
+                    eventJson.put("eventName","LPMessagingSDKConversationMarkedAsUrgent");
 
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+                PluginResult result = new PluginResult(PluginResult.Status.OK, eventJson.toString());
+                result.setKeepCallback(true);
+                mGlobalCallbackContext.sendPluginResult(result);
             }
 
             @Override
             public void onConversationMarkedAsNormal() {
+                final JSONObject eventJson = new JSONObject();
+                try {
+                    eventJson.put("eventName","LPMessagingSDKConversationMarkedAsNormal");
 
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+                PluginResult result = new PluginResult(PluginResult.Status.OK, eventJson.toString());
+                result.setKeepCallback(true);
+                mGlobalCallbackContext.sendPluginResult(result);
             }
 
             @Override
             public void onOfflineHoursChanges(boolean isOfflineHoursOn) {
+                final JSONObject eventJson = new JSONObject();
+                try {
+                    eventJson.put("eventName","LPMessagingSDKOffHoursStateChanged");
+                    eventJson.put("isOffHours",isOfflineHoursOn);
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
 
+                PluginResult result = new PluginResult(PluginResult.Status.OK, eventJson.toString());
+                result.setKeepCallback(true);
+                mGlobalCallbackContext.sendPluginResult(result);
             }
 
             @Override
             public void onAgentAvatarTapped(AgentData agentData) {
+                final JSONObject eventJson = new JSONObject();
+                try {
+                    eventJson.put("eventName","LPMessagingSDKAgentAvatarTapped");
+                    eventJson.put("agent",agentData.toString());
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
 
+                PluginResult result = new PluginResult(PluginResult.Status.OK, eventJson.toString());
+                result.setKeepCallback(true);
+                mGlobalCallbackContext.sendPluginResult(result);
 
             }
         });
     }
 
-
-    private void onEvent(JSONObject eventJson) {
-        Log.d(TAG, eventJson.toString());
-        if(mCallbackContext != null) {
-
-            Log.d(TAG, "******** onEvent mCallbackContext is NOT nil");
-
-            System.out.printf( "JSON: %s", eventJson.toString() );
-
-            PluginResult result = new PluginResult(PluginResult.Status.OK, eventJson.toString());
-            result.setKeepCallback(true);
-            mCallbackContext.sendPluginResult(result);
-
-        }
-    }
 }

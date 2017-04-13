@@ -23,6 +23,14 @@ module.exports = [
         "clobbers": [
             "lpMessagingSDK"
         ]
+    },
+    {
+        "id": "phonegap-plugin-push.PushNotification",
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "pluginId": "phonegap-plugin-push",
+        "clobbers": [
+            "PushNotification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -30,7 +38,8 @@ module.exports.metadata =
 {
     "cordova-plugin-whitelist": "1.3.2",
     "cordova-plugin-console": "1.0.6",
-    "com.liveperson.messagingSDK": "0.1.0"
+    "com.liveperson.messagingSDK": "0.1.0",
+    "phonegap-plugin-push": "1.10.2"
 };
 // BOTTOM OF METADATA
 });

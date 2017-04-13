@@ -16,12 +16,12 @@
         "source": "/Users/jbeadle/.android/build-cache/2bf2e5b635c607515980502c98421a7c41d4879e/output/res/drawable/lpinfra_ui_chat_url_bubble_bottom_start.xml"
     },
     {
-        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable/lpmessaging_ui_ic_state_sending.xml",
-        "source": "/Users/jbeadle/.android/build-cache/77c8d5bd7b64d380aa45a310acce2c824cab75e1/output/res/drawable/lpmessaging_ui_ic_state_sending.xml"
-    },
-    {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable/lpmessaging_ui_state_sending_05.xml",
         "source": "/Users/jbeadle/.android/build-cache/77c8d5bd7b64d380aa45a310acce2c824cab75e1/output/res/drawable/lpmessaging_ui_state_sending_05.xml"
+    },
+    {
+        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable/lpmessaging_ui_ic_state_sending.xml",
+        "source": "/Users/jbeadle/.android/build-cache/77c8d5bd7b64d380aa45a310acce2c824cab75e1/output/res/drawable/lpmessaging_ui_ic_state_sending.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable/lpmessaging_ui_consumer_url_bubble_rounded_top_background.xml",
@@ -32,12 +32,12 @@
         "source": "/Users/jbeadle/.android/build-cache/77c8d5bd7b64d380aa45a310acce2c824cab75e1/output/res/drawable/lpmessaging_ui_consumer_url_bubble_buttom_background.xml"
     },
     {
-        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable/lpmessaging_ui_feedback_submit_button.xml",
-        "source": "/Users/jbeadle/.android/build-cache/77c8d5bd7b64d380aa45a310acce2c824cab75e1/output/res/drawable/lpmessaging_ui_feedback_submit_button.xml"
-    },
-    {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable/lpinfra_ui_chat_header_rect.xml",
         "source": "/Users/jbeadle/.android/build-cache/2bf2e5b635c607515980502c98421a7c41d4879e/output/res/drawable/lpinfra_ui_chat_header_rect.xml"
+    },
+    {
+        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable/lpmessaging_ui_feedback_submit_button.xml",
+        "source": "/Users/jbeadle/.android/build-cache/77c8d5bd7b64d380aa45a310acce2c824cab75e1/output/res/drawable/lpmessaging_ui_feedback_submit_button.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp01/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable/lpmessaging_ui_urgent.png",

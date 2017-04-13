@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="messaging_ui-">
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/28d22ef09e2c17adb652341e8dd4e1b6eb372990/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/28d22ef09e2c17adb652341e8dd4e1b6eb372990/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/122dc7d40bf187c3375c74cae06199a2cbe01a5a/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/122dc7d40bf187c3375c74cae06199a2cbe01a5a/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

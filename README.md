@@ -56,9 +56,7 @@ You will still need to follow the usual steps for adding the embedded binary `.f
 
 The plugin itself does NOT include any copies of the Android SDK `aars` libraries. You should download the [latest version of the Android SDK from here on github](https://github.com/LP-Messaging/Android-Messaging-SDK/releases). Once downloaded, follow the instructions in the `/docs` folder for adding the Messaging SDK to your Android Cordova app in Android studio.
 
-## TODO -- update for v.2.1.1
-
-Android v2.1.0 `aars` files are located in `/sdk-libs/android/v2.1.0` for your convenience **BUT ALWAYS CHECK GITHUB RELEASES LINK ABOVE FOR THE LATEST VERSION**
+Android v2.1.1 `aars` files are located in `/sdk-libs/android/v2.1.1` for your convenience **BUT ALWAYS CHECK GITHUB RELEASES LINK ABOVE FOR THE LATEST VERSION**
 
 ----------
 
@@ -66,9 +64,14 @@ Android v2.1.0 `aars` files are located in `/sdk-libs/android/v2.1.0` for your c
 
 Within the `apps/` folder at the root of this repo you will find some sample apps demoing the plugin. Here is a breakdown.
 
-### `apps/sampleapp03`
+### `apps/sampleapp03` -- Authentication and Push Plugin
 
-**TODO/ document !**
++ includes authentication for both platforms
++ phone gap push plugin RC 2.0 for Android and iOS
+  + working on Android
+  + not yet tested on iOS due to account limitations TBC.
++ Android SDK v2.1.1
++ iOS SDK v2.1.2
 
 ### `apps/sampleapp01`
 
@@ -115,7 +118,42 @@ var failure = function() {
 }
 
 lpMessagingSDK.lp_conversation_api("lp_sdk_init", ["123456"], success, failure);
+```
 
+### `"register_pusher"`
+
+Used to register device tokens with the SDK for handling push notifications
+
++ **api method** : `lpMessagingSDK.lp_conversation_api`
++ **action** : `'register_pusher'`
++ **args** : [`accountId`,`deviceToken`]
+  + `deviceToken` should be obtained by your app using relevant cordova plugin
+
++ Reccomend this method is called within the success callback of `lp_sdk_init` to ensure SDK is ready to receive the token.
+
+```js
+lpMessagingSDK.lp_conversation_api(
+    "lp_sdk_init", [this.settings.accountId, sdkConfig],
+    function(data) {
+        var eventData = JSON.parse(data);
+        console.log("@@@ js ... unique lp_sdk_init SDK callback");
+        lpMessagingSDK.lp_conversation_api(
+            "register_pusher", [app.settings.accountId,app.deviceToken],
+            function(data) {
+                //var eventData = JSON.parse(data);
+                console.log("@@@ js ... unique register_pusher SDK callback .."+data);
+            },
+            function(data) {
+                // var eventData = JSON.parse(data);
+                console.log("@@@ js ... unique register_pusher SDK error callback ..."+data);
+            }
+        );
+    },
+    function(data) {
+        var eventData = JSON.parse(data);
+        console.log("@@@ js ... unique lp_sdk_init SDK error callback");
+    }
+);
 ```
 
 ### `"start_lp_conversation"`
@@ -142,23 +180,40 @@ lpMessagingSDK.lp_conversation_api(
 
 ### `"lp_clear_history_and_logout"`
 
-Used to clear the current user data and unregister the device from push notifications (once enabled in subsequent versions).
+Used to clear the current user data and unregister the device from push notifications.
 
-+ When the customer logs out of your app, call this method to clear the local device SDK history and unregister.
+#### Impact on Push Notifications 
+**Calling this method will mean the device is no longer going to receive push notifications until the next user logs back in and opens the conversation screen to send the latest JWT token to the SDK and establish a connection**. After that point the device will receive push notifications again for that user when not viewing the conversation screen.  
+
++ When the customer logs out of your app, call this method to clear the local device SDK history and unregister the device from push notifications.
 + Then once the next user logs in, **remember to call `lp_sdk_init` before starting a new conversation for the next user when you supply the updated and relevant JWT token**
++ see example below for doing this in the callback for logout ready for the next user.
 + You must supply the account id for your LivePerson account number into this method
 
 ```js
 lpMessagingSDK.lp_conversation_api(
     "lp_clear_history_and_logout", [this.settings.accountId],
-    this.clearHistorySuccessCallback,
-    this.errorCallback
+    function(data) {
+        var eventData = JSON.parse(data);
+        console.log("@@@ js ... unique clearDeviceHistoryAndLogout SDK callback ...data => "+data);
+        console.log("@@@ js ... post logout...now auto reinitialise the SDK for next user to save button press in demo!");
+        app.lpMessagingSdkInit();
+
+    },
+    function(data) {
+        var eventData = JSON.parse(data);
+        console.log("@@@ js ... unique clearDeviceHistoryAndLogout SDK error callback ...data => "+data);
+    }
 );
 ```
 
 + callback event name : `LPMessagingSDKClearHistoryAndLogout`
 
 ### `"reconnect_with_new_token"`
+
++ **args** : [`token`,`accountId`]
+  + **in that specific order!**
+  + `accountId` is required for iOS version of the function
 
 within your javascript `successCallback` function, you must listen for the specific `eventName` that tells you the SDK has detected that the customer JWT has expired and must be refreshed.
 
@@ -187,7 +242,7 @@ lpGenerateNewAuthenticationToken: function() {
 
     // pass the 
     lpMessagingSDK.lp_conversation_api(
-        "reconnect_with_new_token", [jwt],
+        "reconnect_with_new_token", [jwt,app.settings.accountId],
         this.successCallback,
         this.errorCallback
     );
@@ -200,7 +255,7 @@ lpGenerateNewAuthenticationToken: function() {
 ```js
 lpMessagingSDK.lp_conversation_api(
     "reconnect_with_new_token", 
-    [jwt],
+    [jwt,app.settings.accountId],
     this.successCallback,
     this.errorCallback
 );
@@ -213,16 +268,24 @@ lpMessagingSDK.lp_conversation_api(
 
 ### `"set_lp_user_profile"`
 
-Used to send **unauthenticated** customer information to the agent 
+Used to send **unauthenticated** customer information to the agent where authenticated equivalents are not being sent.
+
+**PLEASE NOTE** : unclear which of these values are still being used on server side so subject to change/deprecation in subsequent versions.
 
 `args` array parameter mapping:
 
-+ `1` : accountId : "123456"
-+ `2` : first name : "John"
-+ `3` : last name : "Doe"
-+ `4` : nickname : "JD"
-+ `5` : profile image url : "https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg"
-+ `6` : customer phone number : "555-444-12345"
++ `0` : accountId : "123456"
++ `1` : first name : "John"
++ `2` : last name : "Doe"
++ `3` : nickname : "JD"
++ `4` : profile image url : "https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg"
++ `5` : customer phone number : "555-444-12345"
+
+(iOS Only)
++ `6` : uid : "UID123145"
++ `7` : employeeID : "employeeId123123123"
+
+^ Both of the above seemingly not being read on server side for iOS so use with caution.
 
 ```js
 lpMessagingSDK.lp_conversation_api(
@@ -317,6 +380,24 @@ This video shows step by step how to replace the existing iOS frameworks and bun
 
 The following callbacks are fired from the iOS / Android apps back up into the Cordova plugin for processing / actions in Javascript
 
+### Register your Global Async Callback Handler
+
+#### API Function definition
+
+```js
+lpMessagingSDK.lp_register_event_callback: function(args, successCallback, errorCallback)
+```
+
++ register your global async callback handler for monitoring these events.
+
+```js
+lpMessagingSDK.lp_register_event_callback(
+    [accountId],
+    this.globalAsyncEventsSuccessCallback,
+    this.globalAsyncEventsErrorCallback
+);
+```
+
 ### SuccessCallback Event Object
 
 In your js successCallback function you will receive a `data` object that must be parsed from a string into JSON
@@ -337,18 +418,55 @@ There may be other additional data points depending on the callback and context.
 
 ### iOS + Android Callbacks
 
-The following is a list of the expected `eventName` property passed to the `successCallback` function when these events are raised. Where applicable additional data points are passed and noted below...
+#### Immediate responses
 
-+ `"LPMessagingSDKCustomButtonTapped"`
+Certain events are now returning immediate responses by triggering the respective, unique success/error callbacks passed into certain API functions.
+
+`lpMessagingSDK.lp_conversation_api` with the following `actions` will return success/failure ASAP.
+
++ **action**: `start_lp_conversation` | **eventName**: `LPMessagingSDKStartConversation` 
+  - based on the SDK API call not failing - does not mean the conversation screen has loaded without errors etc, just means we called the method successfully.
++ **action**: `set_lp_user_profile` | **eventName**: `LPMessagingSDKSetUserProfile`  
+  - called the API method and did/did not throw errors as a result.
++ **action**: `lp_sdk_init` | **eventName**: `LPMessagingSDKInit` 
+  - SDK has initialised successfully based on calling the method and not throwing any errors.
++ **action**: `lp_clear_history_and_logout` | **eventName**: `LPMessagingSDKClearHistoryAndLogout` 
+  - SDK has cleared device history and unregistered push notifications for the device.
++ **action**: `register_pusher` | **eventName**: `LPMessagingSDKRegisterLpPusher` 
+  - successully registered the push token via the API call. **Should only be called once `lp_sdk_init` has succeeded**. Suggest triggering within the success callback of `lp_sdk_init`
+  + Refer to `register_pusher` section for exact details, usage and implications
+
+
+#### Triggering asynchronously 
+
+
+
++ This will be the single handler for all the following async events
++ example function that JSON parses the data to get the eventData.eventName property listed below
+
+```js
+globalAsyncEventsSuccessCallback: function(data) {
+    var eventData = JSON.parse(data);
+    console.log(
+        '@@@ globalAsyncEventsSuccessCallback --> ' + data
+    );
+    if (eventData.eventName == 'LPMessagingSDKTokenExpired') {
+        console.log("@@@ authenticated token has expired...refreshing...");
+        app.lpGenerateNewAuthenticationToken();
+    }
+},
+```
+
+**eventData.eventName values listed below**. additional `eventData` properties are indented
+
++ `"LPMessagingSDKCustomButtonTapped"` (iOS Only)
 + `"LPMessagingSDKAgentDetails"`
   + `agentName` : String
-+ `"LPMessagingSDKActionsMenuToggled"`
++ `"LPMessagingSDKActionsMenuToggled"` (iOS Only)
   + `toggled` : true|false
-+ `"LPMessagingSDKHasConnectionError"`
++ `"LPMessagingSDKHasConnectionError"` (iOS Only)
   + `error` : String
 + `"LPMessagingSDKCSATScoreSubmissionDidFinish"`
-+ `"LPMessagingSDKObseleteVersion"`
-  + `error` : String
 + `"LPMessagingSDKAuthenticationFailed"`
   + `error` : String
 + `"LPMessagingSDKTokenExpired"`
@@ -356,7 +474,7 @@ The following is a list of the expected `eventName` property passed to the `succ
 + `"LPMessagingSDKError"`
   + `error` : String
 + `"LPMessagingSDKAgentIsTypingStateChanged"`
-  + `agentIsTyping` : `true|false`
+  + `isTyping` : `true|false`
 + `"LPMessagingSDKConversationStarted"`
   + `conversationID` : string
 + `"LPMessagingSDKConversationEnded"`
@@ -367,18 +485,30 @@ The following is a list of the expected `eventName` property passed to the `succ
   + `isReady` : true|false
 + `"LPMessagingSDKOffHoursStateChanged"`
   + `isOffHours` : true|false
-  + `accountId` : string
-+ `"LPMessagingSDKConversationViewControllerDidDismiss"`
++ `"LPMessagingSDKConversationViewControllerDidDismiss"` (iOS only)
 
 **NEW in v1.4**
+
+Immediate response callback execution:
 
 + `"LPMessagingSDKInit"`
 + `"LPMessagingSDKClearHistoryAndLogout"`
 + `"LPMessagingSDKSetUserProfile"`
++ `"LPMessagingSDKReconnectWithNewToken"`
+ + `"token"` : new jwt
++ `"LPMessagingSDKRegisterLpPusher"`
+ + `"deviceToken"` : device token supplied
++ `"LPMessagingSDKStartConversation"`
+  + `"type"` : "authenticated" | "unauthenticated"
+ 
 
-+ `"LPMessagingSDKObseleteVersion"`
+Triggering asynchronously -- register your global async callback handler for monitoring these events.
 
-### !!! Not currently implemented in callbacks!!!
++ `"LPMessagingSDKObseleteVersion"` (iOS Only)
++ `"LPMessagingSDKCsatDismissed"` (Android Only)
+
+
+### !!! Not currently implemented/applicable in callbacks!!!
 
 + `"LPMessagingSDKAgentAvatarTapped"`
 + `"LPMessagingSDKCSATCustomTitleView"`

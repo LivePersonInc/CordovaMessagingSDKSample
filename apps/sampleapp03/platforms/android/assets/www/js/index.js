@@ -21,7 +21,9 @@ var app = {
     settings: {
         accountId: "90233546", // replace with your account id
         startMessagingConversationButtonId: "start_lp_conversation",
-        logoutButtonId: "logout_and_clear_history"
+        logoutButtonId: "logout_and_clear_history",
+        activeUser:"jwt1",
+        deviceToken : ""
     },
     // Application Constructor
     initialize: function() {
@@ -40,10 +42,64 @@ var app = {
         }
         this.receivedEvent('deviceready');
         // initialise LP Messaging SDK here
-        this.lpMessagingSdkInit();
+
 
         // setup click event listener for start messaging button example
+        var push = PushNotification.init({
+        	android: {
+        	},
+        	ios: {
+        		alert: "true",
+        		badge: "true",
+        		sound: "true"
+        	}
+        });
 
+        push.on('registration', function(data) {
+        	// data.registrationId
+        	console.log('@@@ pushNotification plugin registrationId ...'+data.registrationId);
+            app.deviceToken = data.registrationId;
+            app.lpMessagingSdkInit(app.deviceToken);
+
+
+        });
+
+        push.on('error', function(e) {
+        	// e.message
+        	console.log('@@@ pushNotification plugin error ...'+e.message);
+        });
+
+
+        push.on('notification', function(data) {
+        	console.log('@@@ pushNotification on.notification ...'+data.message);
+        	//alert('New Message from Agent! ...'+data.message);
+
+        	bootbox.confirm({
+                title: "New Message Received",
+                message: data.message,
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Cancel'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> View'
+                    }
+                },
+                callback: function (result) {
+                    if(result) {
+                        console.log("@@@ bootbox --> user asked to view the message...calling startConversation...");
+                        app.lpStartMessagingConversation(app.activeUser);
+                    }
+                    console.log('@@@ bootbox ... This was logged in the callback: ' + result);
+                }
+            });
+
+//        	console.log('@@@ pushNotification on.notification ...'+data.title);
+//        	console.log('@@@ pushNotification on.notification ...'+data.count);
+//        	console.log('@@@ pushNotification on.notification ...'+data.sound);
+//        	console.log('@@@ pushNotification on.notification ...'+data.image);
+        	console.log('@@@ pushNotification on.notification ...'+data.additionalData);
+        });
 
         console.log('@@@ js ... onDeviceReady completed');
     },
@@ -129,7 +185,7 @@ var app = {
         // TODO -- implement auth0 API call for refresh token via AJAX/jQuery etc to get a new token
         var jwt = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSQlMtMTIzLTQ1Ni03ODktMDEyIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE1MTQ3MTg2NzEwMDAsImlhdCI6MTQ4NzE1OTMzNzAwMCwicGhvbmVfbnVtYmVyIjoiKzEtMTAtMzQ0LTM3NjUzMzMiLCJscF9zZGVzIjpbeyJ0eXBlIjoiY3RtcmluZm8iLCJpbmZvIjp7ImNzdGF0dXMiOiJjYW5jZWxsZWQiLCJjdHlwZSI6InZpcCIsImN1c3RvbWVySWQiOiIxMzg3NjZBQyIsImJhbGFuY2UiOi00MDAuOTksInNvY2lhbElkIjoiMTEyNTYzMjQ3ODAiLCJpbWVpIjoiMzU0MzU0NjU0MzU0NTY4OCIsInVzZXJOYW1lIjoidXNlcjAwMCIsImNvbXBhbnlTaXplIjo1MDAsImFjY291bnROYW1lIjoiYmFuayBjb3JwIiwicm9sZSI6ImJyb2tlciIsImxhc3RQYXltZW50RGF0ZSI6eyJkYXkiOjE1LCJtb250aCI6MTAsInllYXIiOjIwMTR9LCJyZWdpc3RyYXRpb25EYXRlIjp7ImRheSI6MjMsIm1vbnRoIjo1LCJ5ZWFyIjoyMDEzfX19LHsidHlwZSI6InBlcnNvbmFsIiwicGVyc29uYWwiOnsiZmlyc3RuYW1lIjoiSm9objk5IiwibGFzdG5hbWUiOiJCZWFkbGU5OSIsImFnZSI6eyJhZ2UiOjM0LCJ5ZWFyIjoxOTgwLCJtb250aCI6NCwiZGF5IjoxNX0sImNvbnRhY3RzIjpbeyJlbWFpbCI6ImpiZWFkbGU5OUBsaXZlcGVyc29uLmNvbSIsInBob25lIjoiKzEgMjEyLTc4OC04ODc3In1dLCJnZW5kZXIiOiJNQUxFIn19XX0.vZeZf8vGG1T2vYV7ysOCU6Y8cocuvWJ-SJOeTly_KS2Dy0d-uNJuxRdCuxpaXk_9hys79IrKWhsl-y3K7gyM7mdr1v2WXoBWYYGohtAkPJqj67bvsG3OKLEKI_rFIm8M2Jqj1lCv_31akNRfYfvpMxh6n-PC__aUSPrj5FyDYtih0sewHqFS_rDg4SEpE5eP45QkleY0hfUBePTF5eKmF4FLnJNGbhyjOf8rsIWyhVLY8dEUyilB0XjSkkAvkRHBMUPdTVHU3IE5Yz9QgnZmEr7AQAf83mBEAzQUyturmBVfKajfEJ5GYaVaql5STdvRfTfvX73swu3r3ueKMoDHaw";
         lpMessagingSDK.lp_conversation_api(
-            "reconnect_with_new_token", [jwt],
+            "reconnect_with_new_token", [jwt,app.settings.accountId],
             function(data) {
                 var eventData = JSON.parse(data);
                 console.log("@@@ js ... unique reconnect_with_new_token SDK callback");
@@ -141,8 +197,9 @@ var app = {
         );
         console.log('lpGenerateNewAuthenticationToken completed --> new jwt -->  ', jwt);
     },
-    lpMessagingSdkInit: function() {
+    lpMessagingSdkInit: function(token) {
         // lp_sdk_init
+
 
         var brandingOptions = {
             "remoteUserBubbleBackgroundColor": "purple",
@@ -165,6 +222,17 @@ var app = {
             function(data) {
                 var eventData = JSON.parse(data);
                 console.log("@@@ js ... unique lp_sdk_init SDK callback");
+                lpMessagingSDK.lp_conversation_api(
+                    "register_pusher", [app.settings.accountId,app.deviceToken],
+                    function(data) {
+                        //var eventData = JSON.parse(data);
+                        console.log("@@@ js ... unique register_pusher SDK callback .."+data);
+                    },
+                    function(data) {
+                       // var eventData = JSON.parse(data);
+                        console.log("@@@ js ... unique register_pusher SDK error callback ..."+data);
+                    }
+                );
             },
             function(data) {
                 var eventData = JSON.parse(data);
@@ -214,8 +282,8 @@ var app = {
         //        var JWT2 = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0xMi1BUFItMjAxNy0yMDAwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTEzMDUxMDAsImlhdCI6MTQ4NzE1OTMzNywibHBfc2RlcyI6W3sidHlwZSI6ImN0bXJpbmZvIiwiaW5mbyI6eyJjc3RhdHVzIjoibmV3IiwiY3R5cGUiOiJ2aXAiLCJjdXN0b21lcklkIjoiVEFMS1RBTEstMTItQVBSLTIwMTctMjAwMCIsImJhbGFuY2UiOjU1NS43Nywic29jaWFsSWQiOiI0ODQ4ODQ4NDg0IiwiaW1laSI6Ijk4NzEzMTU0ODc4Nzg0OSIsInVzZXJOYW1lIjoidXNlcjA1MiIsImNvbXBhbnlTaXplIjoxMDAsImFjY291bnROYW1lIjoidGFsa3RhbGsiLCJyb2xlIjoiY3VzdG9tZXIiLCJsYXN0UGF5bWVudERhdGUiOnsiZGF5IjoxNSwibW9udGgiOjMsInllYXIiOjIwMTd9LCJyZWdpc3RyYXRpb25EYXRlIjp7ImRheSI6MjMsIm1vbnRoIjo1LCJ5ZWFyIjoyMDEzfX19XX0.l1kKa8alysf3bcdykB3VNF7nViNrnqs8snOGBra6JDRn8Pc3r5y-fPlfeeK-l2Zo63x9WiK8gLfsvKtyqoxRcrL6YDxZw6uWQs-A3VDVdB5Yr6pZ3pDt2Bk1A5teBCebey-UYZ6aD-rzENV_rgCaBK1PCJyHOUBnQwl7m3Rtu5w";
 
         // sub TALKTALK-12-APR-2017-2023
-
-        var JWT2 = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0xMi1BUFItMjAxNy0yMTAwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTIwODE4NzEsImlhdCI6MTQ4NzE1OTMzNywibHBfc2RlcyI6W3sidHlwZSI6ImN0bXJpbmZvIiwiaW5mbyI6eyJjc3RhdHVzIjoibmV3IiwiY3R5cGUiOiJ2aXAiLCJjdXN0b21lcklkIjoiVEFMS1RBTEstMTItQVBSLTIwMTctMjEwMCJ9fSx7InR5cGUiOiJwZXJzb25hbCIsInBlcnNvbmFsIjp7ImFnZSI6eyJhZ2UiOjM0LCJ5ZWFyIjoxOTgwLCJtb250aCI6NCwiZGF5IjoxNX0sImNvbnRhY3RzIjpbeyJlbWFpbCI6ImJvYkB0YWxrdGFsay5jby51ayJ9XSwiZ2VuZGVyIjoiTUFMRSJ9fV19.m3ktgPjbmks1J1orh7mHtsEPjCeI0QQmwMXrDFVDE2-s3Q_JSFZRouqzQnIS14v_VHc2yMQ0WzEHFeSpL1g-LxbBLtxIWIILX67hkCLvOqeCGluziaD9QEtRzMiwdL_EG83OsF9WZW82vlIJRcFQzYJ4gPsFVRZYUogkIuSuDHA";
+        // exp 1492686671 04/20/2017 @ 11:11am (UTC)
+        var JWT2 = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0xMi1BUFItMjAxNy0yMTAwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTI2ODY2NzEsImlhdCI6MTQ4NzE1OTMzNywibHBfc2RlcyI6W3sidHlwZSI6ImN0bXJpbmZvIiwiaW5mbyI6eyJjc3RhdHVzIjoibmV3IiwiY3R5cGUiOiJ2aXAiLCJjdXN0b21lcklkIjoiVEFMS1RBTEstMTItQVBSLTIwMTctMjEwMCJ9fSx7InR5cGUiOiJwZXJzb25hbCIsInBlcnNvbmFsIjp7ImFnZSI6eyJhZ2UiOjM0LCJ5ZWFyIjoxOTgwLCJtb250aCI6NCwiZGF5IjoxNX0sImNvbnRhY3RzIjpbeyJlbWFpbCI6ImJvYkB0YWxrdGFsay5jby51ayJ9XSwiZ2VuZGVyIjoiTUFMRSJ9fV19.k5vGW5MKK5l201WQHDf4m-wYErLpWz4GSLEHbAGYpvnRwTDmeQU877u66XIVyeQ9OqQxQ7rA_uBXf-Lbu0kcVl2__3PVJjJlIPV3uWtpo-novLhaPWbInoINpRMB1x8RzDlEAmHECT4otGHIVdaAuAMF-cGP5wRoIoThuBlvDB0";
 
         lpMessagingSDK.lp_conversation_api(
             "start_lp_conversation", [

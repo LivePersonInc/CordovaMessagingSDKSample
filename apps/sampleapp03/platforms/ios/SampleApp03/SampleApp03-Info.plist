@@ -52,5 +52,13 @@
       <string>UIInterfaceOrientationPortraitUpsideDown</string>
       <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>remote-notification</string>
+    </array>
+    <key>GCM_SENDER_ID</key>
+    <string>1073860922601</string>
+    <key>IS_GCM_ENABLED</key>
+    <true/>
   </dict>
 </plist>

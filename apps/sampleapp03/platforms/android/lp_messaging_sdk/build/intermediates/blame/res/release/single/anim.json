@@ -29,7 +29,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/lpmessaging_ui_right_left_bounce.xml",
-        "source": "/Users/jbeadle/.android/build-cache/28d22ef09e2c17adb652341e8dd4e1b6eb372990/output/res/anim/lpmessaging_ui_right_left_bounce.xml"
+        "source": "/Users/jbeadle/.android/build-cache/122dc7d40bf187c3375c74cae06199a2cbe01a5a/output/res/anim/lpmessaging_ui_right_left_bounce.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/design_fab_in.xml",
@@ -37,11 +37,11 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/menu_icon_amination_out.xml",
-        "source": "/Users/jbeadle/.android/build-cache/6b23bb7067826a78d2abfe9b71c596e5e8fccd0d/output/res/anim/menu_icon_amination_out.xml"
+        "source": "/Users/jbeadle/.android/build-cache/84ba7dc1479bfaef270ab5472d8d3692017edcd9/output/res/anim/menu_icon_amination_out.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/lpmessaging_ui_pulse.xml",
-        "source": "/Users/jbeadle/.android/build-cache/28d22ef09e2c17adb652341e8dd4e1b6eb372990/output/res/anim/lpmessaging_ui_pulse.xml"
+        "source": "/Users/jbeadle/.android/build-cache/122dc7d40bf187c3375c74cae06199a2cbe01a5a/output/res/anim/lpmessaging_ui_pulse.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/abc_slide_in_bottom.xml",
@@ -49,7 +49,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/menu_icon_amination_in.xml",
-        "source": "/Users/jbeadle/.android/build-cache/6b23bb7067826a78d2abfe9b71c596e5e8fccd0d/output/res/anim/menu_icon_amination_in.xml"
+        "source": "/Users/jbeadle/.android/build-cache/84ba7dc1479bfaef270ab5472d8d3692017edcd9/output/res/anim/menu_icon_amination_in.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/abc_grow_fade_in_from_bottom.xml",
@@ -73,7 +73,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/lpmessaging_ui_slide_out.xml",
-        "source": "/Users/jbeadle/.android/build-cache/28d22ef09e2c17adb652341e8dd4e1b6eb372990/output/res/anim/lpmessaging_ui_slide_out.xml"
+        "source": "/Users/jbeadle/.android/build-cache/122dc7d40bf187c3375c74cae06199a2cbe01a5a/output/res/anim/lpmessaging_ui_slide_out.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/design_bottom_sheet_slide_out.xml",
@@ -85,6 +85,6 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/anim/lpmessaging_ui_slide_in.xml",
-        "source": "/Users/jbeadle/.android/build-cache/28d22ef09e2c17adb652341e8dd4e1b6eb372990/output/res/anim/lpmessaging_ui_slide_in.xml"
+        "source": "/Users/jbeadle/.android/build-cache/122dc7d40bf187c3375c74cae06199a2cbe01a5a/output/res/anim/lpmessaging_ui_slide_in.xml"
     }
 ]
