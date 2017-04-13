@@ -300,13 +300,13 @@ public class LPMessagingSDK extends CordovaPlugin {
      */
     private void setProfile(final CallbackContext callbackContext, JSONArray args) throws JSONException {
         final String appId = SDK_SAMPLE_APP_ID;
-        final String firstName  = args.getString(1);
-        final String lastName   = args.getString(2);
-        final String nickname   = args.getString(3);
-        final String profileImageUrl   = args.getString(4);
-        final String phone      = args.getString(5);
-        final String uid   = args.getString(6);
-        final String employeeId   = args.getString(7);
+        final String firstName  = !args.isNull(1) ? args.getString(1) : "";
+        final String lastName   = !args.isNull(2) ? args.getString(2) : "";
+        final String nickname   = !args.isNull(3) ? args.getString(3) : "";
+        final String profileImageUrl   = !args.isNull(4) ? args.getString(4) : "";
+        final String phone      = !args.isNull(5) ? args.getString(5) : "";
+        final String uid   = !args.isNull(6) ? args.getString(6) : "";
+        final String employeeId   = !args.isNull(7) ? args.getString(7) : "";
 
         ConsumerProfile consumerProfile = new ConsumerProfile.Builder()
                 .setFirstName(firstName)
@@ -422,7 +422,7 @@ public class LPMessagingSDK extends CordovaPlugin {
                 final JSONObject eventJson = new JSONObject();
                 try {
                     eventJson.put("eventName","LPMessagingSDKConnectionStateChanged");
-                    eventJson.put("connectionState",isConnected);
+                    eventJson.putOpt("connectionState",isConnected);
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }

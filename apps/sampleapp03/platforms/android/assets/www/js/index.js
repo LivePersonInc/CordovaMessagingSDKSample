@@ -247,9 +247,7 @@ var app = {
                 "Doe",
                 "NickName:JD",
                 "https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg",
-                "tel:555-444-12345",
-                "uid_5678",
-                "employeeId_1234"
+                "tel:555-444-12345"
             ],
             function(data) {
                 var eventData = JSON.parse(data);
