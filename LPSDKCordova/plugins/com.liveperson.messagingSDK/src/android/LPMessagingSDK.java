@@ -25,7 +25,7 @@ public class LPMessagingSDK extends CordovaPlugin {
     private static final String INIT = "lp_sdk_init";
     private static final String START_CONVERSATION = "start_lp_conversation";
     private static final String SET_USER = "set_lp_user_profile";
-    public static final String LP_ACCOUND_ID = "lp_account_id";
+    public static final String LP_ACCOUNT_ID = "lp_account_id";
     public static final String LP_REGISTER_PUSHER = "register_pusher";
 
     CallbackContext mCallbackContext;
@@ -89,7 +89,7 @@ public class LPMessagingSDK extends CordovaPlugin {
                         public void onInitSucceed() {
                             Log.i(TAG, "SDK initialize completed successfully");
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cordova.getActivity());
-                        sharedPreferences.edit().putString(LP_ACCOUND_ID, accountId).apply();
+                        sharedPreferences.edit().putString(LP_ACCOUNT_ID, accountId).apply();
                             cordova.getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
