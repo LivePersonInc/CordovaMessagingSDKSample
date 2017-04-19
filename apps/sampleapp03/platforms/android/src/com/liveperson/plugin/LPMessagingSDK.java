@@ -1,7 +1,7 @@
 package com.liveperson.plugin;
 
-import android.content.ComponentName;
-import android.content.Intent;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -27,7 +27,7 @@ import java.util.Map;
 public class LPMessagingSDK extends CordovaPlugin {
 
     private static final String TAG = LPMessagingSDK.class.getSimpleName();
-    private static final String SDK_SAMPLE_APP_ID = "com.liveperson.sampleapp03";
+    public String LP_APP_PACKAGE_NAME;
 
     private static final String INIT = "lp_sdk_init";
     private static final String START_CONVERSATION = "start_lp_conversation";
@@ -44,6 +44,21 @@ public class LPMessagingSDK extends CordovaPlugin {
     CallbackContext mCallbackContext;
     CallbackContext mGlobalCallbackContext;
     CallbackContext mRegisterLpPusherCallbackContext;
+
+    private CordovaWebView mainWebView;
+
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        mainWebView = webView;
+    }
+
+    public static String getAppPackageName(Context context) {
+        String currentPackageName = context.getPackageName();
+        Log.v(TAG, "LPMessagingSDK.getAppPackageName : currentPackageName" + currentPackageName);
+        return currentPackageName;
+    }
+
     /**
      * Liveperson messaging API calls from the JS
      * @param action - supported action: lp_sdk_init, start_lp_conversation
@@ -55,7 +70,8 @@ public class LPMessagingSDK extends CordovaPlugin {
     public boolean execute(final String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
         Log.v(TAG, "LPMessagingSDK.execute:" + action);
-
+        LP_APP_PACKAGE_NAME = getAppPackageName(cordova.getActivity());
+        Log.v(TAG, "LPMessagingSDK.LP_APP_PACKAGE_NAME:" + LP_APP_PACKAGE_NAME);
         boolean success = true;
 
 
@@ -71,7 +87,7 @@ public class LPMessagingSDK extends CordovaPlugin {
                 break;
             case INIT:
                 //mCallbackContext = callbackContext;
-        // lp_sdk_init - Call this action inorder to do Messaging SDK init
+                // lp_sdk_init - Call this action inorder to do Messaging SDK init
                 final String accountId = args.getString(0);
                 Log.d(TAG, "Messaging SDK: init for account Id: " + accountId);
                 initSDK(accountId,callbackContext);
@@ -79,7 +95,7 @@ public class LPMessagingSDK extends CordovaPlugin {
             case CLEAR_HISTORY_AND_LOGOUT:
                 mCallbackContext = callbackContext;
                 //final String accountId = args.getString(0);
-                LivePerson.logOut(cordova.getActivity(), args.getString(0), SDK_SAMPLE_APP_ID, new LogoutLivePersonCallback() {
+                LivePerson.logOut(cordova.getActivity(), args.getString(0), LP_APP_PACKAGE_NAME, new LogoutLivePersonCallback() {
                     @Override
                     public void onLogoutSucceed() {
                         JSONObject json = new JSONObject();
@@ -129,11 +145,13 @@ public class LPMessagingSDK extends CordovaPlugin {
                 setProfile(callbackContext, args);
                 break;
             case LP_REGISTER_PUSHER:
+
+
                 mRegisterLpPusherCallbackContext = callbackContext;
                 final String account = args.getString(0);
                 final String token = args.getString(1);
-                Log.d(TAG, "@@@ Android ...LPMessaging SDK: register_pusher for  account: " + account +", token: " + token);
-                LivePerson.registerLPPusher(account, SDK_SAMPLE_APP_ID, token);
+                Log.d(TAG, "@@@ Android ...LPMessaging SDK: register_pusher for  account: " + account +", token: " + token + " LP_APP_PACKAGE_NAME : "+LP_APP_PACKAGE_NAME);
+                LivePerson.registerLPPusher(account, LP_APP_PACKAGE_NAME, token);
                 JSONObject json = new JSONObject();
                 try {
                     json.put("eventName","LPMessagingSDKRegisterLpPusher");
@@ -167,7 +185,7 @@ public class LPMessagingSDK extends CordovaPlugin {
 
             cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
-                    LivePerson.initialize(cordova.getActivity(), new InitLivePersonProperties(accountId, SDK_SAMPLE_APP_ID, new InitLivePersonCallBack() {
+                    LivePerson.initialize(cordova.getActivity(), new InitLivePersonProperties(accountId, LP_APP_PACKAGE_NAME, new InitLivePersonCallBack() {
                         @Override
                         public void onInitSucceed() {
                             Log.i(TAG, "@@@ android ... SDK initialize completed successfully");
@@ -299,7 +317,7 @@ public class LPMessagingSDK extends CordovaPlugin {
      * @throws JSONException
      */
     private void setProfile(final CallbackContext callbackContext, JSONArray args) throws JSONException {
-        final String appId = SDK_SAMPLE_APP_ID;
+        final String appId = LP_APP_PACKAGE_NAME;
         final String firstName  = !args.isNull(1) ? args.getString(1) : "";
         final String lastName   = !args.isNull(2) ? args.getString(2) : "";
         final String nickname   = !args.isNull(3) ? args.getString(3) : "";
