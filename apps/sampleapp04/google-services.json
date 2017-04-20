@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1033039619349",
+    "firebase_url": "https://sampleapp04.firebaseio.com",
+    "project_id": "sampleapp04",
+    "storage_bucket": "sampleapp04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033039619349:android:5b6cfe773e2aeb6a",
+        "android_client_info": {
+          "package_name": "com.liveperson.sampleapp04"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033039619349-8su5hecab2mc9citac0ds0ddqd1kmnio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbIBYb6miLgGAlHMIOMKCG-qZT_GwBYTA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
