@@ -1,10 +1,18 @@
 # Cordova Messaging Plugin
 
-Current Version: v1.4
 
-## v1.4 Release Notes:
+Current Version: v1.5
 
-Are in the `/plugins/v1.4/MessagingSDKPlugin/README.md` file
+
+## v1.5 Release Notes
+
++ iOS frameworks in plugins folder v.1.5 bumped to v2.1.5 to include various bug fixes (https://github.com/LP-Messaging/iOS-Messaging-SDK/releases/tag/2.1.5)
+
+## PLEASE NOTE -- XCODE UPGRADE REQUIRED!!
+
++ v1.5 of the plugin has been compiled with the xcode version 8.3.1
++ any apps you build with this version of the iOS frameworks (v2.1.5) will require the above xcode version to build and run - due to the change in Swift version numbers.
+
 
 ## "Where do I find the latest version of the plugin?"
 
@@ -15,7 +23,7 @@ The various versions of the plugin live here:
 
 The latest release v1.4 is here
 
-`/plugins/v1.4/MessagingSDKPlugin`
+`/plugins/v1.5/MessagingSDKPlugin`
 
 If you need to reinstall the plugin to your app, make sure you pull it from this folder to include the latest iOS frameworks.
 
@@ -26,6 +34,14 @@ cd apps/sampleapp01
 cordova plugin remove com.liveperson.messagingSDK
 cordova plugin add ../../plugins/v1.4/MessagingSDKPlugin
 ```
+
+-----------
+
+## v1.4 Release Notes:
+
+Are in the `/plugins/v1.4/MessagingSDKPlugin/README.md` file
+
+
 
 ### iOS Install 
 
@@ -63,6 +79,17 @@ Android v2.1.1 `aars` files are located in `/sdk-libs/android/v2.1.1` for your c
 ## Sample Apps Included
 
 Within the `apps/` folder at the root of this repo you will find some sample apps demoing the plugin. Here is a breakdown.
+
+### `apps/sampleapp04` -- iOS Only SDK v2.1.5
+
+Has been created as  reference app using iOS frameworks v2.1.5 which fixes several bugs around token refresh situations.
+
+This app does NOT include an Android application - refer to SampleApp03 for the latest Android example app.
+
+Includes a basic iOS Cordova App with Messaging integration and the PhoneGap Push plugin installed - but not yet tested as Simulator restrictions prevent this...
+
+![screen shot 2017-04-20 at 22 50 14](https://cloud.githubusercontent.com/assets/10999907/25254104/c19f863e-261b-11e7-95ac-1affddb98db0.png)
+
 
 ### `apps/sampleapp03` -- Authentication and Push Plugin
 
