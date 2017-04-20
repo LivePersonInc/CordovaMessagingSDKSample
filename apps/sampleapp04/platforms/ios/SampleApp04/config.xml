@@ -18,6 +18,9 @@
     <feature name="LPMessagingSDK">
         <param name="ios-package" value="LPMessagingSDKPlugin" />
     </feature>
+    <feature name="PushNotification">
+        <param name="ios-package" value="PushPlugin" />
+    </feature>
     <name>SampleApp04</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -48,7 +51,4 @@
     <preference name="PageLength" value="0" />
     <preference name="PaginationBreakingMode" value="page" />
     <preference name="PaginationMode" value="unpaginated" />
-    <feature name="PushNotification">
-        <param name="ios-package" value="PushPlugin" />
-    </feature>
 </widget>
