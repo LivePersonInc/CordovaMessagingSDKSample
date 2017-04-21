@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="lp_messaging_sdk-unspecified">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lp_messaging_sdk/build/intermediates/bundles/default/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/lp_messaging_sdk/build/intermediates/bundles/default/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
