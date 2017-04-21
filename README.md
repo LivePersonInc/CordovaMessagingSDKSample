@@ -1,8 +1,9 @@
 # Cordova Messaging Plugin
 
-
 Current Version: v1.5
 
++ iOS SDK v2.1.5
++ Android SDK v2.1.3
 
 ## v1.5 Release Notes
 
@@ -21,7 +22,7 @@ The various versions of the plugin live here:
 
 `/plugins/`
 
-The latest release v1.4 is here
+The latest release v1.5 is here
 
 `/plugins/v1.5/MessagingSDKPlugin`
 
@@ -32,16 +33,10 @@ e.g if you were working in the sampleapp01 example folder
 ```
 cd apps/sampleapp01
 cordova plugin remove com.liveperson.messagingSDK
-cordova plugin add ../../plugins/v1.4/MessagingSDKPlugin
+cordova plugin add ../../plugins/v1.5/MessagingSDKPlugin
 ```
 
 -----------
-
-## v1.4 Release Notes:
-
-Are in the `/plugins/v1.4/MessagingSDKPlugin/README.md` file
-
-
 
 ### iOS Install 
 
@@ -72,7 +67,7 @@ You will still need to follow the usual steps for adding the embedded binary `.f
 
 The plugin itself does NOT include any copies of the Android SDK `aars` libraries. You should download the [latest version of the Android SDK from here on github](https://github.com/LP-Messaging/Android-Messaging-SDK/releases). Once downloaded, follow the instructions in the `/docs` folder for adding the Messaging SDK to your Android Cordova app in Android studio.
 
-Android v2.1.1 `aars` files are located in `/sdk-libs/android/v2.1.1` for your convenience **BUT ALWAYS CHECK GITHUB RELEASES LINK ABOVE FOR THE LATEST VERSION**
+Android v2.1.3 `aars` files are located in `/sdk-libs/android/v2.1.3` for your convenience **BUT ALWAYS CHECK GITHUB RELEASES LINK ABOVE FOR THE LATEST VERSION**
 
 ----------
 
@@ -97,9 +92,10 @@ Includes a basic iOS Cordova App with Messaging integration and the PhoneGap Pus
 + phone gap push plugin RC 2.0 for Android and iOS
   + working on Android
   + not yet tested on iOS due to account limitations TBC.
-+ Android SDK v2.1.1
++ Android SDK v2.1.3
 + iOS SDK v2.1.2
-
+  + runs on xcode 8.2.1
+  
 ### `apps/sampleapp01`
 
 + Combined Android and iOS Cordova app - running SDK 2.1.2 on iOS and 2.1.0 on Android
