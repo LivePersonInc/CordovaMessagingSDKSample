@@ -185,7 +185,7 @@ var app = {
         // TODO -- implement auth0 API call for refresh token via AJAX/jQuery etc to get a new token
         var jwt = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUQUxLVEFMSy0yMS1BUFItMjAxNy0xNTEwIiwiaXNzIjoiaHR0cHM6Ly93d3cubGl2ZXBlcnNvbi5jb20iLCJleHAiOjE0OTUzODE4MTksImlhdCI6MTQ4NzE1OTMzNywibHBfc2RlcyI6W3sidHlwZSI6ImN0bXJpbmZvIiwiaW5mbyI6eyJjc3RhdHVzIjoibmV3IiwiY3R5cGUiOiJ2aXAiLCJjdXN0b21lcklkIjoiVEFMS1RBTEstMTItQVBSLTIwMTctMjEwMCJ9fSx7InR5cGUiOiJwZXJzb25hbCIsInBlcnNvbmFsIjp7ImFnZSI6eyJhZ2UiOjM0LCJ5ZWFyIjoxOTgwLCJtb250aCI6NCwiZGF5IjoxNX0sImNvbnRhY3RzIjpbeyJlbWFpbCI6ImJvYkB0YWxrdGFsay5jby51ayJ9XSwiZ2VuZGVyIjoiTUFMRSJ9fV19.kLCTLwct8A-LJLsjU3Vc_8BrLWMX5oqzdqJ04W7lBOOnkG3Kq0Al2Yol_MdCrWB3LKz98f861tOhKlngP5zJBxdPTL4TNI8Z9PFagZWehYxJudHrVBxrRvqWkZo9n5lFA9Gr-zUcmQ2NuKf1snbJSqXhnVOk2bHsRfUGPiq4pns";
         lpMessagingSDK.lp_conversation_api(
-            "reconnect_with_new_token", [jwt,app.settings.accountId],
+            "reconnect_with_new_token", [jwt],
             function(data) {
                 var eventData = JSON.parse(data);
                 console.log("@@@ js ... unique reconnect_with_new_token SDK callback");

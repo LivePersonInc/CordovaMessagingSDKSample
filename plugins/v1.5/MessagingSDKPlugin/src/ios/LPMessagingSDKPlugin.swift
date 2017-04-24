@@ -26,6 +26,7 @@ import LPAMS
     var globalCallbackCommandDelegate: CDVCommandDelegate?
     var globalCallbackCommand: CDVInvokedUrlCommand?
     
+    var lpAccountNumber:String?
     
     override init() {
         super.init()
@@ -35,73 +36,17 @@ import LPAMS
         print("@@@ iOS pluginInitialize")
     }
     
-    func convertToDictionary(text: String) -> [String: Any]? {
-        if let data = text.data(using: .utf8) {
-            do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        return nil
-    }
-    
-    func register_pusher(_ command:CDVInvokedUrlCommand) {
-        // API passes in token via args object
-        let pushToken = command.argument(at: 1) as? Data
-        LPMessagingSDK.instance.registerPushNotifications(token: pushToken!);
-        self.registerLpPusherCallbackCommandDelegate = commandDelegate
-        self.registerLpPusherCallbackCommand = command
-        var response:[String:String];
-        
-        response = ["eventName":"LPMessagingSDKRegisterLpPusher","deviceToken":"\(String(describing: pushToken))"];
-        
-        let jsonString = self.convertDicToJSON(response)
-        // return NO_RESULT for now and then use this delegate in all async callbacks for other events.
-        let pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_OK,
-            messageAs: jsonString
-        )
-        
-        pluginResult?.setKeepCallbackAs(true)
-        
-        self.registerLpPusherCallbackCommandDelegate!.send(
-            pluginResult,
-            callbackId: self.registerLpPusherCallbackCommand!.callbackId
-        )
 
-    }
-    
-    func lp_register_event_callback(_ command: CDVInvokedUrlCommand) {
-        self.globalCallbackCommandDelegate = commandDelegate
-        self.globalCallbackCommand = command
-        
-        // return NO_RESULT for now and then use this delegate in all async callbacks for other events.
-        let pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_NO_RESULT,
-            messageAs: "lp_register_global_async_event_callback"
-        )
-        
-        pluginResult?.setKeepCallbackAs(true)
-        
-        self.globalCallbackCommandDelegate!.send(
-            pluginResult,
-            callbackId: self.globalCallbackCommand!.callbackId
-        )
-        
-        print("@@@ iOS lp_register_event_callback \n")
-
-    }
     
     
     func lp_sdk_init(_ command: CDVInvokedUrlCommand) {
-        guard let brandID = command.arguments.first as? String else {
+        guard let lpAccountNumber = command.arguments.first as? String else {
             print("Can't init without brandID")
             return
         }
 
         let config = command.arguments[1] as? [String:AnyObject]
-        print("lpMessagingSdkInit brandID --> \(brandID)")
+        print("lpMessagingSdkInit brandID --> \(lpAccountNumber)")
         /*
          examples pulling out config
          print(config!)
@@ -111,7 +56,7 @@ import LPAMS
 
          */
         do {
-            try LPMessagingSDK.instance.initialize(brandID)
+            try LPMessagingSDK.instance.initialize(lpAccountNumber)
             
             setSDKConfigurations(config!)
             LPMessagingSDK.instance.delegate = self
@@ -157,38 +102,104 @@ import LPAMS
         
     }
 
-    func reconnect_with_new_token(_ command: CDVInvokedUrlCommand) {
-        
-        var brandId:String;
-        var authCode:String;
-        authCode = (command.argument(at: 1) as? String)!
-        brandId = (command.argument(at: 2) as? String)!
-        
-//        if(command.argument(at: 1) as? String != nil){
-//            
-//        }
-//        
-//        if(command.argument(at: 2) as? String != nil){
-//            
-//        }
-        
-        self.conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(brandId)
-        
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
+    func register_pusher(_ command:CDVInvokedUrlCommand) {
+        // API passes in token via args object
+        let pushToken = command.argument(at: 1) as? Data
+        LPMessagingSDK.instance.registerPushNotifications(token: pushToken!);
+        self.registerLpPusherCallbackCommandDelegate = commandDelegate
+        self.registerLpPusherCallbackCommand = command
         var response:[String:String];
         
-        response = ["eventName":"LPMessagingSDKReconnectWithNewToken","token":"\(authCode)"];
+        response = ["eventName":"LPMessagingSDKRegisterLpPusher","deviceToken":"\(String(describing: pushToken))"];
+        
         let jsonString = self.convertDicToJSON(response)
-        
-        self.set_lp_callbacks(command)
-        
-        LPMessagingSDK.instance.reconnect(self.conversationQuery!, authenticationCode: authCode)
+        // return NO_RESULT for now and then use this delegate in all async callbacks for other events.
         let pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK,
             messageAs: jsonString
         )
         
         pluginResult?.setKeepCallbackAs(true)
-        self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
+        
+        self.registerLpPusherCallbackCommandDelegate!.send(
+            pluginResult,
+            callbackId: self.registerLpPusherCallbackCommand!.callbackId
+        )
+        
+    }
+    
+    func lp_register_event_callback(_ command: CDVInvokedUrlCommand) {
+        self.globalCallbackCommandDelegate = commandDelegate
+        self.globalCallbackCommand = command
+        
+        // return NO_RESULT for now and then use this delegate in all async callbacks for other events.
+        let pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_NO_RESULT,
+            messageAs: "lp_register_global_async_event_callback"
+        )
+        
+        pluginResult?.setKeepCallbackAs(true)
+        
+        self.globalCallbackCommandDelegate!.send(
+            pluginResult,
+            callbackId: self.globalCallbackCommand!.callbackId
+        )
+        
+        print("@@@ iOS lp_register_event_callback \n")
+        
+    }
+    
+    func reconnect_with_new_token(_ command: CDVInvokedUrlCommand) {
+        
+        guard let authCode = command.arguments.first as? String else {
+            print("Can't init without authCode jwt")
+            return
+        }
+        
+        print("@@@ reconnect_with_new_token: new token for reconnect - \(authCode)")
+        
+        var response:[String:String];
+        
+        
+        self.set_lp_callbacks(command)
+        do {
+            try LPMessagingSDK.instance.reconnect(self.conversationQuery!, authenticationCode: authCode)
+            
+            response = ["eventName":"LPMessagingSDKReconnectWithNewToken","token":"\(authCode)","lpAccountNumber":"\(String(describing: lpAccountNumber))"];
+            let jsonString = self.convertDicToJSON(response)
+            
+            let pluginResult = CDVPluginResult(
+                status: CDVCommandStatus_OK,
+                messageAs: jsonString
+            )
+            pluginResult?.setKeepCallbackAs(true)
+            self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
+        }
+        catch let error as NSError {
+            
+            response = ["eventName":"LPMessagingSDKReconnectWithNewToken","token":"\(authCode)","lpAccountNumber":"\(String(describing: lpAccountNumber))","error":"\(error)"];
+            let jsonString = self.convertDicToJSON(response)
+
+            let pluginResult = CDVPluginResult(
+                status: CDVCommandStatus_ERROR,
+                messageAs: jsonString
+            )
+            pluginResult?.setKeepCallbackAs(true)
+            self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
+
+        }
+        
     }
 
     
@@ -333,26 +344,14 @@ import LPAMS
      */
     func showConversation(_ brandID: String, authenticationCode:String? = nil) {
         
-        let conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(brandID)
+        self.conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(brandID)
         if authenticationCode == nil {
-            LPMessagingSDK.instance.showConversation(conversationQuery)
+            LPMessagingSDK.instance.showConversation(self.conversationQuery!)
         } else {
-            LPMessagingSDK.instance.showConversation(conversationQuery,authenticationCode: authenticationCode)
+            LPMessagingSDK.instance.showConversation(self.conversationQuery!,authenticationCode: authenticationCode)
        }
     }
     
-    /**
-     Set user profile for the consumer
-     */
-    // func setUserProfile(_ brandID: String, firstName: String?, lastName: String?, nickName: String?, uid: String?, profileImageURL: String?, phoneNumber: String?, employeeID: String?) {
-    //     //let user2 = LPUser(firstName: <#T##String?#>, lastName: <#T##String?#>, nickName: <#T##String?#>, uid: <#T##String?#>, profileImageURL: <#T##String?#>, phoneNumber: <#T##String?#>, employeeID: <#T##String?#>)
-    //     let user = LPUser(firstName: firstName, lastName: lastName, nickName: nickName,  uid: uid, profileImageURL: profileImageURL, phoneNumber: phoneNumber, employeeID: employeeID)
-    //     LPMessagingSDK.instance.setUserProfile(user, brandID: brandID)
-    //     sendEventToJavaScript(dicValue:[
-    //         "eventName":"LPMessagingSDKSetUserProfileSuccess",
-    //         "message" : "firstName: \(firstName), lastName: \(lastName), nickName: \(nickName),  uid: \(uid), profileImageURL: \(profileImageURL), phoneNumber: \(phoneNumber), employeeID: \(employeeID)"
-    //         ])
-    // }
     
     /**
      Change default SDK configurations

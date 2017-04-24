@@ -234,9 +234,9 @@ lpMessagingSDK.lp_conversation_api(
 
 ### `"reconnect_with_new_token"`
 
-+ **args** : [`token`,`accountId`]
-  + **in that specific order!**
-  + `accountId` is required for iOS version of the function
++ **args** : [`token`]
+  + ~~**in that specific order!**~~
+  + ~~`accountId` is required for iOS version of the function~~
 
 within your javascript `successCallback` function, you must listen for the specific `eventName` that tells you the SDK has detected that the customer JWT has expired and must be refreshed.
 
