@@ -5,11 +5,11 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lp_messaging_ui_ic_agent_avatar.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lp_messaging_ui_ic_agent_avatar.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lp_messaging_ui_ic_agent_avatar.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_image_light_large.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_image_light_large.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_image_light_large.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_scrubber_control_to_pressed_mtrl_000.png",
@@ -17,11 +17,11 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_ic_msg_read.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_msg_read.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_msg_read.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpinfra_ui_ic_send_disabled.png",
-        "source": "/Users/jbeadle/.android/build-cache/89c4ef323740a5beb86c925746bc3d9e64c81881/output/res/drawable-hdpi-v4/lpinfra_ui_ic_send_disabled.png"
+        "source": "/Users/jbeadle/.android/build-cache/728164be8e8ca3b83d68f0a39e5eee0e73bdec1c/output/res/drawable-hdpi-v4/lpinfra_ui_ic_send_disabled.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_list_divider_mtrl_alpha.9.png",
@@ -33,15 +33,15 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_ic_msg_sent.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_msg_sent.png"
-    },
-    {
-        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_ic_star_black_48dp.png",
-        "source": "/Users/jbeadle/.android/build-cache/e01c35bf5a22e66e9a25ead649ac299889dd81df/output/res/drawable-hdpi-v4/abc_ic_star_black_48dp.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_msg_sent.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png",
         "source": "/Users/jbeadle/.android/build-cache/e01c35bf5a22e66e9a25ead649ac299889dd81df/output/res/drawable-hdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_ic_star_black_48dp.png",
+        "source": "/Users/jbeadle/.android/build-cache/e01c35bf5a22e66e9a25ead649ac299889dd81df/output/res/drawable-hdpi-v4/abc_ic_star_black_48dp.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/design_ic_visibility.png",
@@ -93,11 +93,11 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_actions_w.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_actions_w.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_actions_w.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_ic_camera.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_camera.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_camera.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_ic_star_half_black_48dp.png",
@@ -105,7 +105,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_csat_check.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_csat_check.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_csat_check.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_ic_menu_share_mtrl_alpha.png",
@@ -149,7 +149,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_ic_gallery.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_gallery.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_gallery.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_ic_star_black_16dp.png",
@@ -197,7 +197,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpinfra_close_btn.png",
-        "source": "/Users/jbeadle/.android/build-cache/89c4ef323740a5beb86c925746bc3d9e64c81881/output/res/drawable-hdpi-v4/lpinfra_close_btn.png"
+        "source": "/Users/jbeadle/.android/build-cache/728164be8e8ca3b83d68f0a39e5eee0e73bdec1c/output/res/drawable-hdpi-v4/lpinfra_close_btn.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png",
@@ -225,15 +225,15 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_ic_avatar.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_avatar.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_avatar.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpinfra_ui_ic_attach.png",
-        "source": "/Users/jbeadle/.android/build-cache/89c4ef323740a5beb86c925746bc3d9e64c81881/output/res/drawable-hdpi-v4/lpinfra_ui_ic_attach.png"
+        "source": "/Users/jbeadle/.android/build-cache/728164be8e8ca3b83d68f0a39e5eee0e73bdec1c/output/res/drawable-hdpi-v4/lpinfra_ui_ic_attach.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_ic_msg_received.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_msg_received.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_msg_received.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_btn_radio_to_on_mtrl_000.png",
@@ -245,7 +245,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/lpmessaging_ui_ic_msg_error.png",
-        "source": "/Users/jbeadle/.android/build-cache/9e3cf35ab4141ea73478f4a5866e889b7e0f180b/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_msg_error.png"
+        "source": "/Users/jbeadle/.android/build-cache/eadbd205f2b0dacbba4bfa378c8fc28101c4b0df/output/res/drawable-hdpi-v4/lpmessaging_ui_ic_msg_error.png"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_scrubber_track_mtrl_alpha.9.png",

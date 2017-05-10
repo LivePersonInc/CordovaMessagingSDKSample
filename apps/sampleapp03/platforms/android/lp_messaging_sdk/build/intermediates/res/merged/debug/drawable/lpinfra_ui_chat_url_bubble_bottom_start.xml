@@ -1,9 +1,0 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/agent_bubble_background_color"/>
-    <corners
-        android:topLeftRadius="10dp"
-        android:topRightRadius="10dp"
-        />
-    <padding android:left="8dp" android:top="8dp" android:right="8dp" android:bottom="8dp"/>
-    <stroke android:width="@dimen/agent_bubble_stroke_width" android:color="@color/agent_bubble_stroke_color"/>
-</shape>

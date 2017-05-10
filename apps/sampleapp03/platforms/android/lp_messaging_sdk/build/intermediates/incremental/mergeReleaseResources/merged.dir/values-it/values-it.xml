@@ -77,7 +77,7 @@
     <string name="lp_clear_history_menu_text">Cancella cronologia</string>
     <string name="lp_connection_status_connecting">Connessione in corso…</string>
     <string name="lp_connection_status_failed_to_connect">Impossibile connettersi al server. <u>Riprova</u></string>
-    <string name="lp_connection_status_no_connection">Nessuna connessione. Verificare la propria connessione.</string>
+    <string name="lp_connection_status_no_connection">Nessuna connessione</string>
     <string name="lp_connection_status_trying_to_connect">Tentativo nuova connessione in corso…</string>
     <string name="lp_conversation_ended_by_agent_no_name">Conversazione risolta dall\u0027agente\n%1$s</string>
     <string name="lp_conversation_ended_by_agent_with_name">"Conversazione risolta da %1$s\n%2$s"</string>
@@ -94,12 +94,12 @@
     <string name="lp_enter_message">Scrivi un messaggio</string>
     <string name="lp_failed_download_toast_message">Download file non riuscito</string>
     <string name="lp_failed_upload_toast_message">Caricamento file non riuscito</string>
-    <string name="lp_feedback_1">"Molto insoddisfatti"</string>
-    <string name="lp_feedback_2">"Insoddisfatti"</string>
-    <string name="lp_feedback_3">"Né l'uno né l'altro"</string>
-    <string name="lp_feedback_4">"Soddisfatti"</string>
-    <string name="lp_feedback_5">"Molto soddisfatti"</string>
-    <string name="lp_feedback_question">Come valutila connessione con il nostro agente?</string>
+    <string name="lp_feedback_1">"Molto insoddisfatto"</string>
+    <string name="lp_feedback_2">"Insoddisfatto"</string>
+    <string name="lp_feedback_3">"Neutrale"</string>
+    <string name="lp_feedback_4">"Soddisfatto"</string>
+    <string name="lp_feedback_5">"Molto soddisfatto"</string>
+    <string name="lp_feedback_question">Come valuti la connessione con il nostro agente?</string>
     <string name="lp_feedback_submit">Invia</string>
     <string name="lp_feedback_submit_message">Le tue opinioni ci aiutano a migliorare.\nNon saranno condivise con altri agenti.</string>
     <string name="lp_feedback_thank_you">Sondaggio presentato con successo.\nGrazie!</string>
@@ -121,7 +121,7 @@
     <string name="lp_message_time_now_with_state">Ora</string>
     <string name="lp_new_messages">messaggi nuovi</string>
     <string name="lp_no_action_not_available_toast_message">Azione non disponibile, nessuna conversazione aperta</string>
-    <string name="lp_no_network_toast_message">Nessuna connessione Internet. Verifica la tua connessione e riprova.</string>
+    <string name="lp_no_network_toast_message">Nessuna connessione</string>
     <string name="lp_ok">OK</string>
     <string name="lp_resend_failed_conversation_closed">La conversazione è già stata risolta</string>
     <string name="lp_resend_failed_masked_message">Messaggio non inviato. Inserire nuovamente il messaggio e reinviarlo.</string>
