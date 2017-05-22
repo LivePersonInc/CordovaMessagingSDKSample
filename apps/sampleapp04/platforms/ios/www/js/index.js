@@ -203,7 +203,7 @@ var app = {
         };
         //here2
       lpMessagingSDK.lp_conversation_api(
-            'lp_sdk_init', [this.settings.accountId, sdkConfig],
+                                         'lp_sdk_init', [this.settings.accountId],
             function(data) {
               var eventData = JSON.parse(data);
               console.log('@@@ js ... unique lp_sdk_init SDK callback');

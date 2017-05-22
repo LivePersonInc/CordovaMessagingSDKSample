@@ -45,20 +45,20 @@ import LPAMS
             return
         }
 
-        let config = command.arguments[1] as? [String:AnyObject]
         print("lpMessagingSdkInit brandID --> \(lpAccountNumber)")
-        /*
-         examples pulling out config
-         print(config!)
-         print(config?["branding"])
-         print(config?["branding"]?["remoteUserBubbleBackgroundColor"])
-         print(config?["window"]?["useCustomViewController"])
-
-         */
+        
         do {
             try LPMessagingSDK.instance.initialize(lpAccountNumber)
             
-            setSDKConfigurations(config!)
+            // only set config if we have a valid argument
+            // deprecated - should be done through direct editing of this function  for the relevant options
+            // in which case move the setSDKConfigurations call outside of this wrapping loop and call on init every time
+            
+            if let config = command.arguments.lastElement as? [String:AnyObject] {
+                setSDKConfigurations(config)
+            }
+            
+            
             LPMessagingSDK.instance.delegate = self
             self.set_lp_callbacks(command)
 
@@ -115,8 +115,15 @@ import LPAMS
     
     func register_pusher(_ command:CDVInvokedUrlCommand) {
         // API passes in token via args object
-        let pushToken = command.argument(at: 1) as? Data
-        LPMessagingSDK.instance.registerPushNotifications(token: pushToken!);
+        guard let pushToken = command.arguments[1] as? String else {
+            print("Can't register pusher without device pushToken ")
+            return
+        }
+        
+        // now convert to Type Data for the register Push function
+        let pushTokenData = pushToken.data(using: .utf8)!
+        // call the SDK method e.g.
+        LPMessagingSDK.instance.registerPushNotifications(token: pushTokenData);
         self.registerLpPusherCallbackCommandDelegate = commandDelegate
         self.registerLpPusherCallbackCommand = command
         var response:[String:String];
@@ -136,6 +143,7 @@ import LPAMS
             pluginResult,
             callbackId: self.registerLpPusherCallbackCommand!.callbackId
         )
+
         
     }
     
@@ -362,6 +370,9 @@ import LPAMS
      */
     func setSDKConfigurations(_ config:[String:AnyObject]) {
         let configurations = LPConfig.defaultConfiguration
+        
+        configurations.brandAvatarImage = UIImage(named: "agent")
+        
         configurations.remoteUserBubbleBackgroundColor = UIColor.purple
         configurations.remoteUserBubbleBorderColor = UIColor.purple
         configurations.remoteUserBubbleTextColor = UIColor.white
