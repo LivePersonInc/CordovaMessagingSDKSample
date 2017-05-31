@@ -11,6 +11,31 @@ import LPMessagingSDK
 import LPInfra
 import LPAMS
 
+extension String {
+    
+    /// Create `Data` from hexadecimal string representation
+    ///
+    /// This takes a hexadecimal representation and creates a `Data` object. Note, if the string has any spaces or non-hex characters (e.g. starts with '<' and with a '>'), those are ignored and only hex characters are processed.
+    ///
+    /// - returns: Data represented by this hexadecimal string.
+    
+    func hexadecimal() -> Data? {
+        var data = Data(capacity: characters.count / 2)
+        
+        let regex = try! NSRegularExpression(pattern: "[0-9a-f]{1,2}", options: .caseInsensitive)
+        regex.enumerateMatches(in: self, range: NSMakeRange(0, utf16.count)) { match, flags, stop in
+            let byteString = (self as NSString).substring(with: match!.range)
+            var num = UInt8(byteString, radix: 16)!
+            data.append(&num, count: 1)
+        }
+        
+        guard data.count > 0 else { return nil }
+        
+        return data
+    }
+    
+}
+
 @objc(LPMessagingSDKPlugin) class LPMessagingSDKPlugin: CDVPlugin, LPMessagingSDKdelegate {
     
     var conversationQuery: ConversationParamProtocol?
@@ -44,9 +69,10 @@ import LPAMS
             print("Can't init without brandID")
             return
         }
-
+        self.lpAccountNumber = lpAccountNumber
+        
         print("lpMessagingSdkInit brandID --> \(lpAccountNumber)")
-
+        
         do {
             try LPMessagingSDK.instance.initialize(lpAccountNumber)
             
@@ -55,20 +81,10 @@ import LPAMS
             // in which case move the setSDKConfigurations call outside of this wrapping loop and call on init every time
             
             if let config = command.arguments.lastElement as? [String:AnyObject] {
-                /*
-                examples pulling out config
-                //let config = command.arguments[1] as? [String:AnyObject]
-
-                print(config!)
-                print(config?["branding"])
-                print(config?["branding"]?["remoteUserBubbleBackgroundColor"])
-                print(config?["window"]?["useCustomViewController"])
-
-                */
                 setSDKConfigurations(config)
             }
             
-
+            
             LPMessagingSDK.instance.delegate = self
             self.set_lp_callbacks(command)
 
@@ -123,17 +139,47 @@ import LPAMS
         return nil
     }
     
+    func convertDeviceTokenString(token:String) -> Data {
+        
+        
+        var result: [String] = []
+        let characters = Array(token.characters)
+        stride(from: 0, to: characters.count, by: 8).forEach {
+            result.append(String(characters[$0..<min($0+8, characters.count)]))
+        }
+        
+        var tokenAsString = result.joined(separator: " ")
+        
+        tokenAsString = "<" + tokenAsString + ">"
+        
+        let tokenAsNSData = tokenAsString.hexadecimal()! as NSData
+        let tokenAsData = tokenAsString.hexadecimal()!
+        
+        print("@@@ tokenAsNSData \(tokenAsNSData)")
+        print("@@@ tokenAsData \(tokenAsData)")
+        
+        print("@@@ string as 8 character chunks ... \(result)")
+        print("@@@ tokenAsString --> \(tokenAsString)" )
+        
+        
+        
+        return tokenAsData
+    }
+    
+
+    
     func register_pusher(_ command:CDVInvokedUrlCommand) {
         // API passes in token via args object
         guard let pushToken = command.arguments[1] as? String else {
             print("Can't register pusher without device pushToken ")
             return
         }
+
+        var convertedTokenAsData = convertDeviceTokenString(token: pushToken)
         
-        // now convert to Type Data for the register Push function
-        let pushTokenData = pushToken.data(using: .utf8)!
         // call the SDK method e.g.
-        LPMessagingSDK.instance.registerPushNotifications(token: pushTokenData);
+        LPMessagingSDK.instance.registerPushNotifications(token: convertedTokenAsData);
+        
         self.registerLpPusherCallbackCommandDelegate = commandDelegate
         self.registerLpPusherCallbackCommand = command
         var response:[String:String];
@@ -156,7 +202,6 @@ import LPAMS
 
         
     }
-
     
     func lp_register_event_callback(_ command: CDVInvokedUrlCommand) {
         self.globalCallbackCommandDelegate = commandDelegate
@@ -381,6 +426,9 @@ import LPAMS
      */
     func setSDKConfigurations(_ config:[String:AnyObject]) {
         let configurations = LPConfig.defaultConfiguration
+        
+        configurations.brandAvatarImage = UIImage(named: "agent")
+        
         configurations.remoteUserBubbleBackgroundColor = UIColor.purple
         configurations.remoteUserBubbleBorderColor = UIColor.purple
         configurations.remoteUserBubbleTextColor = UIColor.white
@@ -580,6 +628,7 @@ import LPAMS
     }
     
     internal func LPMessagingSDKConversationViewControllerDidDismiss() {
+
         print("@@@ ios ... LPMessagingSDKConversationViewControllerDidDismiss")
         var response:[String:String];
         response = ["eventName":"LPMessagingSDKConversationViewControllerDidDismiss"];
