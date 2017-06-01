@@ -300,15 +300,18 @@ extension String {
         // this is expected to be the JWT token for enabling authenticated messaging conversations
         // if found we pass it to the showConversation method, otherwise fallback to default unauthenticated mode
         var conversationType = "authenticated";
-        if(command.argument(at: 1) as? String != nil){
-            let authCode = command.argument(at: 1) as? String
-            self.showConversation(brandID,authenticationCode: authCode)
+
+//        var token:String = command.arguments[1] as AnyObject! as! String
+        let token = command.arguments[1] as? String ?? ""
+        if(token.characters.count > 0){
+            self.showConversation(brandID,authenticationCode: token)
         }else{
             conversationType = "unauthenticated";
             self.showConversation(brandID)
         }
         
         var response:[String:String];
+        print("@@@ LPMessagingSDKStartConversation conversationType : \(conversationType)")
         
         response = ["eventName":"LPMessagingSDKStartConversation","type" : conversationType];
         let jsonString = self.convertDicToJSON(response)
@@ -410,8 +413,12 @@ extension String {
         
         self.conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(brandID)
         if authenticationCode == nil {
+            print("@@@ ios -- showConversation ... unauthenticated no JWT token found")
+
             LPMessagingSDK.instance.showConversation(self.conversationQuery!)
         } else {
+            print("@@@ ios -- showConversation ...authenticated session jwt token found! \(authenticationCode!)")
+
             LPMessagingSDK.instance.showConversation(self.conversationQuery!,authenticationCode: authenticationCode)
        }
     }

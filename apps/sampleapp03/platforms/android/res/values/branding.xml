@@ -3,9 +3,8 @@
 <resources>
 
     <string name="brand_name">cordova test app</string>
-
-    <color name="conversation_background">#ffffff</color>
-
+    <color name="conversation_background">#fff</color>
+    <color name= "brand_logo_background_color" >#8B008B</color>
     <!-- all bubbles -->
     <color name="bubble_selected_background_color">#5597a7e3</color>
 
