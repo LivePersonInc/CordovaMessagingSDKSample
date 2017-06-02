@@ -62,8 +62,7 @@ extension String {
     }
     
 
-    
-    
+  
     func lp_sdk_init(_ command: CDVInvokedUrlCommand) {
         guard let lpAccountNumber = command.arguments.first as? String else {
             print("Can't init without brandID")
@@ -80,12 +79,32 @@ extension String {
             // deprecated - should be done through direct editing of this function  for the relevant options
             // in which case move the setSDKConfigurations call outside of this wrapping loop and call on init every time
             
+            
+            let configurations = LPConfig.defaultConfiguration
+            configurations.conversationNavigationBackgroundColor = UIColor.purple
+            configurations.conversationNavigationTitleColor = UIColor.white
+            
             if let config = command.arguments.lastElement as? [String:AnyObject] {
                 setSDKConfigurations(config)
             }
             
             
             LPMessagingSDK.instance.delegate = self
+            
+//            LPMessagingSDK.instance.subscribeLogEvents(LogLevel.trace) { (log) -> () in
+//                print("~~~ Trace Log for LPMessagingSDK trace log: \(String(describing: log.text))")
+//            }
+//            
+//            LPMessagingSDK.instance.subscribeLogEvents(LogLevel.debug) { (log) -> () in
+//                print("~~~ Debug Log for LPMessagingSDK log: \(String(describing: log.text))")
+//            }
+            
+            
+            
+//            LPMessagingSDK.instance.subscribeLogEvents(LogLevel.warning) { (log) -> () in
+//                print("~~~ Warning Log for LPMessagingSDK warning log: \(String(describing: log.text))")
+//            }
+            
             self.set_lp_callbacks(command)
 
             var response:[String:String];
@@ -219,6 +238,31 @@ extension String {
             pluginResult,
             callbackId: self.globalCallbackCommand!.callbackId
         )
+        
+        LPMessagingSDK.instance.subscribeLogEvents(LogLevel.error) { (log) -> () in
+            print("~~~ error Log for LPMessagingSDK error log: \(String(describing: log.text))")
+            
+            var errorLogResponse:[String:String];
+            
+            errorLogResponse = [
+                "eventName":"subscribeLogEvents",
+                "className" : "\(String(describing: log.className!))",
+                "funcName" : "\(String(describing: log.funcName!))",
+                "error" : "\(String(describing: log.text!))",
+                "timestamp" : "\(String(describing: log.timestamp!))"
+            ];
+            let jsonErrorString = self.convertDicToJSON(errorLogResponse)
+            
+            let errorLogResponseResult = CDVPluginResult(
+                status: CDVCommandStatus_ERROR,
+                messageAs:jsonErrorString
+            )
+
+            self.globalCallbackCommandDelegate?.send(errorLogResponseResult, callbackId: self.globalCallbackCommand?.callbackId)
+            
+            
+            
+        }
         
         print("@@@ iOS lp_register_event_callback \n")
         

@@ -204,17 +204,24 @@ var app = {
         };
         //here2
       lpMessagingSDK.lp_conversation_api(
-                                         'lp_sdk_init', [this.settings.accountId],
+            'lp_sdk_init', [this.settings.accountId],
             function(data) {
               var eventData = JSON.parse(data);
               console.log('@@@ js ... unique lp_sdk_init SDK callback');
+                                         
+               
+                                         
             },
             function(data) {
               var eventData = JSON.parse(data);
               console.log('@@@ js ... unique lp_sdk_init SDK error callback');
             }
         );
-
+      lpMessagingSDK.lp_register_event_callback(
+        [this.settings.accountId],
+        this.globalAsyncEventsSuccessCallback,
+        this.globalAsyncEventsErrorCallback
+      );
       lpMessagingSDK.lp_conversation_api(
             'set_lp_user_profile', [
               this.settings.accountId,
@@ -237,11 +244,7 @@ var app = {
         );
 
 
-      lpMessagingSDK.lp_register_event_callback(
-            [this.settings.accountId],
-            this.globalAsyncEventsSuccessCallback,
-            this.globalAsyncEventsErrorCallback
-        );
+
 
       console.log('@@@ js lpMessagingSdkInit completed -- ' + this.settings.accountId);
     },
