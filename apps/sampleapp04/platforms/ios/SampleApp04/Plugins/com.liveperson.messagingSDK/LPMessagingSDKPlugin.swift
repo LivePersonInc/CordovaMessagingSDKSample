@@ -83,7 +83,17 @@ extension String {
             let configurations = LPConfig.defaultConfiguration
             configurations.conversationNavigationBackgroundColor = UIColor.purple
             configurations.conversationNavigationTitleColor = UIColor.white
+            configurations.enableRealTimeMasking = true
+            let longNumbers: String = "[0-9]{14,16}"
+            configurations.realTimeMaskingRegex = longNumbers
             
+            configurations.remoteUserAvatarBackgroundColor = UIColor.darkGray
+            configurations.remoteUserAvatarIconColor = UIColor.green
+            
+            configurations.brandAvatarImage = UIImage(named: "AppIcon")
+            // NSRegularExpression(pattern: longNumbers, options: NSRegularExpression.Options.caseInsensitive)
+            
+
             if let config = command.arguments.lastElement as? [String:AnyObject] {
                 setSDKConfigurations(config)
             }
