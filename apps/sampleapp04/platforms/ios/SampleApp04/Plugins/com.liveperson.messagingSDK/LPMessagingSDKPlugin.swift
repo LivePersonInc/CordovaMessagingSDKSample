@@ -70,6 +70,49 @@ extension String {
         }
         self.lpAccountNumber = lpAccountNumber
         
+        let headers = [
+            "cache-control": "no-cache",
+            "postman-token": "3113b099-fe6a-6b80-6451-b1fce8d78b35"
+        ]
+        
+        let request = NSMutableURLRequest(url: NSURL(string: "https://liveperson-jwt-generator.herokuapp.com/api/tokendemo")! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+            } else {
+                let httpResponse = response as? HTTPURLResponse
+                let responseData = String(data: data!, encoding: String.Encoding.utf8)
+                let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+                
+                if let dictionary = json as? [String: Any] {
+                    if let jwt = dictionary["jwt"] as? String {
+                        // access individual value in dictionary
+                        print("lpMessagingSdkInit jwt --> \(String(describing: jwt))")
+                    }
+                    
+//                    for (key, value) in dictionary {
+//                        // access all key / value pairs in dictionary
+//                    }
+//                    
+//                    if let nestedDictionary = dictionary["anotherKey"] as? [String: Any] {
+//                        // access nested dictionary values by key
+//                    }
+                }
+
+                
+                print("lpMessagingSdkInit responseData --> \(String(describing: responseData))")
+//                print("lpMessagingSdkInit jwt --> \(String(describing: response.jwt))")
+            }
+        })
+        
+        dataTask.resume()
+        
         print("lpMessagingSdkInit brandID --> \(lpAccountNumber)")
         
         do {
