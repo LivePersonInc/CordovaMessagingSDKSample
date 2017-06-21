@@ -1,8 +1,0 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/brand_logo_background_color"/>
-    <corners
-        android:bottomRightRadius="@dimen/avatar_radius"
-        android:bottomLeftRadius="@dimen/avatar_radius"
-        android:topLeftRadius="@dimen/avatar_radius"
-        android:topRightRadius="@dimen/avatar_radius"/>
-</shape>

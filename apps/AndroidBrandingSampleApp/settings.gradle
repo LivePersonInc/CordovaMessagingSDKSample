@@ -1,1 +1,0 @@
-include ':app', ':lp_messaging_sdk', ':sample_app'
