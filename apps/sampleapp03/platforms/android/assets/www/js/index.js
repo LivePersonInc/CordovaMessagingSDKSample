@@ -159,13 +159,42 @@ var app = {
       if (eventData.eventName == 'LPMessagingSDKTokenExpired') {
           console.log('@@@ authenticated token has expired...refreshing...');
           app.lpGenerateNewAuthenticationToken();
-        }
+      }
+
     },
+  lpCloseConversationOnError: function(err) {
+    console.log('@@@ here!');
+
+    var myRe = /(?:internalErrorCode\\":\\")([0-9]{3,4})(?:\\")/g;
+    var myArray = myRe.exec('idp url = https:\\/\\/lo.idp.liveperson.net\\/api\\/account\\/90233546\\/authenticate?v=1.0. Exception On Response Error :  response code: 500 body: {\\"internalErrorCode\\":\\"1012\\"}');
+
+    myArray.forEach((match, groupIndex) => {
+        console.log('@@@ Found match '+match);
+
+    });
+
+    lpMessagingSDK.lp_conversation_api(
+        "close_lp_conversation_on_error",
+        [this.settings.accountId],
+        function(data) {
+            console.log('@@@ lpCloseConversationOnError -> successCallback');
+            alert("closed conversation due to error"+match[1])
+        },
+        function(data) {
+            console.log('@@@ lpCloseConversationOnError -> errorCallback');
+        }
+    )
+    console.log('@@@ here after!')
+  },
   globalAsyncEventsErrorCallback: function(data) {
       var eventData = JSON.parse(data);
       console.log(
             '@@@ globalAsyncEventsErrorCallback --> ' + data
         );
+      if (eventData.eventName == 'LPMessagingSDKError') {
+        console.log('@@@ LPMessagingSDKError ...lpCloseConversationOnError ...'+data);
+        app.lpCloseConversationOnError(eventData);
+      }
     },
   lpGenerateNewAuthenticationToken: function() {
         // code to generate new fresh JWT would go here...
@@ -204,7 +233,7 @@ var app = {
         };
         //here2
       lpMessagingSDK.lp_conversation_api(
-                                         'lp_sdk_init', [this.settings.accountId],
+            'lp_sdk_init', [this.settings.accountId],
             function(data) {
               var eventData = JSON.parse(data);
               console.log('@@@ js ... unique lp_sdk_init SDK callback');

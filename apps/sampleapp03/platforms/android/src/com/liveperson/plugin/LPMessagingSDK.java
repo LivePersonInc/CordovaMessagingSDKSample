@@ -93,6 +93,18 @@ public class LPMessagingSDK extends CordovaPlugin {
                 Log.d(TAG, "Messaging SDK: init for account Id: " + accountId);
                 initSDK(accountId,callbackContext);
                 break;
+            case CLOSE_CONVERSATION_ON_ERROR:
+                mCallbackContext = callbackContext;
+                LivePerson.hideConversation(cordova.getActivity());
+                Log.d(TAG, CLOSE_CONVERSATION_ON_ERROR+ " LPMessagingSDKConversationScreenClosedOnError " + args);
+                JSONObject jsonCloseConversation = new JSONObject();
+                try {
+                    jsonCloseConversation.putOpt("eventName","LPMessagingSDKConversationScreenClosedOnError");
+                    mCallbackContext.success(jsonCloseConversation.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
             case CLEAR_HISTORY_AND_LOGOUT:
                 mCallbackContext = callbackContext;
                 //final String accountId = args.getString(0);
