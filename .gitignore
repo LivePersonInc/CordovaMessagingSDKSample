@@ -26,5 +26,5 @@ Temporary Items
 .apdisk
 
 #Cordova build
-apps/sampleapp03/platforms/android/CordovaLib/build/*
-apps/sampleapp03/platforms/android/lp_messaging_sdk/build/*
+apps/sampleapp03/platforms/android/CordovaLib/build
+apps/sampleapp03/platforms/android/lp_messaging_sdk/build
