@@ -21,15 +21,15 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/lpmessaging_ui_slide_in.xml",
-        "source": "/Users/jbeadle/.android/build-cache/43686820a81e2b9c4a4c7735226bad8a7c005e06/output/res/anim/lpmessaging_ui_slide_in.xml"
+        "source": "/Users/jbeadle/.android/build-cache/d8e9c2aaf1546fab2474625f2936a06ce011bac6/output/res/anim/lpmessaging_ui_slide_in.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/menu_icon_amination_in.xml",
-        "source": "/Users/jbeadle/.android/build-cache/0b28cb69d7e15948bad931846030eae5ed382cee/output/res/anim/menu_icon_amination_in.xml"
+        "source": "/Users/jbeadle/.android/build-cache/0730f1b913436d10d43ddf5dd222391055e8674b/output/res/anim/menu_icon_amination_in.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/lpmessaging_ui_right_left_bounce.xml",
-        "source": "/Users/jbeadle/.android/build-cache/43686820a81e2b9c4a4c7735226bad8a7c005e06/output/res/anim/lpmessaging_ui_right_left_bounce.xml"
+        "source": "/Users/jbeadle/.android/build-cache/d8e9c2aaf1546fab2474625f2936a06ce011bac6/output/res/anim/lpmessaging_ui_right_left_bounce.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_out.xml",
@@ -41,7 +41,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/lpmessaging_ui_slide_out.xml",
-        "source": "/Users/jbeadle/.android/build-cache/43686820a81e2b9c4a4c7735226bad8a7c005e06/output/res/anim/lpmessaging_ui_slide_out.xml"
+        "source": "/Users/jbeadle/.android/build-cache/d8e9c2aaf1546fab2474625f2936a06ce011bac6/output/res/anim/lpmessaging_ui_slide_out.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_bottom.xml",
@@ -49,7 +49,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/menu_icon_amination_out.xml",
-        "source": "/Users/jbeadle/.android/build-cache/0b28cb69d7e15948bad931846030eae5ed382cee/output/res/anim/menu_icon_amination_out.xml"
+        "source": "/Users/jbeadle/.android/build-cache/0730f1b913436d10d43ddf5dd222391055e8674b/output/res/anim/menu_icon_amination_out.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/design_snackbar_out.xml",
@@ -73,7 +73,7 @@
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/lpmessaging_ui_pulse.xml",
-        "source": "/Users/jbeadle/.android/build-cache/43686820a81e2b9c4a4c7735226bad8a7c005e06/output/res/anim/lpmessaging_ui_pulse.xml"
+        "source": "/Users/jbeadle/.android/build-cache/d8e9c2aaf1546fab2474625f2936a06ce011bac6/output/res/anim/lpmessaging_ui_pulse.xml"
     },
     {
         "merged": "/Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/res/merged/androidTest/debug/anim/design_bottom_sheet_slide_in.xml",

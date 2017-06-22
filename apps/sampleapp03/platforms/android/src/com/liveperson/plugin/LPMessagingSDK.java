@@ -31,6 +31,7 @@ public class LPMessagingSDK extends CordovaPlugin {
 
     private static final String INIT = "lp_sdk_init";
     private static final String START_CONVERSATION = "start_lp_conversation";
+    private static final String CLOSE_CONVERSATION_ON_ERROR = "close_lp_conversation_on_error";
     private static final String SET_USER = "set_lp_user_profile";
 
     private static final String CLEAR_HISTORY_AND_LOGOUT = "lp_clear_history_and_logout";
