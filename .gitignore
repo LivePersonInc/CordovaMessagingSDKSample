@@ -28,8 +28,8 @@ Temporary Items
 #Cordova build
 apps/sampleapp03/platforms/android/CordovaLib/build
 apps/sampleapp03/platforms/android/lp_messaging_sdk/build
-apps/sampleapp03/platforms/android/.idea
-apps/sampleapp03/platforms/android/.gradle
+*.idea
+*.gradle
 
 #old apps
 apps/AndroidBrandingSampleApp
