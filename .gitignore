@@ -33,4 +33,4 @@ apps/sampleapp03/platforms/android/lp_messaging_sdk/build
 
 #old apps
 apps/AndroidBrandingSampleApp
-*UserInterfaceState.xcuserstate
+UserInterfaceState.xcuserstate
