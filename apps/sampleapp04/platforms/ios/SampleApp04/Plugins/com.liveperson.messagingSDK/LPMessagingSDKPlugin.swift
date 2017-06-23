@@ -93,7 +93,7 @@ extension String {
                 if let dictionary = json as? [String: Any] {
                     if let jwt = dictionary["jwt"] as? String {
                         // access individual value in dictionary
-                        print("lpMessagingSdkInit jwt --> \(String(describing: jwt))")
+                        print("@@@ ios lpMessagingSdkInit jwt --> \(String(describing: jwt))")
                     }
                     
 //                    for (key, value) in dictionary {
@@ -106,14 +106,14 @@ extension String {
                 }
 
                 
-                print("lpMessagingSdkInit responseData --> \(String(describing: responseData))")
+                print("@@@ ios lpMessagingSdkInit responseData --> \(String(describing: responseData))")
 //                print("lpMessagingSdkInit jwt --> \(String(describing: response.jwt))")
             }
         })
         
         dataTask.resume()
         
-        print("lpMessagingSdkInit brandID --> \(lpAccountNumber)")
+        print("@@@ ios lpMessagingSdkInit brandID --> \(lpAccountNumber)")
         
         do {
             try LPMessagingSDK.instance.initialize(lpAccountNumber)
@@ -141,23 +141,7 @@ extension String {
                 setSDKConfigurations(config)
             }
             
-            
             LPMessagingSDK.instance.delegate = self
-            
-//            LPMessagingSDK.instance.subscribeLogEvents(LogLevel.trace) { (log) -> () in
-//                print("~~~ Trace Log for LPMessagingSDK trace log: \(String(describing: log.text))")
-//            }
-//            
-//            LPMessagingSDK.instance.subscribeLogEvents(LogLevel.debug) { (log) -> () in
-//                print("~~~ Debug Log for LPMessagingSDK log: \(String(describing: log.text))")
-//            }
-            
-            
-            
-//            LPMessagingSDK.instance.subscribeLogEvents(LogLevel.warning) { (log) -> () in
-//                print("~~~ Warning Log for LPMessagingSDK warning log: \(String(describing: log.text))")
-//            }
-            
             self.set_lp_callbacks(command)
 
             var response:[String:String];
@@ -238,7 +222,22 @@ extension String {
         return tokenAsData
     }
     
+    func close_conversation_screen(_ command:CDVInvokedUrlCommand) {
+        self.conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(self.lpAccountNumber!)
+        if self.conversationQuery != nil {
+            LPMessagingSDK.instance.removeConversation(self.conversationQuery!)
+            self.viewController.navigationController?.popViewController(animated: true)
+            print("@@@ iOS ... LPMessagingSDK  close_conversation_screen:")
+            var response:[String:String];
+            response = ["eventName":"LPMessagingSDKCloseConversationScreen"];
+            let jsonString = self.convertDicToJSON(response)
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs:jsonString)
+            pluginResult?.setKeepCallbackAs(true)
+            self.globalCallbackCommandDelegate?.send(pluginResult, callbackId: self.globalCallbackCommand?.callbackId)
+            
+        }
 
+    }
     
     func register_pusher(_ command:CDVInvokedUrlCommand) {
         // API passes in token via args object
@@ -293,7 +292,7 @@ extension String {
         )
         
         LPMessagingSDK.instance.subscribeLogEvents(LogLevel.error) { (log) -> () in
-            print("~~~ error Log for LPMessagingSDK error log: \(String(describing: log.text))")
+            print("@@@ ~~~ error Log for LPMessagingSDK error log: \(String(describing: log.text))")
             
             var errorLogResponse:[String:String];
             
@@ -310,7 +309,7 @@ extension String {
                 status: CDVCommandStatus_ERROR,
                 messageAs:jsonErrorString
             )
-
+            errorLogResponseResult?.setKeepCallbackAs(true)
             self.globalCallbackCommandDelegate?.send(errorLogResponseResult, callbackId: self.globalCallbackCommand?.callbackId)
             
             
@@ -318,7 +317,7 @@ extension String {
         }
         
         print("@@@ iOS lp_register_event_callback \n")
-        
+//        LPMessagingSDK.instance.delegate = self;
     }
     
     func reconnect_with_new_token(_ command: CDVInvokedUrlCommand) {
@@ -706,7 +705,6 @@ extension String {
     internal func LPMessagingSDKConnectionStateChanged(_ isReady: Bool, brandID: String) {
         print("@@@ iOS ... LPMessagingSDKConnectionStateChanged: \(isReady), \(brandID)")
 
-        
         var response:[String:String];
         
         response = ["eventName":"LPMessagingSDKConnectionStateChanged","connectionState":"\(isReady)"];

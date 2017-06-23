@@ -19,7 +19,7 @@
 var app = {
 
   settings: {
-      accountId: '90233546', // replace with your account id
+      accountId: '0000090233546', // replace with your account id
 //      accountId: '33884409',
       startMessagingConversationButtonId: 'start_lp_conversation',
       logoutButtonId: 'logout_and_clear_history'
@@ -162,26 +162,26 @@ var app = {
       }
 
     },
-  lpCloseConversationOnError: function(err) {
-    console.log('@@@ here!');
-
-    var myRe = /(?:internalErrorCode\\":\\")([0-9]{3,4})(?:\\")/g;
-    var myArray = myRe.exec(err);
-
-    myArray.forEach((match, groupIndex) => {
-        console.log('@@@ Found match '+match);
-
-    });
+  lpCloseConversationScreen: function(eventData) {
+    console.log('@@@ here!'+eventData);
+//
+//    var myRe = /(?:internalErrorCode\\":\\")([0-9]{3,4})(?:\\")/g;
+//    var myArray = myRe.exec(eventData.err);
+//
+//    myArray.forEach((match, groupIndex) => {
+//        console.log('@@@ Found match '+match);
+//
+//    });
 
     lpMessagingSDK.lp_conversation_api(
-        "close_lp_conversation_on_error",
+        "close_conversation_screen",
         [this.settings.accountId],
         function(data) {
-            console.log('@@@ lpCloseConversationOnError -> successCallback');
-            alert("closed conversation due to error"+match[1])
+            console.log('@@@ lpCloseConversationScreen -> successCallback');
+            //alert("closed conversation due to error"+match[1])
         },
         function(data) {
-            console.log('@@@ lpCloseConversationOnError -> errorCallback');
+            console.log('@@@ lpCloseConversationScreen -> errorCallback');
         }
     )
     console.log('@@@ here after!')
@@ -192,8 +192,8 @@ var app = {
             '@@@ globalAsyncEventsErrorCallback --> ' + data
         );
       if (eventData.eventName == 'LPMessagingSDKError') {
-        console.log('@@@ LPMessagingSDKError ...lpCloseConversationOnError ...'+data);
-        app.lpCloseConversationOnError(eventData);
+        console.log('@@@ LPMessagingSDKError ...lpCloseConversationScreen ...'+data);
+        app.lpCloseConversationScreen(eventData);
       }
     },
   lpGenerateNewAuthenticationToken: function() {
