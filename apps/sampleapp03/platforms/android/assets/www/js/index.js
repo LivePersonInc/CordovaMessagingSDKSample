@@ -166,7 +166,7 @@ var app = {
     console.log('@@@ here!');
 
     var myRe = /(?:internalErrorCode\\":\\")([0-9]{3,4})(?:\\")/g;
-    var myArray = myRe.exec('idp url = https:\\/\\/lo.idp.liveperson.net\\/api\\/account\\/90233546\\/authenticate?v=1.0. Exception On Response Error :  response code: 500 body: {\\"internalErrorCode\\":\\"1012\\"}');
+    var myArray = myRe.exec(err);
 
     myArray.forEach((match, groupIndex) => {
         console.log('@@@ Found match '+match);
