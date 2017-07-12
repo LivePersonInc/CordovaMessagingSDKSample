@@ -131,5 +131,6 @@
     <orderEntry type="library" exported="" name="recyclerview-v7-25.1.0" level="project" />
     <orderEntry type="module" module-name="lp_messaging_sdk" exported="" />
     <orderEntry type="module" module-name="CordovaLib" exported="" />
+    <orderEntry type="library" exported="" name="lp_messaging_sdk-unspecified" level="project" />
   </component>
 </module>

@@ -73,6 +73,9 @@ public class LPMessagingSDK extends CordovaPlugin {
         Log.v(TAG, "LPMessagingSDK.execute:" + action);
         LP_APP_PACKAGE_NAME = getAppPackageName(cordova.getActivity());
         Log.v(TAG, "LPMessagingSDK.LP_APP_PACKAGE_NAME:" + LP_APP_PACKAGE_NAME);
+        Log.v(TAG, "LPMessagingSDK.VERSION:" + LivePerson.getSDKVersion());
+
+
         boolean success = true;
 
 
@@ -91,6 +94,7 @@ public class LPMessagingSDK extends CordovaPlugin {
                 // lp_sdk_init - Call this action inorder to do Messaging SDK init
                 final String accountId = args.getString(0);
                 Log.d(TAG, "Messaging SDK: init for account Id: " + accountId);
+                Log.v(TAG, "Messaging SDK VERSION:" + LivePerson.getSDKVersion());
                 initSDK(accountId,callbackContext);
                 break;
             case CLOSE_CONVERSATION_SCREEN:
@@ -344,7 +348,6 @@ public class LPMessagingSDK extends CordovaPlugin {
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setPhoneNumber(phone)
-                .setAvatartUrl(profileImageUrl)
                 .setNickname(nickname)
                 .build();
 

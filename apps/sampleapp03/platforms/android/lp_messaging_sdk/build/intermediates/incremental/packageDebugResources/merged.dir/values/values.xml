@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="primary_material_light_1">#f44336</color>
-    <string name="app_name">MessagingSDK</string>
-    <style name="LivePerson.test" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/primary_material_light_1</item>
-    </style>
-</resources>

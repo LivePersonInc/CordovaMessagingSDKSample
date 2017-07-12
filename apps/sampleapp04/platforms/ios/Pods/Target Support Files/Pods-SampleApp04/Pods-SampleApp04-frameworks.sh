@@ -87,6 +87,21 @@ strip_invalid_archs() {
   fi
 }
 
+
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/GoogleToolboxForMac/GoogleToolboxForMac.framework"
+  install_framework "${PODS_ROOT}/LPMessagingSDK/LPMessagingSDK/LPAMS.framework"
+  install_framework "${PODS_ROOT}/LPMessagingSDK/LPMessagingSDK/LPInfra.framework"
+  install_framework "${PODS_ROOT}/LPMessagingSDK/LPMessagingSDK/LPMessagingSDK.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Protobuf/Protobuf.framework"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/GoogleToolboxForMac/GoogleToolboxForMac.framework"
+  install_framework "${PODS_ROOT}/LPMessagingSDK/LPMessagingSDK/LPAMS.framework"
+  install_framework "${PODS_ROOT}/LPMessagingSDK/LPMessagingSDK/LPInfra.framework"
+  install_framework "${PODS_ROOT}/LPMessagingSDK/LPMessagingSDK/LPMessagingSDK.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Protobuf/Protobuf.framework"
+fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
 fi

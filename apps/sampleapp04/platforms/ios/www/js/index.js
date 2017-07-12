@@ -19,7 +19,7 @@
 var app = {
 
   settings: {
-    accountId: '00000090233546', // replace with your account id
+    accountId: '90233546', // replace with your account id
 //      accountId: '33884409',
     startMessagingConversationButtonId: 'start_lp_conversation',
     logoutButtonId: 'logout_and_clear_history'

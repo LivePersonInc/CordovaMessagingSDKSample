@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="LivePerson.test" parent="Theme.AppCompat.Light.NoActionBar" >
-        <item name="colorPrimary">@color/primary_material_light_1</item>
-    </style>
-</resources>
