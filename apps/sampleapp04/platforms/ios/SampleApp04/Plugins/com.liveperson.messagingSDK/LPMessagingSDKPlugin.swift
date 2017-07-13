@@ -70,73 +70,11 @@ extension String {
         }
         self.lpAccountNumber = lpAccountNumber
         
-        let headers = [
-            "cache-control": "no-cache",
-            "postman-token": "3113b099-fe6a-6b80-6451-b1fce8d78b35"
-        ]
-        
-        let request = NSMutableURLRequest(url: NSURL(string: "https://liveperson-jwt-generator.herokuapp.com/api/tokendemo")! as URL,
-                                          cachePolicy: .useProtocolCachePolicy,
-                                          timeoutInterval: 10.0)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
-        
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error)
-            } else {
-                let httpResponse = response as? HTTPURLResponse
-                let responseData = String(data: data!, encoding: String.Encoding.utf8)
-                let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-                
-                if let dictionary = json as? [String: Any] {
-                    if let jwt = dictionary["jwt"] as? String {
-                        // access individual value in dictionary
-                        print("@@@ ios lpMessagingSdkInit jwt --> \(String(describing: jwt))")
-                    }
-                    
-//                    for (key, value) in dictionary {
-//                        // access all key / value pairs in dictionary
-//                    }
-//                    
-//                    if let nestedDictionary = dictionary["anotherKey"] as? [String: Any] {
-//                        // access nested dictionary values by key
-//                    }
-                }
-
-                
-                print("@@@ ios lpMessagingSdkInit responseData --> \(String(describing: responseData))")
-//                print("lpMessagingSdkInit jwt --> \(String(describing: response.jwt))")
-            }
-        })
-        
-        dataTask.resume()
-        
         print("@@@ ios lpMessagingSdkInit brandID --> \(lpAccountNumber)")
         
         do {
             try LPMessagingSDK.instance.initialize(lpAccountNumber)
-            
-            // only set config if we have a valid argument
-            // deprecated - should be done through direct editing of this function  for the relevant options
-            // in which case move the setSDKConfigurations call outside of this wrapping loop and call on init every time
-            
-            
-            let configurations = LPConfig.defaultConfiguration
-            configurations.conversationNavigationBackgroundColor = UIColor.purple
-            configurations.conversationNavigationTitleColor = UIColor.white
-            configurations.enableRealTimeMasking = true
-            let longNumbers: String = "[0-9]{14,16}"
-            configurations.realTimeMaskingRegex = longNumbers
-            
-            configurations.remoteUserAvatarBackgroundColor = UIColor.darkGray
-            configurations.remoteUserAvatarIconColor = UIColor.green
-            
-            configurations.brandAvatarImage = UIImage(named: "AppIcon")
-            // NSRegularExpression(pattern: longNumbers, options: NSRegularExpression.Options.caseInsensitive)
-            
-
+          
             if let config = command.arguments.lastElement as? [String:AnyObject] {
                 setSDKConfigurations(config)
             }
