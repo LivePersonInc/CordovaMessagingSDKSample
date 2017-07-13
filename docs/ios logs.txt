@@ -1,7 +1,0 @@
-2017-04-13 12:47:33.657 SampleApp03[19867:471604] @@@ js ... console.log works well
-@@@ iOS pluginInitialize@@@ ios ****** BRAND NAME WAS SETUP FROM CONFIG !!! TalkTalk@@@ iOS LPMessagingSDKInit@@@ iOS lp_register_event_callback 
-2017-04-13 12:47:34.369 SampleApp03[19867:471604] @@@ js lpMessagingSdkInit completed -- 90233546
-2017-04-13 12:47:34.369 SampleApp03[19867:471604] @@@ js ... onDeviceReady completed
-2017-04-13 12:47:34.408 SampleApp03[19867:471604] @@@ js ... unique lp_sdk_init SDK callback
-2017-04-13 12:47:34.408 SampleApp03[19867:471604] @@@ js ... unique set_lp_user_profile SDK callback
-2017-04-13 12:47:34.530 SampleApp03[19867:471604] @@@ pushNotification plugin error ... - remote notifications are not supported in the simulator
