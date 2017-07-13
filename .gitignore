@@ -31,15 +31,19 @@ apps/sampleapp03/platforms/android/lp_messaging_sdk/build
 apps/**/.idea/
 apps/**/.gradle/
 apps/**/android.iml
+apps/**/CordovaLib.iml
 apps/**/lp_messaging_sdk.iml
+apps/*.iml
+apps/*.ipr
+apps/*.iws
+apps/**/build/
+apps/**/lp_messaging_sdk/.settings
+
+
 #old apps
 apps/AndroidBrandingSampleApp
 UserInterfaceState.xcuserstate
 
 docs/
-apps/**/build/
 .idea
 .shelf
-apps/*.iml
-apps/*.ipr
-apps/*.iws

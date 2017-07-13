@@ -1,19 +1,16 @@
 # Cordova Messaging Plugin
 
-Current Version: v1.5
+Current Version: v2.5
 
-+ iOS SDK v2.1.5
-+ Android SDK v2.1.3
++ iOS SDK v2.5.x
++ Android SDK v2.5.x
 
-## v1.5 Release Notes
-
-+ iOS frameworks in plugins folder v.1.5 bumped to v2.1.5 to include various bug fixes (https://github.com/LP-Messaging/iOS-Messaging-SDK/releases/tag/2.1.5)
 
 ## PLEASE NOTE -- XCODE UPGRADE REQUIRED!!
 
-+ v1.5 of the plugin has been compiled with the xcode version 8.3.1
-+ any apps you build with this version of the iOS frameworks (v2.1.5) will require the above xcode version to build and run - due to the change in Swift version numbers.
-
++ Any version of the Cordova plugin v2.1.x and above has been compiled with the xcode version 8.3.1
++ Any apps you build with these versions of the iOS SDK (v2.1.5 and above) will require the above xcode version to build and run - due to the change in Swift version numbers.
++ Xcode v8.3.1 also requires macOS Sierra in order to install!
 
 ## "Where do I find the latest version of the plugin?"
 
@@ -22,9 +19,9 @@ The various versions of the plugin live here:
 
 `/plugins/`
 
-The latest release v1.5 is here
+The latest release v2.5.x is here
 
-`/plugins/v1.5/MessagingSDKPlugin`
+`/plugins/v2.5.x/MessagingSDKPlugin`
 
 If you need to reinstall the plugin to your app, make sure you pull it from this folder to include the latest iOS frameworks.
 
@@ -33,7 +30,7 @@ e.g if you were working in the sampleapp01 example folder
 ```
 cd apps/sampleapp01
 cordova plugin remove com.liveperson.messagingSDK
-cordova plugin add ../../plugins/v1.5/MessagingSDKPlugin
+cordova plugin add ../../plugins/v2.5.x/MessagingSDKPlugin
 ```
 
 -----------
@@ -538,4 +535,3 @@ Triggering asynchronously -- register your global async callback handler for mon
 
 
 Refer to native documentation and if you are missing a specific callback pleae let us know!
-
