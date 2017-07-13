@@ -6,7 +6,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SampleApp04/Plugins/com.liveperson.messagingSDK/LPMessagingSDKPlugin.swift"
@@ -15,8 +15,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "528"
             endingLineNumber = "528"
-            landmarkName = "LPMessagingSDKPlugin"
-            landmarkType = "3">
+            landmarkName = "LPMessagingSDKAgentDetails(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "499"
             endingLineNumber = "499"
-            landmarkName = "set_lp_user_profile(_:)"
+            landmarkName = "sendEventToJavaScript(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -47,40 +47,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "205"
             endingLineNumber = "205"
-            landmarkName = "convertDeviceTokenString(token:)"
+            landmarkName = "register_pusher(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SampleApp04.LPMessagingSDKPlugin.convertDeviceTokenString (token : Swift.String) -&gt; Foundation.Data"
-                  moduleName = "SampleApp04"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp04/platforms/ios/SampleApp04/Plugins/com.liveperson.messagingSDK/LPMessagingSDKPlugin.swift"
-                  timestampString = "521561431.030698"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "205"
-                  endingLineNumber = "205"
-                  offsetFromSymbolStart = "460">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SampleApp04.LPMessagingSDKPlugin.(convertDeviceTokenString (token : Swift.String) -&gt; Foundation.Data).(closure #1)"
-                  moduleName = "SampleApp04"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jbeadle/www/talktalk/cordova/repos/github/CordovaMessagingSDKSample/apps/sampleapp04/platforms/ios/SampleApp04/Plugins/com.liveperson.messagingSDK/LPMessagingSDKPlugin.swift"
-                  timestampString = "521561431.032581"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "205"
-                  endingLineNumber = "205"
-                  offsetFromSymbolStart = "457">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -95,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "537"
             endingLineNumber = "537"
-            landmarkName = "setSDKConfigurations(_:)"
+            landmarkName = "LPMessagingSDKActionsMenuToggled(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -111,7 +79,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "547"
             endingLineNumber = "547"
-            landmarkName = "setSDKConfigurations(_:)"
+            landmarkName = "LPMessagingSDKHasConnectionError(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -127,7 +95,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "264"
             endingLineNumber = "264"
-            landmarkName = "register_pusher(_:)"
+            landmarkName = "reconnect_with_new_token(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -157,8 +125,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "622"
             endingLineNumber = "622"
-            landmarkName = "LPMessagingSDKCSATScoreSubmissionDidFinish(_:rating:)"
-            landmarkType = "7">
+            landmarkName = "LPMessagingSDKPlugin"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -307,7 +275,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SampleApp04/Plugins/com.liveperson.messagingSDK/LPMessagingSDKPlugin.swift"
@@ -316,7 +284,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "656"
             endingLineNumber = "656"
-            landmarkName = "LPMessagingSDKError(_:)"
+            landmarkName = "LPMessagingSDKConnectionStateChanged(_:brandID:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -348,7 +316,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "228"
             endingLineNumber = "228"
-            landmarkName = "close_conversation_screen(_:)"
+            landmarkName = "lp_register_event_callback(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -364,14 +332,14 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "232"
             endingLineNumber = "232"
-            landmarkName = "close_conversation_screen(_:)"
+            landmarkName = "lp_register_event_callback(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SampleApp04/Plugins/com.liveperson.messagingSDK/LPMessagingSDKPlugin.swift"
@@ -380,7 +348,23 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "637"
             endingLineNumber = "637"
-            landmarkName = "LPMessagingSDKAuthenticationFailed(_:)"
+            landmarkName = "LPMessagingSDKConversationCSATDismissedOnSubmittion(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SampleApp04/Plugins/com.liveperson.messagingSDK/LPMessagingSDKPlugin.swift"
+            timestampString = "519919420.452602"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "608"
+            endingLineNumber = "608"
+            landmarkName = "LPMessagingSDKAgentIsTypingStateChanged(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -390,14 +374,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SampleApp04/Plugins/com.liveperson.messagingSDK/LPMessagingSDKPlugin.swift"
-            timestampString = "519919420.452602"
+            filePath = "www/js/index.js"
+            timestampString = "521641649.809719"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "608"
-            endingLineNumber = "608"
-            landmarkName = "LPMessagingSDKHasConnectionError(_:)"
-            landmarkType = "7">
+            startingLineNumber = "233"
+            endingLineNumber = "233">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
