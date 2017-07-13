@@ -28,9 +28,18 @@ Temporary Items
 #Cordova build
 apps/sampleapp03/platforms/android/CordovaLib/build
 apps/sampleapp03/platforms/android/lp_messaging_sdk/build
-*.idea
-*.gradle
-
+apps/**/.idea/
+apps/**/.gradle/
+apps/**/android.iml
+apps/**/lp_messaging_sdk.iml
 #old apps
 apps/AndroidBrandingSampleApp
 UserInterfaceState.xcuserstate
+
+docs/
+apps/**/build/
+.idea
+.shelf
+apps/*.iml
+apps/*.ipr
+apps/*.iws
