@@ -21,7 +21,7 @@ var app = {
   settings: {
     accountId: '90233546', // replace with your account id
     currentUserId: '',
-    tokenExpirationInMinutes : 1,
+    tokenExpirationInMinutes : 5,
     startMessagingConversationButtonId: 'start_lp_conversation',
     logoutButtonId: 'logout_and_clear_history'
   },
@@ -81,7 +81,7 @@ var app = {
 
     push.on('notification', function(data) {
       console.log('@@@ pushNotification on.notification ...' + data.message);
-      alert('New Message from Agent! ...' + data.message);
+//      alert('New Message from Agent! ...' + data.message);
     });
 
     console.log('@@@ js ... onDeviceReady completed');
