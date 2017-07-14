@@ -78,7 +78,8 @@ extension String {
             if let config = command.arguments.lastElement as? [String:AnyObject] {
                 setSDKConfigurations(config)
             }
-            
+            let configurations = LPConfig.defaultConfiguration
+            configurations.enablePhotoSharing = true;
             LPMessagingSDK.instance.delegate = self
             self.set_lp_callbacks(command)
 
