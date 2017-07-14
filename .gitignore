@@ -47,3 +47,8 @@ UserInterfaceState.xcuserstate
 docs/
 .idea
 .shelf
+apps/sampleapp03/platforms/android/lp_messaging_sdk/build/outputs/aar/lp_messaging_sdk-release.aar
+apps/sampleapp04/platforms/ios/SampleApp04.xcworkspace/xcuserdata/jbeadle.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+apps/sampleapp04/platforms/ios/SampleApp04.xcodeproj/project.pbxproj
+apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
+apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
