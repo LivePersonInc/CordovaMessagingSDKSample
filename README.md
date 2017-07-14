@@ -1,18 +1,24 @@
-# Cordova Messaging Plugin
+# Cordova LivePerson Messaging Plugin
+> Examples of how to interact with the LivePerson Messaging SDK 
 
-Current Version: v2.5
+# Versioning
 
-+ iOS SDK v2.5.x
-+ Android SDK v2.5.x
+Current Version: v2.5.0
 
+Running with the following versions of the LivePerson Messaging SDK
 
-## PLEASE NOTE -- XCODE UPGRADE REQUIRED!!
++ [iOS SDK v2.5.x](https://github.com/LP-Messaging/iOS-Messaging-SDK/releases/tag/2.5.0)
++ [Android SDK v2.5.x](https://github.com/LP-Messaging/Android-Messaging-SDK/releases/tag/v2.5.0)
+
+### PLEASE NOTE -- XCODE UPGRADE REQUIRED!!
 
 + Any version of the Cordova plugin v2.1.x and above has been compiled with the xcode version 8.3.1
 + Any apps you build with these versions of the iOS SDK (v2.1.5 and above) will require the above xcode version to build and run - due to the change in Swift version numbers.
 + Xcode v8.3.1 also requires macOS Sierra in order to install!
 
-## "Where do I find the latest version of the plugin?"
+# Installing / Getting started
+
+### _"Where do I find the latest version of the plugin?"_
 
 Repo has been restructured.
 The various versions of the plugin live here:
@@ -23,7 +29,7 @@ The latest release v2.5.x is here
 
 `/plugins/v2.5.x/MessagingSDKPlugin`
 
-If you need to reinstall the plugin to your app, make sure you pull it from this folder to include the latest iOS frameworks.
+If you need to reinstall the plugin to your app, make sure you pull it from this folder.
 
 e.g if you were working in the sampleapp01 example folder
 
@@ -33,14 +39,82 @@ cordova plugin remove com.liveperson.messagingSDK
 cordova plugin add ../../plugins/v2.5.x/MessagingSDKPlugin
 ```
 
------------
+## iOS 
 
-### iOS Install 
+### Prerequisites
 
-You will still need to follow the usual steps for adding the embedded binary `.frameworks` and `.bundle` files into the iOS app via Xcode. Check the 
+To use the LivePerson In-App Messaging SDK, the following are required:
+
++ XCode 8.3 or later
++ Swift 3.1 or later, or Objective-C
+
+Note: For information on supported operating systems and devices, refer to [System Requirements](https://s3-eu-west-1.amazonaws.com/ce-sr/CA/Admin/Sys+req/System+requirements.pdf).
+
+
+### Add iOS SDK Frameworks - Recommended via CocoaPods
+
+The SDK is also compatible with CocoaPods, a dependency manager for Swift and Objective-C Cocoa projects. CocoaPods has thousands of libraries and is used in over 2 million apps. It can help you scale your projects elegantly and provides a standard format for managing external libraries.
+
+1. Install cocoapods using the following command:
+
+```
+$ gem install cocoapods
+```
+
+2. Navigate to your project folder and init new pod using the following command:
+
+```
+$ pod init
+```
+
+3. Podfile should be created under your project’s folder.
+
+  > To integrate Liveperson Messaging SDK into your Xcode project using CocoaPods, specify it in your Podfile:
+
+```
+source 'https://github.com/LivePersonInc/iOSPodSpecs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+target '<Your Target Name>' do
+    pod 'LPMessagingSDK'
+end
+```
+
+4. Run the following command in the terminal under your project folder:
+
+```
+$ pod install
+```
+
+5. Incase you wish to upgrade to the latest SDK version and you have already ran 'pod install', Run the following command:
+
+```
+$ pod update
+```
+
+### Installation of iOS Libraries by Copying to Xcode Project
+Copy all framework and bundle files into the project, including the bundle file In project settings, navigate to the General tab, and add all Framework files to the Embedded Binaries section.
+
+#### Installation notes
+
+In project settings, navigate to the Build Phases tab, and click the + button to add a New Run Script Phase. Add the script below in order to loop through the frameworks embedded in the application and remove unused architectures (used for simulator). This step is a workaround for known iOS issue <http://www.openradar.me/radar?id=6409498411401216> and is necessary for archiving your app before publishing it to the App Store.
+
+If frameworks installed using CocoaPods, use the following script:
+```
+bash "${SRCROOT}/Pods/LPMessagingSDK/LPMessagingSDK/LPInfra.framework/frameworks-strip.sh"
+```
+
+If frameworks installed using copy to Xcode project, use the following script:
+```
+bash "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/LPInfra.framework/frameworks-strip.sh"
+```
+
+
+### Manual Framework installation Notes
+
+Follow the usual steps for adding the embedded binary `.frameworks` and `.bundle` files into the iOS app via Xcode. Check the 
 [Video Link](https://youtu.be/wR_k1VWT8lg) for examples of how this can be done.
-
-#### SDK Frameworks and Bundle Install summary
 
 + Add SDK plugin with latest version
 
@@ -59,14 +133,17 @@ You will still need to follow the usual steps for adding the embedded binary `.f
 
 > if you get a build/run error about missing simulators, then edit this file -- `<your app folder>/platforms/ios/cordova/lib/start-emulator` and change the default iOS emulator to run or add iPhone 5s to your list of emulated devices
 
+-------
 
-### Android
+## Android
 
-The plugin itself does NOT include any copies of the Android SDK `aars` libraries. You should download the [latest version of the Android SDK from here on github](https://github.com/LP-Messaging/Android-Messaging-SDK/releases). Once downloaded, follow the instructions in the `/docs` folder for adding the Messaging SDK to your Android Cordova app in Android studio.
+The plugin itself does NOT include any copies of the Android SDK `aars` libraries. You should download the [latest version of the Android SDK from here on github](https://github.com/LP-Messaging/Android-Messaging-SDK/releases). 
 
-Android v2.1.3 `aars` files are located in `/sdk-libs/android/v2.1.3` for your convenience **BUT ALWAYS CHECK GITHUB RELEASES LINK ABOVE FOR THE LATEST VERSION**
+<https://developers.liveperson.com/android-quickstart.html>
 
-----------
+**BUT ALWAYS CHECK GITHUB RELEASES LINK ABOVE FOR THE LATEST VERSION**
+
+---
 
 ## Sample Apps Included
 
@@ -74,7 +151,7 @@ Within the `apps/` folder at the root of this repo you will find some sample app
 
 ### `apps/sampleapp04` -- iOS Only SDK v2.1.5
 
-Has been created as  reference app using iOS frameworks v2.1.5 which fixes several bugs around token refresh situations.
+Has been created as  reference app using iOS frameworks.
 
 This app does NOT include an Android application - refer to SampleApp03 for the latest Android example app.
 
@@ -82,8 +159,7 @@ Includes a basic iOS Cordova App with Messaging integration and the PhoneGap Pus
 
 ![screen shot 2017-04-20 at 22 50 14](https://cloud.githubusercontent.com/assets/10999907/25254104/c19f863e-261b-11e7-95ac-1affddb98db0.png)
 
-
-### `apps/sampleapp03` -- Authentication and Push Plugin
+### `apps/sampleapp03` -- Android -- Authentication and Push Plugin
 
 + includes authentication for both platforms
 + phone gap push plugin RC 2.0 for Android and iOS
@@ -92,20 +168,10 @@ Includes a basic iOS Cordova App with Messaging integration and the PhoneGap Pus
 + Android SDK v2.1.3
 + iOS SDK v2.1.2
   + runs on xcode 8.2.1
-  
-### `apps/sampleapp01`
 
-+ Combined Android and iOS Cordova app - running SDK 2.1.2 on iOS and 2.1.0 on Android
-+ reference the `apps/sampleapp01/www/js/index.js` for examples of configuring the app in javascript to call the Cordova plugin and wrapper APIs
+------
 
-### `apps/sampleapp02-ios`
-
-+ iOS only Cordova app - running SDK 2.1.2 on iOS 
-+ reference the `apps/sampleapp02-ios/www/js/index.js` for examples of configuring the app in javascript to call the Cordova plugin and wrapper APIs
-
-----------
-
-## Cordova API Wrapper file: 
+## Api Reference
 
 **filename: `plugins/MessagingSDKPlugin/www/LPMessagingSDK.js`**
 
@@ -120,6 +186,33 @@ lp_conversation_api: function(action, args, successCallback, errorCallback)
 ```
 
 Supported values for `action` :
+
+---- 
+#### *************************** NEW IN v2.5.x *************************************
+
+### `"close_conversation_screen"`
+
+sample call:
+
+
+
+```js
+lpMessagingSDK.lp_conversation_api(
+  'close_conversation_screen', [accountNumber],
+  function (data) {
+    var eventData = JSON.parse(data);
+    console.log('@@@ js ... unique close_conversation_screen SDK callback');
+  },
+  function (data) {
+    var eventData = JSON.parse(data);
+    console.log('@@@ js ... unique close_conversation_screen SDK error callback');
+  }
+);
+```
+
+can be triggered if the callbacks you bind to trigger an error response and you want to close the conversation screen as a result and provide the user with instructions within the web layer.
+
+-------
 
 ### `"lp_sdk_init"`
 
@@ -202,7 +295,7 @@ lpMessagingSDK.lp_conversation_api(
 
 Used to clear the current user data and unregister the device from push notifications.
 
-#### Impact on Push Notifications 
+#### PLEASE NOTE: Impact on Push Notifications 
 **Calling this method will mean the device is no longer going to receive push notifications until the next user logs back in and opens the conversation screen to send the latest JWT token to the SDK and establish a connection**. After that point the device will receive push notifications again for that user when not viewing the conversation screen.  
 
 + When the customer logs out of your app, call this method to clear the local device SDK history and unregister the device from push notifications.
@@ -298,7 +391,13 @@ Used to send **unauthenticated** customer information to the agent where authent
 + `1` : first name : "John"
 + `2` : last name : "Doe"
 + `3` : nickname : "JD"
+
 + `4` : profile image url : "https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg"
+
+(**Android Deprecated in v2.5** - value will be ignored - send null if not applicable)
+
+(**iOS still supported in v2.5**)
+
 + `5` : customer phone number : "555-444-12345"
 
 (iOS Only)
@@ -309,19 +408,29 @@ Used to send **unauthenticated** customer information to the agent where authent
 
 ```js
 lpMessagingSDK.lp_conversation_api(
-    "set_lp_user_profile",
-    [
-            "123456",
-            "John",
-            "Doe",
-            "JD",
-            "https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg",
-            "555-444-12345"
-    ],
-    success,
-    failure
+  'set_lp_user_profile', 
+  [
+    accountId,
+    'John',
+    'Doe',
+    'NickName:JD',
+    'https://s-media-cache-ak0.pinimg.com/564x/a2/c7/ee/a2c7ee8982de3bae503a730fe4562cf9.jpg',
+    'tel:555-444-12345',
+    'uid_5678',
+    'employeeId_1234'
+  ],
+  function(data) {
+    var eventData = JSON.parse(data);
+    console.log('@@@ js ... unique set_lp_user_profile SDK callback');
+  },
+  function(data) {
+    var eventData = JSON.parse(data);
+    console.log('@@@ js ... unique set_lp_user_profile SDK error callback');
+  }
 );
 ```
+
+### Sending Secure Information via JWT tokens
 
 __If you wish to send secure, authenticated information about the customer to your agent, it should be encoded and encrypted within your JWT token__
 
@@ -331,10 +440,10 @@ For a list of supported engagement attributes within a JWT token payload, see th
 
 ```json
 {
-  "sub": "TALKTALK-ID-1234567890",
+  "sub": "MY_UNIQUE_CUSTOMER_IDENTIFIER_GOES_HERE",
   "iss": "https://www.talktalk.co.uk",
-  "exp": 1514718671000,
-  "iat": 1487159337000,
+  "exp": 1514718671,
+  "iat": 1487159337,
   "phone_number": "+1-10-344-3765333",
   "lp_sdes": [
     {
@@ -365,8 +474,8 @@ For a list of supported engagement attributes within a JWT token payload, see th
     {
       "type": "personal",
       "personal": {
-        "firstname": "John99",
-        "lastname": "Beadle99",
+        "firstname": "AN",
+        "lastname": "Other",
         "age": {
           "age": 34,
           "year": 1980,
@@ -375,7 +484,7 @@ For a list of supported engagement attributes within a JWT token payload, see th
         },
         "contacts": [
           {
-            "email": "jbeadle99@liveperson.com",
+            "email": "another@liveperson.com",
             "phone": "+1 212-788-8877"
           }
         ],
@@ -507,7 +616,6 @@ globalAsyncEventsSuccessCallback: function(data) {
   + `isOffHours` : true|false
 + `"LPMessagingSDKConversationViewControllerDidDismiss"` (iOS only)
 
-**NEW in v1.4**
 
 Immediate response callback execution:
 
