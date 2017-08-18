@@ -236,12 +236,15 @@ var app = {
   lpStartMessagingConversation: function(customerId) {
     app.settings.currentUserId = customerId;
     var data = 'sub='+app.settings.currentUserId+'&exp='+app.settings.tokenExpirationInMinutes;
-
+    console.log(data);
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
     xhr.addEventListener('readystatechange', function () {
+       console.log('readyStateChange');
+       console.log(this.readyState);
       if (this.readyState === 4) {
+        console.log('responseText...');
         console.log(this.responseText);
         var response = JSON.parse(this.responseText);
         var token = response.jwt || null;
