@@ -97,18 +97,18 @@ var app = {
     receivedElement.setAttribute('style', 'display:block;');
 
     var buttonElement = document.getElementById(this.settings.startMessagingConversationButtonId);
-    buttonElement.addEventListener('click', this.lpStartMessagingConversation.bind(this, 'auth-user-id-1'), false);
+    buttonElement.addEventListener('click', this.lpStartMessagingConversation.bind(this, 'demo-user-id-1'), false);
 
 
-    var buttonElement2 = document.getElementById('start_lp_conversation_2nd_user');
-    buttonElement2.addEventListener('click', this.lpStartMessagingConversation.bind(this, 'auth-user-id-2'), false);
+//    var buttonElement2 = document.getElementById('start_lp_conversation_2nd_user');
+//    buttonElement2.addEventListener('click', this.lpStartMessagingConversation.bind(this, 'demo-user-id-2'), false);
 
-    var buttonElement3 = document.getElementById('start_lp_conversation_3rd_user');
-    buttonElement3.addEventListener('click', this.lpStartMessagingConversation.bind(this, 'unauth'), false);
+//    var buttonElement3 = document.getElementById('start_lp_conversation_3rd_user');
+//    buttonElement3.addEventListener('click', this.lpStartMessagingConversation.bind(this, 'unauth'), false);
 
-
-    var logoutElement = document.getElementById(this.settings.logoutButtonId);
-    logoutElement.addEventListener('click', this.clearDeviceHistoryAndLogout.bind(this), false);
+//
+//    var logoutElement = document.getElementById(this.settings.logoutButtonId);
+//    logoutElement.addEventListener('click', this.clearDeviceHistoryAndLogout.bind(this), false);
 
   },
   clearDeviceHistoryAndLogout: function() {
@@ -138,6 +138,14 @@ var app = {
       console.log('@@@ authenticated token has expired...refreshing...');
       app.lpGenerateNewAuthenticationToken();
     }
+
+    if (eventData.eventName == 'LPNumberOfUnreadMessagesUpdated') {
+      console.log('@@@ LPNumberOfUnreadMessagesUpdated...');
+      var numUnreadMessages = eventData.numberOfUnreadMessages;
+      // display badge!
+    }
+
+
   },
   globalAsyncEventsErrorCallback: function(data) {
     var eventData = JSON.parse(data);

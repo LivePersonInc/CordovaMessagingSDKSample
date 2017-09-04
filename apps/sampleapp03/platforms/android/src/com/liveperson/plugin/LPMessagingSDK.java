@@ -46,6 +46,8 @@ public class LPMessagingSDK extends CordovaPlugin {
     CallbackContext mGlobalCallbackContext;
     CallbackContext mRegisterLpPusherCallbackContext;
 
+
+
     private CordovaWebView mainWebView;
 
     @Override
