@@ -1,20 +1,28 @@
 package com.liveperson.plugin;
 
 
+import android.content.BroadcastReceiver;
+import android.support.v4.content.LocalBroadcastManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.google.firebase.messaging.RemoteMessage;
 import com.liveperson.api.LivePersonCallbackImpl;
 import com.liveperson.api.sdk.LPConversationData;
 import com.liveperson.infra.InitLivePersonProperties;
 import com.liveperson.infra.callbacks.InitLivePersonCallBack;
+import com.liveperson.infra.model.PushMessage;
 import com.liveperson.messaging.TaskType;
 import com.liveperson.messaging.model.AgentData;
 import com.liveperson.messaging.sdk.api.LivePerson;
 import com.liveperson.messaging.sdk.api.callbacks.LogoutLivePersonCallback;
 import com.liveperson.messaging.sdk.api.model.ConsumerProfile;
+import com.liveperson.api.LivePersonIntents;
+
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
@@ -40,13 +48,17 @@ public class LPMessagingSDK extends CordovaPlugin {
     public static final String LP_ACCOUNT_ID = "lp_account_id";
     public static final String LP_REGISTER_PUSHER = "register_pusher";
 
+    public static final String LP_HANDLE_PUSH_MESSAGE = "handle_push_message";
+
     private static final String LP_REGISTER_GLOBAL_ASYNC_EVENT_CALLBACK = "lp_register_event_callback";
 
     CallbackContext mCallbackContext;
     CallbackContext mGlobalCallbackContext;
     CallbackContext mRegisterLpPusherCallbackContext;
+    CallbackContext mHandlePushMessageCallbackContext;
 
-
+    BroadcastReceiver unreadMessagesBroadcastReceiver;
+    IntentFilter unreadMessagesCounterFilter = new IntentFilter(LivePerson.ACTION_LP_UPDATE_NUM_UNREAD_MESSAGES_ACTION);
 
     private CordovaWebView mainWebView;
 
@@ -86,6 +98,9 @@ public class LPMessagingSDK extends CordovaPlugin {
                 mGlobalCallbackContext = callbackContext;
                 JSONObject eventJson = new JSONObject();
                 eventJson.put("eventName","lp_register_global_async_event_callback");
+
+                // register broadcast receiver
+                setupUnreadMessagesBroadcastReceiver(mGlobalCallbackContext);
 
                 PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT, "lp_register_global_async_event_callback");
                 result.setKeepCallback(true);
@@ -164,6 +179,25 @@ public class LPMessagingSDK extends CordovaPlugin {
                 Log.d(TAG, "Messaging SDK: Set User, args:" + args);
                 setProfile(callbackContext, args);
                 break;
+            case LP_HANDLE_PUSH_MESSAGE:
+                mHandlePushMessageCallbackContext = callbackContext;
+
+                String pushMessageContent = args.getString(0);
+                RemoteMessage remoteMessage = new RemoteMessage();
+
+                PushMessage message = LivePerson.handlePushMessage(this, remoteMessage.getData(), accountId, false);
+                Log.d(TAG, "LP_HANDLE_PUSH_MESSAGE "+args.getString(0));
+                final JSONObject eventJsonHandlePushMessage = new JSONObject();
+                try {
+                    eventJsonHandlePushMessage.put("eventName","LPHandlePushMessage");
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+                PluginResult resultHandlePushMessage = new PluginResult(PluginResult.Status.OK, eventJsonHandlePushMessage.toString());
+                resultHandlePushMessage.setKeepCallback(true);
+                mHandlePushMessageCallbackContext.sendPluginResult(resultHandlePushMessage);
+                break;
             case LP_REGISTER_PUSHER:
 
 
@@ -194,6 +228,35 @@ public class LPMessagingSDK extends CordovaPlugin {
         }
 
         return success;
+    }
+
+    private void setupUnreadMessagesBroadcastReceiver(CallbackContext cb) {
+        unreadMessagesBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int newValue = intent.getIntExtra("newValue", 0);
+                Log.i(TAG,"unreadMessagesBroadcastReceiver newValue ==> "+newValue);
+                if (newValue > 0) {
+                    // call our callback context here!
+                    final JSONObject eventJson = new JSONObject();
+                    try {
+                        eventJson.put("eventName","LPNumberOfUnreadMessagesUpdated");
+                        eventJson.put("numberOfUnreadMessages", newValue);
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, eventJson.toString());
+                    result.setKeepCallback(true);
+                    mGlobalCallbackContext.sendPluginResult(result);
+                }
+            }
+        };
+
+        // ^ create receiver object
+
+        cordova.getActivity().registerReceiver(unreadMessagesBroadcastReceiver,unreadMessagesCounterFilter );
+        // ^ register receiver!
     }
 
     /**

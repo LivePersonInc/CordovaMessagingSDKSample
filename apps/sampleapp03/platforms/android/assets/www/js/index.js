@@ -23,7 +23,9 @@ var app = {
     currentUserId: '',
     tokenExpirationInMinutes : 5,
     startMessagingConversationButtonId: 'start_lp_conversation',
-    logoutButtonId: 'logout_and_clear_history'
+    logoutButtonId: 'logout_and_clear_history',
+    pushToken:null,
+    sdkInitialised:false
   },
     // Application Constructor
   initialize: function() {
@@ -57,8 +59,14 @@ var app = {
     push.on('registration', function(data) {
             // data.registrationId
       console.log('@@@ pushNotification plugin registrationId ...' + data.registrationId);
+      app.settings.pushToken = data.registrationId;
+      console.log('@@@ push app.settings.pushToken ...' + app.settings.pushToken);
+      var waitForSdkInit = setInterval(function(){
 
-      lpMessagingSDK.lp_conversation_api(
+        if(app.settings.pushToken && app.settings.sdkInitialised) {
+            clearInterval(waitForSdkInit);
+            console.log('@@@ app.settings.pushToken not NULL ...app.settings.sdkInitialised calling register pusher!');
+            lpMessagingSDK.lp_conversation_api(
                 'register_pusher', [app.settings.accountId, data.registrationId],
                 function(data) {
                   var eventData = JSON.parse(data);
@@ -69,6 +77,12 @@ var app = {
                   console.log('@@@ js ... unique register_pusher SDK error callback ...' + data);
                 }
             );
+        } else {
+           console.log('@@@ app.settings.sdkInitialised == false and pushToken not yet set');
+
+        }
+
+      });
 
 
     });
@@ -81,7 +95,20 @@ var app = {
 
     push.on('notification', function(data) {
       console.log('@@@ pushNotification on.notification ...' + data.message);
+//
 //      alert('New Message from Agent! ...' + data.message);
+        lpMessagingSDK.lp_conversation_api(
+                'handle_push_message', [data],
+                function(data) {
+                  var eventData = JSON.parse(data);
+                  console.log('@@@ js ... unique handle_push_message SDK callback ..' + data);
+                },
+                function(data) {
+                  var eventData = JSON.parse(data);
+                  console.log('@@@ js ... unique handle_push_message SDK error callback ...' + data);
+                }
+            );
+
     });
 
     console.log('@@@ js ... onDeviceReady completed');
@@ -142,6 +169,8 @@ var app = {
     if (eventData.eventName == 'LPNumberOfUnreadMessagesUpdated') {
       console.log('@@@ LPNumberOfUnreadMessagesUpdated...');
       var numUnreadMessages = eventData.numberOfUnreadMessages;
+      var containerUnreadMessages = document.getElementById('numberOfUnreadMessages');
+      containerUnreadMessages.innerHTML = numUnreadMessages;
       // display badge!
     }
 
@@ -204,9 +233,14 @@ var app = {
         function(data) {
           var eventData = JSON.parse(data);
           console.log('@@@ js ... unique lp_sdk_init SDK callback');
+          app.settings.sdkInitialised = true;
+
+
+
         },
         function(data) {
           var eventData = JSON.parse(data);
+          app.settings.sdkInitialised = false;
           console.log('@@@ js ... unique lp_sdk_init SDK error callback');
         }
     );
