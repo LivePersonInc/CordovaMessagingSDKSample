@@ -2,7 +2,6 @@ package com.liveperson.plugin;
 
 
 import android.content.BroadcastReceiver;
-import android.support.v4.content.LocalBroadcastManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -10,7 +9,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.google.firebase.messaging.RemoteMessage;
 import com.liveperson.api.LivePersonCallbackImpl;
 import com.liveperson.api.sdk.LPConversationData;
 import com.liveperson.infra.InitLivePersonProperties;
@@ -21,15 +19,18 @@ import com.liveperson.messaging.model.AgentData;
 import com.liveperson.messaging.sdk.api.LivePerson;
 import com.liveperson.messaging.sdk.api.callbacks.LogoutLivePersonCallback;
 import com.liveperson.messaging.sdk.api.model.ConsumerProfile;
-import com.liveperson.api.LivePersonIntents;
 
-
-import org.apache.cordova.*;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class LPMessagingSDK extends CordovaPlugin {
@@ -49,6 +50,7 @@ public class LPMessagingSDK extends CordovaPlugin {
     public static final String LP_REGISTER_PUSHER = "register_pusher";
 
     public static final String LP_HANDLE_PUSH_MESSAGE = "handle_push_message";
+    public Boolean LP_DISPLAY_PUSH_MESSAGE = false;
 
     private static final String LP_REGISTER_GLOBAL_ASYNC_EVENT_CALLBACK = "lp_register_event_callback";
 
@@ -93,7 +95,8 @@ public class LPMessagingSDK extends CordovaPlugin {
         boolean success = true;
 
 
-        switch (action){
+        switch (action)
+        {
             case LP_REGISTER_GLOBAL_ASYNC_EVENT_CALLBACK:
                 mGlobalCallbackContext = callbackContext;
                 JSONObject eventJson = new JSONObject();
@@ -183,15 +186,43 @@ public class LPMessagingSDK extends CordovaPlugin {
                 mHandlePushMessageCallbackContext = callbackContext;
 
                 String pushMessageContent = args.getString(0);
-                RemoteMessage remoteMessage = new RemoteMessage();
 
-                PushMessage message = LivePerson.handlePushMessage(this, remoteMessage.getData(), accountId, false);
+                JSONObject remoteMessageJson = new JSONObject(args.getString(0));
+                JSONObject remoteMessageAdditionalData = remoteMessageJson.getJSONObject("additionalData");
+                JSONObject remoteMessagePayload = remoteMessageAdditionalData.getJSONObject("payload");
+
                 Log.d(TAG, "LP_HANDLE_PUSH_MESSAGE "+args.getString(0));
+                Log.d(TAG,"LP_HANDLE_PUSH_MESSAGE jsonObject "+remoteMessageJson.get("additionalData"));
+
+                Map<String, String> remoteMessageData = new HashMap<String, String>();
+                remoteMessageData.put("message",remoteMessageJson.getString("message"));
+                Iterator<String> keysItr = remoteMessagePayload.keys();
+                while(keysItr.hasNext()) {
+                    String key = keysItr.next();
+                    String value = remoteMessagePayload.getString(key);
+                    remoteMessageData.put(key, value);
+                }
+
+                PushMessage message = LivePerson.handlePushMessage(cordova.getActivity(), remoteMessageData, remoteMessagePayload.getString("brandId"), LP_DISPLAY_PUSH_MESSAGE);
                 final JSONObject eventJsonHandlePushMessage = new JSONObject();
                 try {
                     eventJsonHandlePushMessage.put("eventName","LPHandlePushMessage");
+                    eventJsonHandlePushMessage.put("payload",remoteMessagePayload.toString());
+                    eventJsonHandlePushMessage.put("additionalData",remoteMessageAdditionalData.toString());
+                    eventJsonHandlePushMessage.put("message",remoteMessageJson.getString("message"));
+                    eventJsonHandlePushMessage.put("pushMessageObject",message.toString());
                 } catch (JSONException e1) {
                     e1.printStackTrace();
+                    eventJsonHandlePushMessage.put("JSONException",e1.toString());
+                    PluginResult resultHandlePushMessage = new PluginResult(PluginResult.Status.ERROR, eventJsonHandlePushMessage.toString());
+                    resultHandlePushMessage.setKeepCallback(true);
+                    mHandlePushMessageCallbackContext.sendPluginResult(resultHandlePushMessage);
+                } catch (NullPointerException e1) {
+                    e1.printStackTrace();
+                    eventJsonHandlePushMessage.put("JSONException",e1.toString());
+                    PluginResult resultHandlePushMessage = new PluginResult(PluginResult.Status.ERROR, eventJsonHandlePushMessage.toString());
+                    resultHandlePushMessage.setKeepCallback(true);
+                    mHandlePushMessageCallbackContext.sendPluginResult(resultHandlePushMessage);
                 }
 
                 PluginResult resultHandlePushMessage = new PluginResult(PluginResult.Status.OK, eventJsonHandlePushMessage.toString());
@@ -204,6 +235,7 @@ public class LPMessagingSDK extends CordovaPlugin {
                 mRegisterLpPusherCallbackContext = callbackContext;
                 final String account = args.getString(0);
                 final String token = args.getString(1);
+                LP_DISPLAY_PUSH_MESSAGE = args.getBoolean(2);
                 Log.d(TAG, "@@@ Android ...LPMessaging SDK: register_pusher for  account: " + account +", token: " + token + " LP_APP_PACKAGE_NAME : "+LP_APP_PACKAGE_NAME);
                 LivePerson.registerLPPusher(account, LP_APP_PACKAGE_NAME, token);
                 JSONObject json = new JSONObject();
@@ -234,7 +266,7 @@ public class LPMessagingSDK extends CordovaPlugin {
         unreadMessagesBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                int newValue = intent.getIntExtra("newValue", 0);
+                int newValue = intent.getIntExtra(LivePerson.ACTION_LP_UPDATE_NUM_UNREAD_MESSAGES_EXTRA, 0);
                 Log.i(TAG,"unreadMessagesBroadcastReceiver newValue ==> "+newValue);
                 if (newValue > 0) {
                     // call our callback context here!

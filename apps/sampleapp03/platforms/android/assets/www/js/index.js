@@ -25,7 +25,8 @@ var app = {
     startMessagingConversationButtonId: 'start_lp_conversation',
     logoutButtonId: 'logout_and_clear_history',
     pushToken:null,
-    sdkInitialised:false
+    sdkInitialised:false,
+    displayPushMessage:false
   },
     // Application Constructor
   initialize: function() {
@@ -44,7 +45,7 @@ var app = {
     }
     this.receivedEvent('deviceready');
         // initialise LP Messaging SDK here
-    this.lpMessagingSdkInit();
+    app.lpMessagingSdkInit();
 
         // setup click event listener for start messaging button example
     var push = PushNotification.init({
@@ -58,33 +59,10 @@ var app = {
 
     push.on('registration', function(data) {
             // data.registrationId
-      console.log('@@@ pushNotification plugin registrationId ...' + data.registrationId);
-      app.settings.pushToken = data.registrationId;
-      console.log('@@@ push app.settings.pushToken ...' + app.settings.pushToken);
-      var waitForSdkInit = setInterval(function(){
-
-        if(app.settings.pushToken && app.settings.sdkInitialised) {
-            clearInterval(waitForSdkInit);
-            console.log('@@@ app.settings.pushToken not NULL ...app.settings.sdkInitialised calling register pusher!');
-            lpMessagingSDK.lp_conversation_api(
-                'register_pusher', [app.settings.accountId, data.registrationId],
-                function(data) {
-                  var eventData = JSON.parse(data);
-                  console.log('@@@ js ... unique register_pusher SDK callback ..' + data);
-                },
-                function(data) {
-                  var eventData = JSON.parse(data);
-                  console.log('@@@ js ... unique register_pusher SDK error callback ...' + data);
-                }
-            );
-        } else {
-           console.log('@@@ app.settings.sdkInitialised == false and pushToken not yet set');
-
-        }
-
-      });
-
-
+            console.log('@@@ pushNotification plugin registrationId ...' + data.registrationId);
+        app.settings.pushToken = data.registrationId;
+            console.log('@@@ push app.settings.pushToken ...' + app.settings.pushToken);
+        app.registerDeviceForPushNotifications();
     });
 
     push.on('error', function(e) {
@@ -92,13 +70,13 @@ var app = {
       console.log('@@@ pushNotification plugin error ...' + e.message);
     });
 
-
     push.on('notification', function(data) {
-      console.log('@@@ pushNotification on.notification ...' + data.message);
+      console.log('@@@ pushNotification on.notification ...' + data);
+      console.log('@@@ pushNotification on.notification data.stringify ...' + JSON.stringify(data));
 //
 //      alert('New Message from Agent! ...' + data.message);
         lpMessagingSDK.lp_conversation_api(
-                'handle_push_message', [data],
+                'handle_push_message', [data,app.settings.displayPushMessage],
                 function(data) {
                   var eventData = JSON.parse(data);
                   console.log('@@@ js ... unique handle_push_message SDK callback ..' + data);
@@ -113,7 +91,35 @@ var app = {
 
     console.log('@@@ js ... onDeviceReady completed');
   },
+  registerDeviceForPushNotifications: function() {
+     var waitForSdkInit = setInterval(function(){
 
+        if(app.settings.pushToken && app.settings.sdkInitialised) {
+            clearInterval(waitForSdkInit);
+            console.log('@@@  ------- SDK READY -----  app.settings.pushToken has value ...app.settings.sdkInitialised = true ... calling register pusher!');
+            lpMessagingSDK.lp_conversation_api(
+                'register_pusher',
+                [
+                    app.settings.accountId,
+                    app.settings.pushToken,
+                    app.settings.displayPushMessage
+                ],
+                function(data) {
+                  var eventData = JSON.parse(data);
+                  console.log('@@@ js ... unique register_pusher SDK callback ..' + data);
+                },
+                function(data) {
+                  var eventData = JSON.parse(data);
+                  console.log('@@@ js ... unique register_pusher SDK error callback ...' + data);
+                }
+            );
+        } else {
+           console.log('@@@ [!] app.settings.sdkInitialised == false and pushToken not yet set');
+
+        }
+
+      });
+  },
     // Update DOM on a Received Event
   receivedEvent: function(id) {
     var parentElement = document.getElementById(id);
@@ -127,30 +133,31 @@ var app = {
     buttonElement.addEventListener('click', this.lpStartMessagingConversation.bind(this, 'demo-user-id-1'), false);
 
 
-//    var buttonElement2 = document.getElementById('start_lp_conversation_2nd_user');
-//    buttonElement2.addEventListener('click', this.lpStartMessagingConversation.bind(this, 'demo-user-id-2'), false);
-
-//    var buttonElement3 = document.getElementById('start_lp_conversation_3rd_user');
-//    buttonElement3.addEventListener('click', this.lpStartMessagingConversation.bind(this, 'unauth'), false);
-
-//
-//    var logoutElement = document.getElementById(this.settings.logoutButtonId);
-//    logoutElement.addEventListener('click', this.clearDeviceHistoryAndLogout.bind(this), false);
-
   },
   clearDeviceHistoryAndLogout: function() {
     console.log('@@@ clearDeviceHistoryAndLogout ***');
     lpMessagingSDK.lp_conversation_api(
             'lp_clear_history_and_logout', [app.settings.accountId],
             function(data) {
-              var eventData = JSON.parse(data);
-              console.log('@@@ js ... unique clearDeviceHistoryAndLogout SDK callback ...data => ' + data);
-              console.log('@@@ js ... post logout...now auto reinitialise the SDK for next user to save button press in demo!');
-              app.lpMessagingSdkInit();
-
+                var eventData = JSON.parse(data);
+                console.log('@@@ js ... unique clearDeviceHistoryAndLogout SDK callback ...data => ' + data);
+                console.log('@@@ js ... post logout...now auto reinitialise the SDK for next user to save button press in demo!');
+                app.settings.sdkInitialised = false;
+                //              registerDeviceForPushNotifications
+                app.lpMessagingSdkInit();
+                // wait for app.settings.sdkInitialised = true; before recalling registerforpush
+                var waitForSdkReInit = setInterval(function(){
+                    if(app.settings.sdkInitialised) {
+                        clearInterval(waitForSdkReInit);
+                        app.registerDeviceForPushNotifications();
+                    } else {
+                        console.log('@@@ js ... lp_clear_history_and_logout success callback...waiting for app.settings.sdkInitialised = true');
+                    }
+                },500);
             },
             function(data) {
               var eventData = JSON.parse(data);
+              app.settings.sdkInitialised = false;
               console.log('@@@ js ... unique clearDeviceHistoryAndLogout SDK error callback ...data => ' + data);
             }
         );
@@ -229,14 +236,11 @@ var app = {
         // lp_sdk_init
     lpMessagingSDK.lp_conversation_api(
         'lp_sdk_init',
-        [this.settings.accountId],
+        [app.settings.accountId],
         function(data) {
           var eventData = JSON.parse(data);
           console.log('@@@ js ... unique lp_sdk_init SDK callback');
           app.settings.sdkInitialised = true;
-
-
-
         },
         function(data) {
           var eventData = JSON.parse(data);
@@ -286,25 +290,28 @@ var app = {
        console.log('readyStateChange');
        console.log(this.readyState);
       if (this.readyState === 4) {
-        console.log('responseText...');
-        console.log(this.responseText);
-        var response = JSON.parse(this.responseText);
+        var response = JSON.parse(this.responseText||"");
         var token = response.jwt || null;
         console.log(token);
-        lpMessagingSDK.lp_conversation_api(
-          'start_lp_conversation', [
-            app.settings.accountId,
-            token
-          ],
-          function (data) {
-            var eventData = JSON.parse(data);
-            console.log('@@@ js ... unique start_lp_conversation SDK callback');
-          },
-          function (data) {
-            var eventData = JSON.parse(data);
-            console.log('@@@ js ... unique start_lp_conversation SDK error callback');
-          }
-        );
+        if(token) {
+            lpMessagingSDK.lp_conversation_api(
+                  'start_lp_conversation', [
+                    app.settings.accountId,
+                    token
+                  ],
+                  function (data) {
+                    var eventData = JSON.parse(data);
+                    console.log('@@@ js ... unique start_lp_conversation SDK callback');
+                  },
+                  function (data) {
+                    var eventData = JSON.parse(data);
+                    console.log('@@@ js ... unique start_lp_conversation SDK error callback');
+                  }
+                );
+        } else {
+            console.log("@@@ ERROR with JWT generator -- token is null! "+data);
+        }
+
       }
     });
 

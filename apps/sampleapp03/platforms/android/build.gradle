@@ -35,6 +35,8 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.3.3'
 
 
+
+
     }
 }
 
@@ -171,8 +173,8 @@ android {
 
     defaultConfig {
         versionCode cdvVersionCode ?: new BigInteger("" + privateHelpers.extractIntFromManifest("versionCode"))
-        applicationId privateHelpers.extractStringFromManifest("package")
-
+//        applicationId privateHelpers.extractStringFromManifest("package")
+        applicationId "com.liveperson.sampleapp03"
         if (cdvMinSdkVersion != null) {
             minSdkVersion cdvMinSdkVersion
         }
