@@ -11,6 +11,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "MessagingSDKPlugin": "file:../../plugins/v2.7.x/MessagingSDKPlugin",
+        "com.liveperson.messagingSDK": "../../plugins/v2.7.x/MessagingSDKPlugin",
         "cordova-ios": "^4.4.0",
         "cordova-plugin-whitelist": "^1.3.3",
         "phonegap-plugin-push": "^2.0.0"
@@ -18,8 +19,8 @@
     "cordova": {
         "plugins": {
             "cordova-plugin-whitelist": {},
-            "com.liveperson.messagingSDK": {},
-            "phonegap-plugin-push": {}
+            "phonegap-plugin-push": {},
+            "com.liveperson.messagingSDK": {}
         },
         "platforms": [
             "ios"

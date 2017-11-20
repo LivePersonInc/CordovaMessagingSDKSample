@@ -10,10 +10,10 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
         },
-        "com.liveperson.messagingSDK": {
+        "phonegap-plugin-push": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
         },
-        "phonegap-plugin-push": {
+        "com.liveperson.messagingSDK": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
         }
     },

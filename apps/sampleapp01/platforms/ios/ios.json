@@ -9,11 +9,11 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"LPMessagingSDK\"><param name=\"ios-package\" value=\"LPMessagingSDKPlugin\" /></feature>",
+                            "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+                            "xml": "<feature name=\"LPMessagingSDK\"><param name=\"ios-package\" value=\"LPMessagingSDKPlugin\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -55,23 +55,15 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
         },
-        "com.liveperson.messagingSDK": {
+        "phonegap-plugin-push": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
         },
-        "phonegap-plugin-push": {
+        "com.liveperson.messagingSDK": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
         }
     },
     "dependent_plugins": {},
     "modules": [
-        {
-            "id": "com.liveperson.messagingSDK.lpMessagingSDK",
-            "file": "plugins/com.liveperson.messagingSDK/www/lpMessagingSDK.js",
-            "pluginId": "com.liveperson.messagingSDK",
-            "clobbers": [
-                "lpMessagingSDK"
-            ]
-        },
         {
             "id": "phonegap-plugin-push.PushNotification",
             "file": "plugins/phonegap-plugin-push/www/push.js",
@@ -79,11 +71,19 @@
             "clobbers": [
                 "PushNotification"
             ]
+        },
+        {
+            "id": "com.liveperson.messagingSDK.lpMessagingSDK",
+            "file": "plugins/com.liveperson.messagingSDK/www/lpMessagingSDK.js",
+            "pluginId": "com.liveperson.messagingSDK",
+            "clobbers": [
+                "lpMessagingSDK"
+            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-whitelist": "1.3.3",
-        "com.liveperson.messagingSDK": "0.1.0",
-        "phonegap-plugin-push": "2.0.0"
+        "phonegap-plugin-push": "2.0.0",
+        "com.liveperson.messagingSDK": "0.1.0"
     }
 }
