@@ -25,4 +25,5 @@
     </platform>
     <engine name="ios" spec="~4.4.0" />
     <plugin name="com.liveperson.messagingSDK" spec="../../plugins/v2.7.x/MessagingSDKPlugin" />
+    <plugin name="phonegap-plugin-push" spec="^2.0.0" />
 </widget>

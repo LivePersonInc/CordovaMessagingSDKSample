@@ -48,4 +48,7 @@
     <feature name="LPMessagingSDK">
         <param name="ios-package" value="LPMessagingSDKPlugin" />
     </feature>
+    <feature name="PushNotification">
+        <param name="ios-package" value="PushPlugin" />
+    </feature>
 </widget>

@@ -12,6 +12,9 @@
         },
         "com.liveperson.messagingSDK": {
             "PACKAGE_NAME": "com.liveperson.sampleapp01"
+        },
+        "phonegap-plugin-push": {
+            "PACKAGE_NAME": "com.liveperson.sampleapp01"
         }
     },
     "dependent_plugins": {}
