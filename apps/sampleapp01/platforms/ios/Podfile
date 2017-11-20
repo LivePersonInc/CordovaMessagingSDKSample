@@ -8,5 +8,6 @@ target 'SampleApp01' do
 	project 'SampleApp01.xcodeproj'
 	pod 'FirebaseMessaging', '~> 2.0.0'
 	#LPMessagingSDK Includes: LPAMS.framework, LPInfra.framework, LPMessagingSDK.framework and LPMessagingSDKModels.bundle
-	pod 'LPMessagingSDK', '2.7.1.1.1215'
+	# pod 'LPMessagingSDK', '2.7.1.1.1215'
+	pod 'LPMessagingSDK', '2.8.4.5.1297-xcode91'
 end

@@ -319,10 +319,8 @@ extension String {
 //        var token:String = command.arguments[1] as AnyObject! as! String
         let token = command.arguments[1] as? String ?? ""
         if(token.characters.count > 0){
-            let conversationViewParams = LPConversationViewParams(conversationQuery: self.conversationQuery!, containerViewController: nil, isViewOnly: false)
-            let authenticationParams = LPAuthenticationParams(authenticationCode: nil, jwt: token, redirectURI: nil)
-            self.showConversation(conversationViewParams, authenticationParams: authenticationParams)
-            // self.showConversation(brandID,authenticationCode: token)
+            
+            self.showConversation(brandID,authenticationCode: token)
         }else{
             conversationType = "unauthenticated";
             self.showConversation(brandID)
@@ -433,7 +431,10 @@ extension String {
         if authenticationCode == nil {
             print("@@@ ios -- showConversation ... unauthenticated no JWT token found")
 
-            LPMessagingSDK.instance.showConversation(self.conversationQuery!)
+//            LPMessagingSDK.instance.showConversation(self.conversationQuery!)
+            let conversationViewParams = LPConversationViewParams(conversationQuery: self.conversationQuery!, containerViewController: nil, isViewOnly: false)
+            let authenticationParams = LPAuthenticationParams(authenticationCode: nil, jwt: authenticationCode, redirectURI: nil)
+            LPMessagingSDK.instance.showConversation(conversationViewParams, authenticationParams: authenticationParams)
         } else {
             print("@@@ ios -- showConversation ...authenticated session jwt token found! \(authenticationCode!)")
 
