@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="idp_num_history_conversation">2</integer>
-    <bool name='link_preview_use_big_picture'>false</bool>
-    <bool name='link_preview_enable_real_time_preview'>false</bool>
-    <bool name="enable_photo_sharing">true</bool>
-</resources>

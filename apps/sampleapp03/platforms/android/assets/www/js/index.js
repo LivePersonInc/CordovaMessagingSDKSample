@@ -20,6 +20,7 @@ var app = {
 
   settings: {
     accountId: '90233546', // replace with your account id
+//    accountId: '33884409', // replace with your account id
     currentUserId: '',
     tokenExpirationInMinutes : 5,
     startMessagingConversationButtonId: 'start_lp_conversation',

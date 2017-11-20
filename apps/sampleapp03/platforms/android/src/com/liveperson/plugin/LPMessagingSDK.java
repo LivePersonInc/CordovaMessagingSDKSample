@@ -11,7 +11,9 @@ import android.util.Log;
 
 import com.liveperson.api.LivePersonCallbackImpl;
 import com.liveperson.api.sdk.LPConversationData;
+import com.liveperson.infra.ConversationViewParams;
 import com.liveperson.infra.InitLivePersonProperties;
+import com.liveperson.infra.LPAuthenticationParams;
 import com.liveperson.infra.callbacks.InitLivePersonCallBack;
 import com.liveperson.infra.model.PushMessage;
 import com.liveperson.messaging.TaskType;
@@ -410,7 +412,8 @@ public class LPMessagingSDK extends CordovaPlugin {
                 }
 
                 try {
-                    LivePerson.showConversation(cordova.getActivity(),token);
+//                    LivePerson.showConversation(cordova.getActivity(),token);
+                    LivePerson.showConversation(cordova.getActivity(),new LPAuthenticationParams().setHostAppJWT(token),new ConversationViewParams(false));
                     PluginResult result = new PluginResult(PluginResult.Status.OK, json.toString());
                     result.setKeepCallback(true);
                     mCallbackContext.sendPluginResult(result);

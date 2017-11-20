@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.liveperson.messaging.sdk"
-    android:versionCode="250"
-    android:versionName="2.5.0" >
+    android:versionCode="270"
+    android:versionName="2.7.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="19"
         android:targetSdkVersion="25" />
 
     <application
