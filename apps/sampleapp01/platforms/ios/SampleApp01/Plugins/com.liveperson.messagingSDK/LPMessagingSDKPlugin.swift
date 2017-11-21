@@ -166,7 +166,8 @@ extension String {
         return tokenAsData
     }
     
-    func close_conversation_screen(_ command:CDVInvokedUrlCommand) {
+    @objc(close_conversation_screen:)
+    func close_conversation_screen(command:CDVInvokedUrlCommand) {
         self.conversationQuery = LPMessagingSDK.instance.getConversationBrandQuery(self.lpAccountNumber!)
         if self.conversationQuery != nil {
             LPMessagingSDK.instance.removeConversation(self.conversationQuery!)
@@ -256,7 +257,9 @@ extension String {
         
         self.set_lp_callbacks(command: command)
         do {
-            try LPMessagingSDK.instance.reconnect(self.conversationQuery!, authenticationCode: authCode)
+            let conversationViewParams = LPConversationViewParams(conversationQuery: self.conversationQuery!, containerViewController: nil, isViewOnly: false)
+            let authenticationParams = LPAuthenticationParams(authenticationCode: nil, jwt: authCode, redirectURI: nil)
+            LPMessagingSDK.instance.reconnect(self.conversationQuery!, authenticationParams: authenticationParams);
             
             response = ["eventName":"LPMessagingSDKReconnectWithNewToken","token":"\(authCode)","lpAccountNumber":"\(String(describing: lpAccountNumber))"];
             let jsonString = self.convertDicToJSON(dic: response)

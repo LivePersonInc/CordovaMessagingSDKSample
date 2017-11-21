@@ -18,8 +18,9 @@
     <feature name="PushNotification">
         <param name="ios-package" value="PushPlugin" />
     </feature>
-    <feature name="LPMessagingSDKPlugin">
+    <feature name="LPMessagingSDK">
         <param name="ios-package" value="LPMessagingSDKPlugin" />
+<!--  value is the name of the class in Swift/Objc    -->
     </feature>
 <!--    <feature name="LPMessagingSDKPlugin">-->
 <!--        <param name="ios-package" value="LPMessagingSDKPlugin" />-->
