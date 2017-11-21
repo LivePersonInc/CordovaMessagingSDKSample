@@ -1,0 +1,10 @@
+{
+    "com.liveperson.messagingSDK": {
+        "source": {
+            "type": "local",
+            "path": "../../plugins/v2.7.x/MessagingSDKPlugin"
+        },
+        "is_top_level": true,
+        "variables": {}
+    }
+}

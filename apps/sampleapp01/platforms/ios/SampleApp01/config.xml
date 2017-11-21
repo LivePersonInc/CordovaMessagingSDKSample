@@ -19,7 +19,7 @@
         <param name="ios-package" value="PushPlugin" />
     </feature>
     <feature name="LPMessagingSDK">
-        <param name="ios-package" value="LPMessagingSDKPlugin" />
+        <param name="ios-package" value="LPMessagingSDK" />
     </feature>
     <name>SampleApp01</name>
     <description>
@@ -51,4 +51,7 @@
     <preference name="PageLength" value="0" />
     <preference name="PaginationBreakingMode" value="page" />
     <preference name="PaginationMode" value="unpaginated" />
+    <feature name="LPMessagingSDK">
+        <param name="ios-package" value="LPMessagingSDKPlugin" />
+    </feature>
 </widget>
