@@ -63,7 +63,7 @@ extension String {
     
 
     
-    
+    @objc(lp_sdk_init:)
     func lp_sdk_init(command: CDVInvokedUrlCommand) {
         guard let lpAccountNumber = command.arguments.first as? String else {
             print("Can't init without brandID")
@@ -183,6 +183,7 @@ extension String {
 
     }
     
+    @objc(register_pusher:)
     func register_pusher(command:CDVInvokedUrlCommand) {
         // API passes in token via args object
         guard let pushToken = command.arguments[1] as? String else {
@@ -218,6 +219,7 @@ extension String {
         
     }
     
+    @objc(lp_register_event_callback:)
     func lp_register_event_callback(command: CDVInvokedUrlCommand) {
         self.globalCallbackCommandDelegate = commandDelegate
         self.globalCallbackCommand = command
@@ -239,6 +241,7 @@ extension String {
         
     }
     
+    @objc(reconnect_with_new_token:)
     func reconnect_with_new_token(command: CDVInvokedUrlCommand) {
         
         guard let authCode = command.arguments.first as? String else {
@@ -281,7 +284,7 @@ extension String {
         
     }
 
-    
+    @objc(lp_clear_history_and_logout:)
     func lp_clear_history_and_logout(command: CDVInvokedUrlCommand) {
         
         var response:[String:String];
@@ -290,7 +293,12 @@ extension String {
         let jsonString = self.convertDicToJSON(dic: response)
         
         self.set_lp_callbacks(command: command)
-        LPMessagingSDK.instance.logout()
+//        LPMessagingSDK.instance.logout()
+        LPMessagingSDK.instance.logout(completion: {
+            print("@@@ logout success!");
+        }) { (error) in
+            print("@@@ logout error!");
+        }
         
         let pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK,
@@ -301,6 +309,7 @@ extension String {
         self.callBackCommandDelegate?.send(pluginResult, callbackId: self.callBackCommand?.callbackId)
     }
     
+    @objc(start_lp_conversation:)
     func start_lp_conversation(command: CDVInvokedUrlCommand) {
         print("@@@ ios start_lp_conversation args = \(command.arguments)")
         guard let brandID = command.arguments.first as? String else {
@@ -344,6 +353,7 @@ extension String {
     }
 
     // Assign values to our objects for triggering JS callbacks in the wrapper once native methods complete
+    @objc(set_lp_callbacks:)
     func set_lp_callbacks(command: CDVInvokedUrlCommand) {
         
         self.callBackCommandDelegate = commandDelegate
@@ -352,6 +362,7 @@ extension String {
 
     }
     
+    @objc(set_lp_user_profile:)
     func set_lp_user_profile(command: CDVInvokedUrlCommand) {
         var response:[String:String];
         self.set_lp_callbacks(command: command);

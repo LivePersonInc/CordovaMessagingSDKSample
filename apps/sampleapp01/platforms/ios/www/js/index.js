@@ -238,7 +238,7 @@ var app = {
                                  console.log(msg);
                                  },function(){});
     lpMessagingSDK.lp_conversation_api(
-            'lp_sdk_init', [app.settings.accountId],
+                                       'lp_sdk_init', [app.settings.accountId],
             function (data) {
               var eventData = JSON.parse(data);
               console.log('@@@ js ... unique lp_sdk_init SDK callback');
