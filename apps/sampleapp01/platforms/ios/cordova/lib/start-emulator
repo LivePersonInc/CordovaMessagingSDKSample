@@ -23,7 +23,7 @@
 set -e
 
 
-DEFAULT_TARGET="iPhone 5s"
+DEFAULT_TARGET="iPhone 8"
 TARGET=${1:-$DEFAULT_TARGET}
 LIB_PATH=$( cd "$( dirname "$0" )" && pwd -P)
 
