@@ -1,0 +1,56 @@
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+#Cordova build
+apps/sampleapp03/platforms/android/CordovaLib/build
+apps/sampleapp03/platforms/android/lp_messaging_sdk/build
+apps/**/.idea/
+apps/**/.gradle/
+apps/**/android.iml
+apps/**/CordovaLib.iml
+apps/**/lp_messaging_sdk.iml
+apps/*.iml
+apps/*.ipr
+apps/*.iws
+apps/**/build/
+apps/**/lp_messaging_sdk/.settings
+
+
+#old apps
+apps/AndroidBrandingSampleApp
+UserInterfaceState.xcuserstate
+
+docs/
+.idea
+.shelf
+apps/sampleapp03/platforms/android/lp_messaging_sdk/build/outputs/aar/lp_messaging_sdk-release.aar
+apps/sampleapp04/platforms/ios/SampleApp04.xcworkspace/xcuserdata/jbeadle.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+apps/sampleapp04/platforms/ios/SampleApp04.xcodeproj/project.pbxproj
+apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
+apps/sampleapp03/platforms/android/lp_messaging_sdk/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
+apps/sampleapp04/platforms/ios/SampleApp04.xcodeproj/project.pbxproj
+apps/sampleapp04/platforms/ios/SampleApp04.xcworkspace/xcuserdata/jbeadle.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist

@@ -1,0 +1,6 @@
+framework module Pods_SampleApp04 {
+  umbrella header "Pods-SampleApp04-umbrella.h"
+
+  export *
+  module * { export * }
+}

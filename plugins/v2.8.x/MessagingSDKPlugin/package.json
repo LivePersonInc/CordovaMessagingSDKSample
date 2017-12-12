@@ -1,0 +1,33 @@
+{
+  "name": "MessagingSDKPlugin",
+  "version": "2.8.4.5.1297-xcode91",
+  "description": "Cordova LP MessagingSDKPlugin",
+  "cordova": {
+    "id": "com.liveperson.messagingSDK",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnbeadle/CordovaMessagingSDKSample.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.4.0"
+    }
+  ],
+  "author": "jbeadle@liveperson.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnbeadle/CordovaMessagingSDKSample/issues"
+  },
+  "homepage": "https://github.com/johnbeadle/CordovaMessagingSDKSample#readme"
+}

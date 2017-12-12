@@ -1,0 +1,30 @@
+{
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist@1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.liveperson.messagingSDK": {
+        "source": {
+            "type": "local",
+            "path": "../../plugins/v1.5/MessagingSDKPlugin"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "phonegap-plugin-push": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/phonegap/phonegap-plugin-push",
+            "subdir": ".",
+            "ref": "v2.0.x"
+        },
+        "is_top_level": true,
+        "variables": {
+            "SENDER_ID": "1073860922601"
+        }
+    }
+}

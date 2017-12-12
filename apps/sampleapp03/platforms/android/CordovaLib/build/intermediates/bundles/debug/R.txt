@@ -1,0 +1,2 @@
+int color background_material_light 0x7f030000
+int style LivePerson_orange 0x7f020000

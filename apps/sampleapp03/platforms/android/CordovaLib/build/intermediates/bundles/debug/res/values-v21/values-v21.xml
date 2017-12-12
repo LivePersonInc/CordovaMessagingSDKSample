@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LivePerson.orange" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">@android:color/holo_orange_dark</item>
+        <item name="android:colorBackground">@android:color/darker_gray</item>
+    </style>
+</resources>
